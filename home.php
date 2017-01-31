@@ -21,7 +21,7 @@ include("includes/connection.php");
           <li><a href="home.php">Home</a></li>
           <li><a href="members.php">Members</a></li>
           <strong>Topics:</strong>
-          <?php
+          <!-- <?php
 
           $get_topics = "SELECT * FROM topics";
           $run_topics = mysqli_query($con, $get_topics);
@@ -33,7 +33,7 @@ include("includes/connection.php");
             echo "<li><a href='home.php?topic=$topic_id'>$topic_title</a></li>";
           }
 
-           ?>
+           ?> -->
 
         </ul>
         <form method="get" action="results.php" id="form1">
@@ -55,18 +55,17 @@ include("includes/connection.php");
           $row = mysqli_fetch_array($run_user);
 
           $user_id = $row['user_id'];
-          $user_name = $row['user_name'];
-          $user_pass = $row['user_pass'];
+          $user_firstName = $row['user_firstName'];
+          $user_lastName = $row['user_lastName'];
+          $user_pass = $row['user_password'];
           $user_email = $row['user_email'];
-          $user_image = $row['user_image'];
-          $user_birthday = $row['user_birthday'];
-          $last_login = $row['last_login'];
+          $user_image = $row['user_pic'];
+          $user_birthday = $row['user_DoB'];
           echo "
           <center>
           <p><img id='userImg' src='user/user_images/$user_image' width='200' height='200'/></p>
-          <p><strong>Name: </strong>$user_name</p>
+          <p><strong>Name: </strong>$user_firstName  $user_lastName</p>
           <p><strong>Birthday: </strong>$user_birthday</p>
-          <p><strong>Last login: </strong>$last_login</p>
           <p><a href='my_messages.php'>Messages</a></p>
           </center>
           ";
