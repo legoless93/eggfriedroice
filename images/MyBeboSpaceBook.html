@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MyBeboSpaceBook</title>
+<link rel="stylesheet" href="styles/style.css" media="all"/>
+</head>
+<body>
+  <div class="container">
+    <div id="head_wrap">
+      <div id="header">
+        <img id="logoImg" src="images/logo.jpg" style="float: left"/>
+        <form method="post" action="" id="form1">
+          <strong>Email:</strong> <input type="text" name="email" placeholder="Email"/>
+          <strong>Password:</strong> <input type="password" name="pass" placeholder="Password"/>
+          <button name="login">Log in</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="content">
+      <div>
+        <img src="images/image.jpg" id="imageImg"/>
+      </div>
+
+      <div id="form2">
+        <form action="" method="post">
+          <h1 style="color: white; padding-bottom: 20px;"> Sign Up </h1>
+          <table>
+
+            <tr>
+              <td align="right" style="color: white;">Name:</td>
+              <td>
+                <input type="text" name="username" placeholder="Please enter your name"/>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="right" style="color: white;">Email:</td>
+              <td>
+                <input type="text" name="e_mail" placeholder="Please enter your email address"/>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="right" style="color: white;">Password</td>
+              <td>
+                <input type="password" name="password" placeholder="Please enter a password"/>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="right" style="color: white;">Country:</td>
+              <td>
+                <select name="country">
+                  <option>Select a country</option>
+                  <option>United Kingdom</option>
+                </select>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="right" style="color: white;">Birthday:</td>
+              <td>
+                <input type="date" name="birthday"/>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="6">
+                <button name="signUp">Sign Up</button>
+              </td>
+            </tr>
+
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
