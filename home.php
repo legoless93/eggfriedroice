@@ -50,7 +50,7 @@ include("includes/connection.php");
           <?php
 
           $user = $_SESSION['user_email'];
-          $get_user = "SELECT * FROM users WHERE user_email = '$user'";
+          $get_user = "SELECT * FROM user WHERE user_email = '$user'";
           $run_user = mysqli_query($con, $get_user);
           $row = mysqli_fetch_array($run_user);
 
