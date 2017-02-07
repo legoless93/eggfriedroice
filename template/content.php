@@ -9,9 +9,16 @@
       <table>
 
         <tr>
-          <td align="right" style="color: white;">Name:</td>
+          <td align="right" style="color: white;">First name:</td>
           <td>
-            <input type="text" name="username" placeholder="Please enter your name" required="required"/>
+            <input type="text" name="firstName" placeholder="Please enter your first name" required="required"/>
+          </td>
+        </tr>
+
+        <tr>
+          <td align="right" style="color: white;">Surname:</td>
+          <td>
+            <input type="text" name="lastName" placeholder="Please enter your first surname" required="required"/>
           </td>
         </tr>
 
@@ -30,11 +37,12 @@
         </tr>
 
         <tr>
-          <td align="right" style="color: white;">Country:</td>
+          <td align="right" style="color: white;">Gender:</td>
           <td>
-            <select name="country">
-              <option>Select a country</option>
-              <option>United Kingdom</option>
+            <select name="gender">
+              <option>Select a gender</option>
+              <option>Male</option>
+              <option>Female</option>
             </select>
           </td>
         </tr>
