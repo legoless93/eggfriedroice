@@ -1,8 +1,3 @@
-<?php
-session_start();
-include("includes/connection.php");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,22 +9,22 @@ include("includes/connection.php");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>mybebofacespacebook</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,7 +48,7 @@ include("includes/connection.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">MyBeboSpaceBook</a>
+                <a class="navbar-brand" href="index.html">mybebofacespacebook</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -282,7 +277,7 @@ include("includes/connection.php");
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
+                            <a href="../home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
                         </li>
                         <li>
                             <a href="Pages/blog.php"><i class="fa fa-bar-chart-o fa-fw"></i> Blog</a>
@@ -297,10 +292,10 @@ include("includes/connection.php");
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="Pages/circles.php">My circles</a>
+                                    <a href="circles.php">My circles</a>
                                 </li>
                                 <li>
-                                    <a href="Pages/circle_group.php">Circle chat</a>
+                                    <a href="circle_group.php">Circle chat</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Circle 3</a>
@@ -321,237 +316,167 @@ include("includes/connection.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Profile</h1>
+                    <h1 class="page-header">Create new circle</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-
-
-
-
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> All About Me
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                      <i class="fa fa-gear"></i> <span class="caret"></span>
-                                  </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Edit profile info</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                <div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+                            <h5>My Circles</h5>
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <div class="col-lg-3">
+                              <a href="circle_group.php">
+                                  <!-- <button> -->
+                                      <img src="../circle_assets/circle_default.png" alt="error" class="img-circle" style="width:50px;height:50px;"/>
+                                    <!-- </button> -->
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Circle 1</strong>
+                                        <!-- </div> -->
+                              </a>
                             </div>
+                            <div class="col-lg-3">
+                              <a href="circle_group.php">
+                                      <img src="../circle_assets/circle_default.png" alt="User Avatar" class="img-circle" style="width:50px;height:50px;"/>
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Circle 2</strong>
+                                        <!-- </div> -->
+                              </a>
+                            </div>
+                            <div class="col-lg-3">
+                              <a href="circle_group.php">
+                                      <img src="../circle_assets/circle_default.png" alt="User Avatar" class="img-circle" style="width:50px;height:50px;"/>
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Circle 3</strong>
+                                        <!-- </div> -->
+                              </a>
+                            </div>
+                          </div>
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                          <?php
-
-        $user = $_SESSION['user_email'];
-        $get_user = "SELECT * FROM user WHERE user_email = '$user'";
-        $run_user = mysqli_query($con, $get_user);
-        $row = mysqli_fetch_array($run_user);
-
-        $user_id = $row['user_id'];
-        $user_firstName = $row['user_firstName'];
-        $user_lastName = $row['user_lastName'];
-        $user_pass = $row['user_password'];
-        $user_email = $row['user_email'];
-        $user_image = $row['user_pic'];
-        $user_birthday = $row['user_DoB'];
-        echo "
-        <center>
-        <p><img id='userImg' src='user/user_images/$user_image' width='200' height='200'/></p>
-        <p><strong>Name: </strong>$user_firstName  $user_lastName</p>
-        <p><strong>Birthday: </strong>$user_birthday</p>
-        </center>
-        ";
-         ?>
-                        </div>
-                        <!-- /.panel-body -->
                     </div>
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-user fa-fw"></i> Friends
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 1
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 2
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 3
-                                    </span>
-                                </a>
-
-                            </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">See All Friends</a>
-                        </div>
-                        <!-- /.panel-body -->
+                    <div class="col-lg-6">
+                  <h5>Create new circle:</h5>
+                  <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
                     </div>
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Chat
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Available
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-clock-o fa-fw"></i> Away
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                    <!--  -->
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search friends...">
                                 <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                             </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
-                </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <form action="form_action.asp">
+                              <select name="cars" multiple>
+                                <!-- <option value="volvo">Volvo</option>
+                                <option value="saab">Saab</option>
+                                <option value="opel">Opel</option>
+                                <option value="audi">Audi</option> -->
+                                <?php $friends = array("John Smith", "Dave Smith", "Jen Smith", "Hannah Smith", "Bill Smith"); ?>
+                                <?php foreach ($friends as $value) { ?>
+                                  <!-- <li>Menu Item <?php echo $i; ?></li> -->
+                                  <option value="$value">
+                                    <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                    <?php echo $value; ?>
+                                  </option>
+                                  <?php } ?>
+                              </select>
+                            </form>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <!--  -->
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                          </div>
+                          <!-- end of friend box -->
+                          <div class ="pull-right">
+                            <button><h4>Create circle</h4></button>
+                          </div>
+                  </div>
+              </div>
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="vendor/raphael/raphael.min.js"></script>
-    <script src="vendor/morrisjs/morris.min.js"></script>
-    <script src="data/morris-data.js"></script>
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
