@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("includes/connection.php");
+include("../includes/connection.php");
+include("../functions/new_post.php");
 ?>
 
 <!DOCTYPE html>
@@ -17,19 +18,19 @@ include("includes/connection.php");
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -282,7 +283,7 @@ include("includes/connection.php");
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
+                            <a href="../home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
                         </li>
                         <li>
                             <a href="Pages/blog.php"><i class="fa fa-bar-chart-o fa-fw"></i> Blog</a>
@@ -321,7 +322,7 @@ include("includes/connection.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Profile</h1>
+                    <h1 class="page-header">Blog</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -334,24 +335,10 @@ include("includes/connection.php");
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> All About Me
-                            <div class="pull-right">
-                                <div class="btn-group">
-                                  <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                      <i class="fa fa-gear"></i> <span class="caret"></span>
-                                  </button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                        <li><a href="#">Edit profile info</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li><a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <i class="fa fa-edit fa-fw"></i> Add a new post
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -369,167 +356,80 @@ include("includes/connection.php");
         $user_email = $row['user_email'];
         $user_image = $row['user_pic'];
         $user_birthday = $row['user_DoB'];
-        echo "
-        <center>
-        <p><img id='userImg' src='user/user_images/$user_image' width='200' height='200'/></p>
-        <p><strong>Name: </strong>$user_firstName  $user_lastName</p>
-        <p><strong>Birthday: </strong>$user_birthday</p>
-        </center>
-        ";
          ?>
+         <form method="post">
+         <div class="form-group" id = "post_form" method="post">
+             <label> Title</label>
+                 <label>Text Input with Placeholder</label>
+                 <input id="post_title" class="form-control" placeholder="Enter Title" style="margin-bottom:10px;">
+                <label>Post body</label>
+             <textarea id="post_body" class="form-control" rows="3"></textarea>
+         </div>
+         <button name="postIt" type="submit" class="btn btn-default" style = "float: right">Post</button>
+       </form>
                         </div>
-                        <!-- /.panel-body -->
-                    </div>
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-user fa-fw"></i> Friends
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 1
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 2
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 3
-                                    </span>
-                                </a>
 
-                            </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">See All Friends</a>
-                        </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Chat
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Available
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-clock-o fa-fw"></i> Away
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
                 </div>
-                <!-- /.col-lg-4 -->
+
             </div>
             <!-- /.row -->
+
+            <div class="chat-panel panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-comments fa-fw"></i> Posts
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix">
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">Post Title</strong>
+                                    <small class="text-muted">
+                                        <i class="fa fa-clock-o fa-fw"></i> 07-02-2017
+                                    </small>
+                                        <div class="pull-right btn-group">
+                                          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                              <i class="fa fa-gear"></i> <span class="caret"></span>
+                                          </button>
+                                            <ul class="dropdown-menu pull-right" role="menu">
+                                                <li><a href="#"><i class="fa fa-edit fa-fw"></i> Delete post</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </div>
+                                <p> Example post 1. Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah</p>
+                            </div>
+                        </li>
+
+                        <li class="left clearfix">
+                            <div class="chat-body clearfix">
+                                <div class="header">
+                                  <strong class="primary-font">Post Title</strong>
+                                    <small class="text-muted">
+                                        <i class="fa fa-clock-o fa-fw"></i> 06-02-2017
+                                      </small>
+                                      <div class="pull-right btn-group">
+                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                            <i class="fa fa-gear"></i> <span class="caret"></span>
+                                        </button>
+                                          <ul class="dropdown-menu pull-right" role="menu">
+                                              <li><a href="#"><i class="fa fa-edit fa-fw"></i> Delete post</a>
+                                              </li>
+                                          </ul>
+                                      </div>
+                                </div>
+                                <p>Example post 2. Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah</p>
+                              </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.panel-body -->
+                <!-- /.panel-footer -->
+            </div>
+
         </div>
         <!-- /#page-wrapper -->
 
@@ -537,21 +437,21 @@ include("includes/connection.php");
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="vendor/raphael/raphael.min.js"></script>
-    <script src="vendor/morrisjs/morris.min.js"></script>
-    <script src="data/morris-data.js"></script>
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
