@@ -1,6 +1,19 @@
 <?php
 session_start();
 include("includes/connection.php");
+
+$logged_email = $_SESSION['user_email'];
+
+$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
+$run_userID = mysqli_query($con, $get_userID);
+$row = mysqli_fetch_array($run_userID);
+
+$sessionUserID = $row['user_id'];
+
+if(isset($_GET['userid'])) {
+  $userID = $_GET['userid'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -258,7 +271,7 @@ include("includes/connection.php");
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -282,10 +295,18 @@ include("includes/connection.php");
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
+                          <?php
+                          echo "
+                            <a href='home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
+                            ";
+                            ?>
                         </li>
                         <li>
-                            <a href="Pages/blog.php"><i class="fa fa-bar-chart-o fa-fw"></i> Blog</a>
+                          <?php
+                          echo "
+                            <a href='Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
+                            ";
+                            ?>
                         </li>
                         <li>
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
@@ -358,7 +379,7 @@ include("includes/connection.php");
                           <?php
 
         $user = $_SESSION['user_email'];
-        $get_user = "SELECT * FROM user WHERE user_email = '$user'";
+        $get_user = "SELECT * FROM user WHERE user_id = '$userID'";
         $run_user = mysqli_query($con, $get_user);
         $row = mysqli_fetch_array($run_user);
 
@@ -390,18 +411,34 @@ include("includes/connection.php");
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="list-group">
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 1
+
+                              <?php
+
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$userID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$userID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
+
+                              while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
+
+                                $thisFriendID = $rowPosts['user_id'];
+                                $thisFirstName = $rowPosts['user_firstName'];
+                                $thisLastName = $rowPosts['user_lastName'];
+
+                              echo "
+                                <a href='home.php?userid=$thisFriendID' class='list-group-item'>
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
                                     </span>
                                 </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 2
-                                    </span>
-                                </a>
-                                <a href="#" class="list-group-item">
-                                    <i class="fa fa-user fa-fw"></i> Friend 3
-                                    </span>
-                                </a>
+                                ";
+                              };
+
+                                ?>
 
                             </div>
                             <!-- /.list-group -->
