@@ -10,8 +10,12 @@ if(isset($_POST['login'])) {
   $check = mysqli_num_rows($run_user);
 
   if($check == 1) {
+
+      $rowUsers = mysqli_fetch_array($run_user);
+      $theID = $rowUsers['user_id'];
+
     $_SESSION['user_email']=$email;
-    echo "<script>window.open('home.php', '_self')</script>";
+    echo "<script>window.open('home.php?userid=$theID', '_self')</script>";
   } else {
     echo "<script>alert('Email or password is incorrect!!!')</script>";
   }
