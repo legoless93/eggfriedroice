@@ -2,6 +2,21 @@
 session_start();
 include("../includes/connection.php");
 include("../functions/new_post.php");
+include("../functions/delete_post.php");
+// include("../functions/retrieve_posts.php");
+
+$logged_email = $_SESSION['user_email'];
+
+$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
+$run_userID = mysqli_query($con, $get_userID);
+$row = mysqli_fetch_array($run_userID);
+
+$sessionUserID = $row['user_id'];
+
+if(isset($_GET['userid'])) {
+  $userID = $_GET['userid'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -259,7 +274,7 @@ include("../functions/new_post.php");
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="../functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -283,10 +298,18 @@ include("../functions/new_post.php");
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="../home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
+                          <?php
+                          echo "
+                            <a href='../home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
+                            ";
+                            ?>
                         </li>
                         <li>
-                            <a href="Pages/blog.php"><i class="fa fa-bar-chart-o fa-fw"></i> Blog</a>
+                          <?php
+                          echo "
+                            <a href='../Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
+                            ";
+                            ?>
                         </li>
                         <li>
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
@@ -342,28 +365,13 @@ include("../functions/new_post.php");
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                          <?php
-
-        $user = $_SESSION['user_email'];
-        $get_user = "SELECT * FROM user WHERE user_email = '$user'";
-        $run_user = mysqli_query($con, $get_user);
-        $row = mysqli_fetch_array($run_user);
-
-        $user_id = $row['user_id'];
-        $user_firstName = $row['user_firstName'];
-        $user_lastName = $row['user_lastName'];
-        $user_pass = $row['user_password'];
-        $user_email = $row['user_email'];
-        $user_image = $row['user_pic'];
-        $user_birthday = $row['user_DoB'];
-         ?>
          <form method="post">
-         <div class="form-group" id = "post_form" method="post">
+         <div class="form-group" id="post_form">
              <label> Title</label>
                  <label>Text Input with Placeholder</label>
-                 <input id="post_title" class="form-control" placeholder="Enter Title" style="margin-bottom:10px;">
+                 <input method="post" name="post_title" class="form-control" placeholder="Enter Title" style="margin-bottom:10px;">
                 <label>Post body</label>
-             <textarea id="post_body" class="form-control" rows="3"></textarea>
+             <textarea method="post" name="post_body" class="form-control" rows="3"></textarea>
          </div>
          <button name="postIt" type="submit" class="btn btn-default" style = "float: right">Post</button>
        </form>
@@ -382,47 +390,46 @@ include("../functions/new_post.php");
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <ul class="chat">
-                        <li class="left clearfix">
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                    <strong class="primary-font">Post Title</strong>
-                                    <small class="text-muted">
-                                        <i class="fa fa-clock-o fa-fw"></i> 07-02-2017
+
+                      <?php
+
+                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
+                      $run_myPosts = mysqli_query($con, $get_myPosts);
+                      $checkPosts = mysqli_num_rows($run_myPosts);
+
+                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
+
+                        $thisPostID = $rowPosts['post_id'];
+                        $thisTitle = $rowPosts['post_title'];
+                        $thisBody = $rowPosts['post_body'];
+                        $thisDay = $rowPosts['post_day'];
+                        $thisMonth = $rowPosts['post_month'];
+                        $thisYear = $rowPosts['post_year'];
+                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
+
+                        echo "<li class=\"left clearfix\">
+                            <div class=\"chat-body clearfix\">
+                                <div class=\"header\">
+                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
+                                    <small class=\"text-muted\">
+                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
                                     </small>
-                                        <div class="pull-right btn-group">
-                                          <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                              <i class="fa fa-gear"></i> <span class="caret"></span>
+                                        <div class=\"pull-right btn-group\">
+                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
+                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
                                           </button>
-                                            <ul class="dropdown-menu pull-right" role="menu">
-                                                <li><a href="#"><i class="fa fa-edit fa-fw"></i> Delete post</a>
+                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
+                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
                                                 </li>
                                             </ul>
                                         </div>
                                 </div>
-                                <p> Example post 1. Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah</p>
+                                <p> $thisBody</p>
                             </div>
-                        </li>
+                        </li>";
 
-                        <li class="left clearfix">
-                            <div class="chat-body clearfix">
-                                <div class="header">
-                                  <strong class="primary-font">Post Title</strong>
-                                    <small class="text-muted">
-                                        <i class="fa fa-clock-o fa-fw"></i> 06-02-2017
-                                      </small>
-                                      <div class="pull-right btn-group">
-                                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
-                                            <i class="fa fa-gear"></i> <span class="caret"></span>
-                                        </button>
-                                          <ul class="dropdown-menu pull-right" role="menu">
-                                              <li><a href="#"><i class="fa fa-edit fa-fw"></i> Delete post</a>
-                                              </li>
-                                          </ul>
-                                      </div>
-                                </div>
-                                <p>Example post 2. Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah Blah blah blah</p>
-                              </div>
-                        </li>
+                      };
+                      ?>
 
                     </ul>
                 </div>
