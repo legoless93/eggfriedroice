@@ -1,7 +1,32 @@
+<?php
+session_start();
+include("../includes/connection.php");
+include("../functions/new_circle.php");
+
+$logged_email = $_SESSION['user_email'];
+
+$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
+$run_userID = mysqli_query($con, $get_userID);
+$row = mysqli_fetch_array($run_userID);
+
+$sessionUserID = $row['user_id'];
+
+if(isset($_GET['userid'])) {
+  $userID = $_GET['userid'];
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+<style>
+ul#friends li {
+  display: inline-flex;
+  padding: 10px;
+}
+</style>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -319,141 +344,100 @@
                     <h1 class="page-header">Create new circle</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-                <div>
                   <div class="row">
+
+
                     <div class="col-lg-6">
                       <div class="chat-panel panel panel-default">
+                        <!-- HEADING -->
                           <div class="panel-heading">
                             <h5>My Circles</h5>
                           </div>
                           <!--  -->
                           <div class="panel-body">
-                            <div class="col-lg-3">
-                              <a href="circle_group.php">
-                                  <!-- <button> -->
-                                      <img src="../circle_assets/circle_default.png" alt="error" class="img-circle" style="width:50px;height:50px;"/>
-                                    <!-- </button> -->
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Circle 1</strong>
-                                        <!-- </div> -->
-                              </a>
-                            </div>
-                            <div class="col-lg-3">
-                              <a href="circle_group.php">
-                                      <img src="../circle_assets/circle_default.png" alt="User Avatar" class="img-circle" style="width:50px;height:50px;"/>
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Circle 2</strong>
-                                        <!-- </div> -->
-                              </a>
-                            </div>
-                            <div class="col-lg-3">
-                              <a href="circle_group.php">
-                                      <img src="../circle_assets/circle_default.png" alt="User Avatar" class="img-circle" style="width:50px;height:50px;"/>
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Circle 3</strong>
-                                        <!-- </div> -->
-                              </a>
-                            </div>
+                            <div class="list-group">
+                              <ul id="friends">
+                            <!-- insert from database -->
+                            <?php
+                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
+                            // $get_myCircles = "SELECT * FROM circles WHERE creator_id = '$userID' ORDER BY circle_id DESC";
+                            $run_myCircles = mysqli_query($con, $get_myCircles);
+                            $checkCircles = mysqli_num_rows($run_myCircles);
+
+                            while ($rowCircles = mysqli_fetch_array($run_myCircles)) {
+
+                              // to delete circle later on
+                              $thisCircleID = $rowCircles['circle_id'];
+                              $thisTitle = $rowCircles['circle_name'];
+
+                              echo "<li>
+                                <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
+                                  <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
+                                  <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
+                                </a>
+                              </li>";
+
+                            }
+                            ?>
+                            <!-- insert from database ENDS -->
+                          </ul>
                           </div>
                         </div>
+                      </div>
                     </div>
                     <div class="col-lg-6">
                   <h5>Create new circle:</h5>
-                  <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
+                  <form method="post">
+                  <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
                     </div>
                     <!--  -->
                     <div class="col-lg-6">
                       <div class="chat-panel panel panel-default">
                           <div class="panel-heading">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search friends...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                            </div>
+
                           </div>
                           <!--  -->
                           <div class="panel-body">
-                            <form action="form_action.asp">
-                              <select name="cars" multiple>
-                                <!-- <option value="volvo">Volvo</option>
-                                <option value="saab">Saab</option>
-                                <option value="opel">Opel</option>
-                                <option value="audi">Audi</option> -->
-                                <?php $friends = array("John Smith", "Dave Smith", "Jen Smith", "Hannah Smith", "Bill Smith"); ?>
-                                <?php foreach ($friends as $value) { ?>
-                                  <!-- <li>Menu Item <?php echo $i; ?></li> -->
-                                  <option value="$value">
-                                    <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    <?php echo $value; ?>
-                                  </option>
-                                  <?php } ?>
-                              </select>
+                            <!-- paste here -->
+                            <div class="list-group">
+                              <!-- <form method="post"> -->
+                              <?php
+
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$userID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$userID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
+
+                              while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
+
+                                $thisFriendID = $rowPosts['user_id'];
+                                $thisFirstName = $rowPosts['user_firstName'];
+                                $thisLastName = $rowPosts['user_lastName'];
+                                $thisPhoto = $rowPosts['user_pic'];
+
+                              echo "
+                                <input type='checkbox' name='chk_group[]' value=$thisFriendID>
+                                  <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
+                                  $thisFirstName $thisLastName
+                                    </span>
+                                ";
+                              };
+
+                                ?>
+                            <!-- </form> -->
+                            </div>
+                              <div class ="pull-right">
+                                <button name="createCircle" type="submit"><h4>Create circle</h4></button>
+                              </div>
                             </form>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
 
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Jack Sparrow</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Jack Sparrow</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Jack Sparrow</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Jack Sparrow</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <!--  -->
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Bhaumik Patel</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Bhaumik Patel</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Bhaumik Patel</strong>
-                                        <!-- </div> -->
-                            </div>
-                            <div class="col-lg-3">
-                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-
-                                      <!-- <div class="header"> -->
-                                          <strong class="primary-font">Bhaumik Patel</strong>
-                                        <!-- </div> -->
-                            </div>
-                          </div>
                           <!-- end of friend box -->
-                          <div class ="pull-right">
-                            <button><h4>Create circle</h4></button>
-                          </div>
+
                   </div>
               </div>
         </div>
