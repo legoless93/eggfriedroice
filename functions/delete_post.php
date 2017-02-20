@@ -9,8 +9,8 @@ if(isset($_GET['post_id'])) {
     $run_delete = mysqli_query($con, $delete_post);
 
     if($run_delete) {
-        echo "<script>alert('Post deleted!!!')</script>";
-        echo "<script>window.open('../Pages/blog.php', '_self')</script>";
+        //echo "<script>alert('Post deleted!!!')</script>";
+        echo "<script>window.open('../Pages/blog.php','_self')</script>";
     }
 
 }
