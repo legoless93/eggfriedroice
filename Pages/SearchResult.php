@@ -1,9 +1,16 @@
-<?php
+ <?php
+
 session_start();
 include("../includes/connection.php");
-include("../functions/new_post.php");
-include("../functions/delete_post.php");
-// include("../functions/retrieve_posts.php");
+// if(isset($_GET['thisFriend'])){
+
+
+// $query = $_GET['query'];
+
+	// echo "<script>alert('$query')</script>";
+
+
+
 
 $logged_email = $_SESSION['user_email'];
 
@@ -13,15 +20,22 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-if(isset($_GET['userid'])) {
-  $userID = $_GET['userid'];
-}
+  
+  
 
-include("../functions/checkPrivacy.php");
+?> 
 
-?>
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>Search Result</title>
+</head>
+<body>
 
+<h1>search results mate</h1>
 
+</body>
+</html> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -349,109 +363,211 @@ include("../functions/checkPrivacy.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blog</h1>
+                    <h1 class="page-header">Search Results</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-
-
-
-
             </div>
-<!-- /.row -->
-            <?php
-
-            if($userID == $sessionUserID) {
-              echo "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-edit fa-fw'></i> Add a new post
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class='panel-body'>
-         <form method='post'>
-         <div class='form-group' id='post_form'>
-             <label> Title</label>
-                 <label>Text Input with Placeholder</label>
-                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
-                <label>Post body</label>
-             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
-         </div>
-         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
-       </form>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-            ";
-          };
-
-            ?>
-    <!-- /.row -->
 
 
+            
 
-            <!-- Where POSTS begin -->
+        
+            <!-- /.row -->
+            <!-- friends list CHANGES here -->
             <div class="chat-panel panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-comments fa-fw"></i> Posts
+
+<!--                 <?php
+
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
+								
+								echo "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)"
+
+                              ?> -->
+
+                     <i class="fa fa-user fa-fw"></i>Search Results
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <ul class="chat">
+                    <ul class="list-group">
 
-                      <?php
+                              <?php
 
-                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
-                      $run_myPosts = mysqli_query($con, $get_myPosts);
-                      $checkPosts = mysqli_num_rows($run_myPosts);
+                              // $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                              //                     JOIN user ON friendshipBridge.user_id = user.user_id
+                              //                     WHERE friendshipBridge.friend_id = '$sessionUserID'
+                              //                     UNION ALL
+                              //                     SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                              //                     JOIN user ON friendshipBridge.friend_id = user.user_id
+                              //                     WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              // $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              // $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
 
-                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
+                              // add another query here ??
+                              //
 
-                        $thisPostID = $rowPosts['post_id'];
-                        $thisTitle = $rowPosts['post_title'];
-                        $thisBody = $rowPosts['post_body'];
-                        $thisDay = $rowPosts['post_day'];
-                        $thisMonth = $rowPosts['post_month'];
-                        $thisYear = $rowPosts['post_year'];
-                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
+                               $get_myFriends5 = "SELECT user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                  UNION ALL
+                                                  SELECT user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
 
-                        echo "<li class=\"left clearfix\">
-                            <div class=\"chat-body clearfix\">
-                                <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
-                                    <small class=\"text-muted\">
-                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
-                                    </small>
-                                    ";
-                                    if($userID == $sessionUserID) {
-                                    echo "
-                                        <div class=\"pull-right btn-group\">
-                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
-                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
-                                          </button>
-                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
-                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        ";
-                                      };
-                                      echo "
-                                </div>
-                                <p> $thisBody</p>
-                            </div>
-                        </li>";
+                              $friends_user_id_array = array();
 
-                      };
-                      ?>
+                                while($row = mysqli_fetch_array($run_myFriends5)) {
 
+                                      // $friends_user_id_array[] = implode(" ", $row['user_id']);
+
+                                      $friends_user_id_array[] = $row['user_id'];
+                                }
+
+                                ////////////////
+
+                              $query = $_GET['query'];
+
+                              $min_length = 3;
+
+
+                              if(strlen($query) >= $min_length){
+
+                              	 $query = htmlspecialchars($query); 
+        							// changes characters used in html to their equivalents, for example: < to &gt;
+         
+       							 $query = mysqli_real_escape_string($con,$query);
+
+       							 // makes sure nobody uses SQL injection ??? 
+
+       							 // $results_of_query = "SELECT user_id, user_firstName, user_lastName FROM user WHERE user_firstName OR user_lastName LIKE  '%$query%'"; // use this instead ? '%".$query."%'
+
+       							 $results_of_query = "SELECT * FROM user WHERE CONCAT(user_firstName, ' ', user_lastName) LIKE '%".$query."%'";
+       							 // performance may be an issue 
+
+       							 $run_result_of_query = mysqli_query($con, $results_of_query);
+
+       							 $check_result_of_query = mysqli_num_rows($run_result_of_query); // gives the number of rows ie searhc results
+
+
+       							 if ($check_result_of_query > 0){
+
+       							 	while ( $rowPosts = mysqli_fetch_array($run_result_of_query)) {
+       							 		
+
+       							 		$thisFriendID = $rowPosts['user_id'];
+                                		$thisFirstName = $rowPosts['user_firstName'];
+                                		$thisLastName = $rowPosts['user_lastName'];
+
+
+
+                                		if ($thisFriendID == $sessionUserID){
+
+                                			// if the result is you
+
+                                			echo "
+                                			<li class='list-group-item clearfix'>
+                                			<a href='../home.php?userid=$thisFriendID'>
+
+                                   
+                                   			<div class='d-flex w-100 justify-content-between'>
+                                   	 		<img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        	<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    		</div>
+                                    		<p class='mb-1'>Display timestamp here or number of friends?</p>
+                                			</a>
+                                			";
+
+
+
+                                		} else if ((in_array($thisFriendID, $friends_user_id_array))){
+
+                                			// if the results are already in your friends list 
+
+                                			echo "
+                                			<li class='list-group-item clearfix'>
+                                				<a href='../home.php?userid=$thisFriendID'>
+
+                                   
+                                   				<div class='d-flex w-100 justify-content-between'>
+                                   	 			<img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    			</div>
+                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
+                                				</a>
+                                			";
+                                			echo "
+                                				<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
+
+                                        		<span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
+     
+                                				</a>
+                                			</li>
+                                 			";
+
+                                		} else {
+
+                                			// they are not your friend 
+
+                                			echo "
+                                			<li class='list-group-item clearfix'>
+                                				<a href='../home.php?userid=$thisFriendID'>
+
+                                   
+                                   				<div class='d-flex w-100 justify-content-between'>
+                                   	 			<img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    			</div>
+                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
+                                				</a>
+                                			";
+                                				echo "
+                                			<a href=\"../functions/add_friends.php?thisFriend=$thisFriendID\" title='Send Friend Request'>
+
+                                        		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
+     
+                                			</a>
+                                			</li>
+                                 			";
+
+
+                                		}
+
+
+       							 	}
+
+       							 } else {
+
+       							 	echo "<script>alert('No matching results')</script>";
+       							 }
+
+                              } else { 
+
+                              	echo "<script>alert('The minimum search term is $min_length')</script>";
+
+                              }
+
+                            
+
+                                ?>
+
+                             <!--    echo "
+                                <a href='home.php?userid=$thisFriendID' class='list-group-item '>
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName 
+                                    </span>
+                                </a>
+                                "; -->
                     </ul>
                 </div>
                 <!-- /.panel-body -->

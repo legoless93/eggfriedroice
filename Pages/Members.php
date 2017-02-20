@@ -1,8 +1,8 @@
 <?php
 session_start();
 include("../includes/connection.php");
-include("../functions/new_post.php");
-include("../functions/delete_post.php");
+// include("../functions/new_post.php");
+// include("../functions/delete_post.php");
 // include("../functions/retrieve_posts.php");
 
 $logged_email = $_SESSION['user_email'];
@@ -13,14 +13,30 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-if(isset($_GET['userid'])) {
-  $userID = $_GET['userid'];
-}
+// echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
-include("../functions/checkPrivacy.php");
+// if(isset($_GET['userid'])) {
+//   $userID = $_GET['userid'];
+// }
+
+// if(isset($_GET[''])){
+// }
 
 ?>
 
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>TEST</title>
+</head>
+<body>
+
+<h1>HEY THERE u fuck  </h1>
+
+
+</body>
+</html> -->
 
 
 <!DOCTYPE html>
@@ -349,109 +365,125 @@ include("../functions/checkPrivacy.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blog</h1>
+                    <h1 class="page-header">Members</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-
-
-
-
             </div>
-<!-- /.row -->
-            <?php
-
-            if($userID == $sessionUserID) {
-              echo "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-edit fa-fw'></i> Add a new post
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class='panel-body'>
-         <form method='post'>
-         <div class='form-group' id='post_form'>
-             <label> Title</label>
-                 <label>Text Input with Placeholder</label>
-                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
-                <label>Post body</label>
-             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
-         </div>
-         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
-       </form>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-            ";
-          };
-
-            ?>
-    <!-- /.row -->
-
-
-
-            <!-- Where POSTS begin -->
+           
+            <!-- /.row -->
+            <!-- friends list CHANGES here -->
             <div class="chat-panel panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-comments fa-fw"></i> Posts
+
+               
+								
+								<i class='fa fa-user fa-fw'></i>Members 
+
+                    <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <ul class="chat">
+                    <ul class="list-group">
 
-                      <?php
+                              <?php
 
-                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
-                      $run_myPosts = mysqli_query($con, $get_myPosts);
-                      $checkPosts = mysqli_num_rows($run_myPosts);
+                              $get_myFriends5 = "SELECT user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                  UNION ALL
+                                                  SELECT user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
 
-                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
+                              $friends_user_id_array = array();
 
-                        $thisPostID = $rowPosts['post_id'];
-                        $thisTitle = $rowPosts['post_title'];
-                        $thisBody = $rowPosts['post_body'];
-                        $thisDay = $rowPosts['post_day'];
-                        $thisMonth = $rowPosts['post_month'];
-                        $thisYear = $rowPosts['post_year'];
-                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
+                                while($row = mysqli_fetch_array($run_myFriends5)) {
 
-                        echo "<li class=\"left clearfix\">
-                            <div class=\"chat-body clearfix\">
-                                <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
-                                    <small class=\"text-muted\">
-                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
-                                    </small>
-                                    ";
-                                    if($userID == $sessionUserID) {
-                                    echo "
-                                        <div class=\"pull-right btn-group\">
-                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
-                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
-                                          </button>
-                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
-                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        ";
-                                      };
-                                      echo "
-                                </div>
-                                <p> $thisBody</p>
-                            </div>
-                        </li>";
+                                      // $friends_user_id_array[] = implode(" ", $row['user_id']);
 
-                      };
-                      ?>
+                                      $friends_user_id_array[] = $row['user_id'];
+                                }
 
+
+                                //this checks the user_id's in the array
+                                // echo "<script type='text/javascript'> alert('".json_encode($friends_user_id_array)."') </script>";
+
+
+
+                              //////////////////////////////////////////
+
+                              $get_members = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM user";
+                               
+
+                                                  
+                              $run_getMembers = mysqli_query($con, $get_members);
+                              $check_members = mysqli_num_rows($run_getMembers); // this is the number of friends
+
+                              // add another query here ??
+                              // query to see if get status, first name and last name depending on the
+                              // OR CREATE AN ARRA OF MEMBERS and compare  
+
+                              while ($rowPosts = mysqli_fetch_array($run_getMembers)) {
+
+                              	
+
+                                $thisFriendID = $rowPosts['user_id'];
+                                $thisFirstName = $rowPosts['user_firstName'];
+                                $thisLastName = $rowPosts['user_lastName'];
+                                // $thisRelID = $rowPosts['']
+
+                                // $friend_ids = array($rowPosts['user_id'] );
+
+                                if($thisFriendID != $sessionUserID ) {
+ 								echo "
+                                <li class='list-group-item clearfix'>
+                                <a href='../home.php?userid=$thisFriendID'>
+
+                                   
+                                   	<div class='d-flex w-100 justify-content-between'>
+                                   	 <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                </a>
+                                "; 
+                                // ( $thisFirstName == 'Ping' || $thisFirstName == 'ghita')
+                                if (!(in_array($thisFriendID, $friends_user_id_array))) {
+                                    // if member is not in your friends list
+                                	echo "
+                                <a href=\"../functions/add_friends.php?thisFriend=$thisFriendID\" title='Send Friend Request'>
+
+                                        <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
+     
+                                </a>
+                                </li>
+                                 ";} else {
+
+                                 	echo "
+                                	<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
+
+                                        <span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
+     
+                                	</a>
+                                	</li>
+                                 ";
+                                 }
+                             }
+                              };
+
+
+                                ?>
+
+                             <!--    echo "
+                                <a href='home.php?userid=$thisFriendID' class='list-group-item '>
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName 
+                                    </span>
+                                </a>
+                                "; -->
                     </ul>
                 </div>
                 <!-- /.panel-body -->
