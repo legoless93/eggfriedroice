@@ -1,0 +1,71 @@
+<select name='' multiple>
+
+<?php
+
+$get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                  JOIN user ON friendshipBridge.user_id = user.user_id
+                  WHERE friendshipBridge.friend_id = '$userID'
+                  UNION ALL
+                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                  WHERE friendshipBridge.user_id = '$userID'";
+$run_myFriends5 = mysqli_query($con, $get_myFriends5);
+$check_myFriends5 = mysqli_num_rows($run_myFriends5);
+
+while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
+
+$thisFriendID = $rowPosts['user_id'];
+$thisFirstName = $rowPosts['user_firstName'];
+$thisLastName = $rowPosts['user_lastName'];
+
+echo "
+<a href='home.php?userid=$thisFriendID' class='list-group-item'>
+    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
+    </span>
+</a>
+<option value=$thisFriendID>$thisFirstName $thisLastName</option>
+";
+};
+
+?>
+
+</select>
+
+// SEARCH BAR
+<div class="input-group custom-search-form">
+    <input type="text" class="form-control" placeholder="Search friends...">
+    <span class="input-group-btn">
+    <button class="btn btn-default" type="button">
+        <i class="fa fa-search"></i>
+    </button>
+</span>
+</div>
+
+// echo
+echo "<div class='col-lg-3'>
+  <a href='circle_group.php'>
+      <!-- <button> -->
+          <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:50px;height:50px;'/>
+        <!-- </button> -->
+          <!-- <div class='header'> -->
+              <strong class='primary-font'>$thisTitle</strong>
+            <!-- </div> -->
+  </a>
+</div>";
+
+// DEFAULT CHAT
+<li class="right clearfix">
+    <span class="chat-img pull-right">
+        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+    </span>
+    <div class="chat-body clearfix">
+        <div class="header">
+            <small class=" text-muted">
+                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
+            <strong class="pull-right primary-font">Bhaumik Patel</strong>
+        </div>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
+        </p>
+    </div>
+</li>

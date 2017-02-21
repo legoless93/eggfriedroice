@@ -1,9 +1,8 @@
+
 <?php
 session_start();
-include("includes/connection.php");
-
-// include("../functions/searching.php");
-// include("../functions/delete_post.php");
+include("../includes/connection.php");
+include("../functions/new_circle.php");
 
 $logged_email = $_SESSION['user_email'];
 
@@ -24,28 +23,36 @@ if(isset($_GET['userid'])) {
 
 <head>
 
+<style>
+ul#friends li {
+  display: inline-flex;
+  padding: 10px;
+}
+</style>
+
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>mybebofacespacebook</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -69,7 +76,7 @@ if(isset($_GET['userid'])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">MyBeboSpaceBook</a>
+                <a class="navbar-brand" href="index.html">mybebofacespacebook</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -274,7 +281,7 @@ if(isset($_GET['userid'])) {
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -287,77 +294,36 @@ if(isset($_GET['userid'])) {
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
-                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                               
-
-                                
-                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
-                                 -->
-                            <input type="submit" value="Search" class='btn btn-default'/>
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </span>
-
-                            
-                            </form> 
-                            
-                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
-                                <input class="search-query" placeholder="Search" type="text" />
-                            </form> -->
-
+                            </div>
                             <!-- /input-group -->
                         </li>
                         <li>
-                          <?php
-                          echo "
-                            <a href='home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
-                            ";
-                            ?>
+                            <a href="../home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
                         </li>
                         <li>
-                          <?php
-                          echo "
-                            <a href='Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
-                            ";
-                            ?>
+                            <a href="Pages/blog.php"><i class="fa fa-bar-chart-o fa-fw"></i> Blog</a>
                         </li>
                         <li>
-
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
                         </li>
                         <li>
-                        <!-- CHANGES HERE ** -->
-                        <?php
-                          echo "
-                            <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
-                            ";
-                            ?>
-                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
-                        </li>
-                        <li>
-                        <!-- CHANGES HERE ** -->
-                        <?php
-                          echo "
-                            <a href='Pages/Members.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Members</a>
-                            ";
-                            ?>
-                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-
-                                    <!-- <a href="Pages/circles.php">My circles</a> -->
-                                    <?php
-                                    echo "
-                                      <a href='Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> My circles</a>
-                                      ";
-                                      ?>
-
+                                    <a href="circles.php">My circles</a>
                                 </li>
                                 <li>
-                                    <a href="Pages/circle_group.php">Circle chat</a>
+                                    <a href="circle_group.php">Circle chat</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Circle 3</a>
@@ -378,97 +344,78 @@ if(isset($_GET['userid'])) {
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Profile</h1>
+                    <h1 class="page-header">Create new circle</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
+
+                  <div class="row">
 
 
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                        <!-- HEADING -->
 
+                          <div class="panel-heading">
+                            <h5>My Circles</h5>
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
 
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> All About Me
-                            <?php
-
-                            if($userID == $sessionUserID) {
-                              echo "
-                              <div class='pull-right'>
-                                  <div class='btn-group'>
-                                    <button type='button' class='btn btn-primary btn-sm dropdown-toggle' data-toggle='dropdown'>
-                                        <i class='fa fa-gear'></i> <span class='caret'></span>
-                                    </button>
-                                      <ul class='dropdown-menu pull-right' role='menu'>
-                                          <li><a href='Pages/editProfile.php'>Edit profile info</a>
-                                          </li>
-                                          <li class='divider'></li>
-                                          <li><a href='#'>Separated link</a>
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </div>
-                            ";
-
-                          }
-
-                             ?>
-
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                          <?php
-
-        $user = $_SESSION['user_email'];
-        $get_user = "SELECT * FROM user WHERE user_id = '$userID'";
-        $run_user = mysqli_query($con, $get_user);
-        $row = mysqli_fetch_array($run_user);
-
-        $user_id = $row['user_id'];
-        $user_firstName = $row['user_firstName'];
-        $user_lastName = $row['user_lastName'];
-        $user_pass = $row['user_password'];
-        $user_email = $row['user_email'];
-        $user_image = $row['user_pic'];
-        $user_birthday = $row['user_DoB'];
-        $formatDoB = strtotime($user_birthday);
-        $theBirthday = date("d F Y", $formatDoB);
-
-        echo "
-        <center>
-        <p><img id='userImg' src='user/user_images/$user_image' width='200' height='200'/></p>
-        <p><strong>Name: </strong>$user_firstName  $user_lastName</p>
-        <p><strong>Birthday: </strong>$theBirthday</p>
-        <a href = 'Pages/blog.php?userid=$userID'><strong>$user_firstName's blog</strong></a>
-        </center>
-        ";
-         ?>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-user fa-fw"></i> Friends
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
                             <div class="list-group">
+                              <ul id="friends">
+                            <!-- insert from database -->
+                            <?php
+                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
+                            // $get_myCircles = "SELECT * FROM circles WHERE creator_id = '$userID' ORDER BY circle_id DESC";
+                            $run_myCircles = mysqli_query($con, $get_myCircles);
+                            $checkCircles = mysqli_num_rows($run_myCircles);
 
+                            while ($rowCircles = mysqli_fetch_array($run_myCircles)) {
+
+                              // to delete circle later on
+                              $thisCircleID = $rowCircles['circle_id'];
+                              $thisTitle = $rowCircles['circle_name'];
+
+                              echo "<li>
+                                <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
+                                  <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
+                                  <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
+                                </a>
+                              </li>";
+
+                            }
+                            ?>
+                            <!-- insert from database ENDS -->
+                          </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                  <h5>Create new circle:</h5>
+                  <form method="post">
+                  <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
+
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+
+
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <!-- paste here -->
+                            <div class="list-group">
+                              <!-- <form method="post"> -->
                               <?php
 
-                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
                                                   WHERE friendshipBridge.friend_id = '$userID'
                                                   UNION ALL
-                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
                                                   JOIN user ON friendshipBridge.friend_id = user.user_id
                                                   WHERE friendshipBridge.user_id = '$userID'";
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
@@ -479,166 +426,50 @@ if(isset($_GET['userid'])) {
                                 $thisFriendID = $rowPosts['user_id'];
                                 $thisFirstName = $rowPosts['user_firstName'];
                                 $thisLastName = $rowPosts['user_lastName'];
+                                $thisPhoto = $rowPosts['user_pic'];
 
                               echo "
-                                <a href='home.php?userid=$thisFriendID' class='list-group-item'>
-                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
+                                <input type='checkbox' name='chk_group[]' value=$thisFriendID>
+                                  <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
+                                  $thisFirstName $thisLastName
                                     </span>
-                                </a>
                                 ";
                               };
 
                                 ?>
+                            <!-- </form> -->
+                            </div>
+                              <div class ="pull-right">
+                                <button name="createCircle" type="submit"><h4>Create circle</h4></button>
+                              </div>
+                            </form>
 
-                            </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">See All Friends</a>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Chat
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Available
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-clock-o fa-fw"></i> Away
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
-                </div>
-                <!-- /.col-lg-4 -->
-            </div>
-            <!-- /.row -->
+                          <!-- end of friend box -->
+
+
+                  </div>
+              </div>
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="vendor/raphael/raphael.min.js"></script>
-    <script src="vendor/morrisjs/morris.min.js"></script>
-    <script src="data/morris-data.js"></script>
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 

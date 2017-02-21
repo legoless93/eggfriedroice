@@ -1,9 +1,9 @@
 <?php
 session_start();
-include("includes/connection.php");
-
-// include("../functions/searching.php");
+include("../includes/connection.php");
+// include("../functions/new_post.php");
 // include("../functions/delete_post.php");
+// include("../functions/retrieve_posts.php");
 
 $logged_email = $_SESSION['user_email'];
 
@@ -13,11 +13,31 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-if(isset($_GET['userid'])) {
-  $userID = $_GET['userid'];
-}
+echo "<script>alert('session user id: $sessionUserID !!!')</script>";
+
+// if(isset($_GET['userid'])) {
+//   $userID = $_GET['userid'];
+// }
+
+// if(isset($_GET[''])){
+// }
 
 ?>
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>TEST</title>
+</head>
+<body>
+
+<h1>HEY THERE u fuck  </h1>
+
+
+</body>
+</html> -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,19 +53,19 @@ if(isset($_GET['userid'])) {
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="vendor/morrisjs/morris.css" rel="stylesheet">
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -274,7 +294,7 @@ if(isset($_GET['userid'])) {
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="../functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -287,77 +307,44 @@ if(isset($_GET['userid'])) {
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
-                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
                                 <span class="input-group-btn">
-                               
-
-                                
-                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
-                                 -->
-                            <input type="submit" value="Search" class='btn btn-default'/>
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </span>
-
-                            
-                            </form> 
-                            
-                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
-                                <input class="search-query" placeholder="Search" type="text" />
-                            </form> -->
-
+                            </div>
                             <!-- /input-group -->
                         </li>
                         <li>
                           <?php
                           echo "
-                            <a href='home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
+                            <a href='../home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
                             ";
                             ?>
                         </li>
                         <li>
                           <?php
                           echo "
-                            <a href='Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
+                            <a href='../Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
                             ";
                             ?>
                         </li>
                         <li>
-
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
                         </li>
                         <li>
-                        <!-- CHANGES HERE ** -->
-                        <?php
-                          echo "
-                            <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
-                            ";
-                            ?>
-                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
-                        </li>
-                        <li>
-                        <!-- CHANGES HERE ** -->
-                        <?php
-                          echo "
-                            <a href='Pages/Members.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Members</a>
-                            ";
-                            ?>
-                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
+                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-
-                                    <!-- <a href="Pages/circles.php">My circles</a> -->
-                                    <?php
-                                    echo "
-                                      <a href='Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> My circles</a>
-                                      ";
-                                      ?>
-
+                                    <a href="panels-wells.html">Circle 1</a>
                                 </li>
                                 <li>
-                                    <a href="Pages/circle_group.php">Circle chat</a>
+                                    <a href="buttons.html">Circle 2</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Circle 3</a>
@@ -378,245 +365,279 @@ if(isset($_GET['userid'])) {
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Profile</h1>
+                    <h1 class="page-header">Friends List</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-
-
-
-
             </div>
+
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> All About Me
-                            <?php
-
-                            if($userID == $sessionUserID) {
-                              echo "
-                              <div class='pull-right'>
-                                  <div class='btn-group'>
-                                    <button type='button' class='btn btn-primary btn-sm dropdown-toggle' data-toggle='dropdown'>
-                                        <i class='fa fa-gear'></i> <span class='caret'></span>
-                                    </button>
-                                      <ul class='dropdown-menu pull-right' role='menu'>
-                                          <li><a href='Pages/editProfile.php'>Edit profile info</a>
-                                          </li>
-                                          <li class='divider'></li>
-                                          <li><a href='#'>Separated link</a>
-                                          </li>
-                                      </ul>
-                                  </div>
-                              </div>
-                            ";
-
-                          }
-
-                             ?>
-
+                            <i class="fa fa-edit fa-fw"></i> Friend Requests Received
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                          <?php
 
-        $user = $_SESSION['user_email'];
-        $get_user = "SELECT * FROM user WHERE user_id = '$userID'";
-        $run_user = mysqli_query($con, $get_user);
-        $row = mysqli_fetch_array($run_user);
+                        <ul class="list-group">
 
-        $user_id = $row['user_id'];
-        $user_firstName = $row['user_firstName'];
-        $user_lastName = $row['user_lastName'];
-        $user_pass = $row['user_password'];
-        $user_email = $row['user_email'];
-        $user_image = $row['user_pic'];
-        $user_birthday = $row['user_DoB'];
-        $formatDoB = strtotime($user_birthday);
-        $theBirthday = date("d F Y", $formatDoB);
+                        </ul>
 
-        echo "
-        <center>
-        <p><img id='userImg' src='user/user_images/$user_image' width='200' height='200'/></p>
-        <p><strong>Name: </strong>$user_firstName  $user_lastName</p>
-        <p><strong>Birthday: </strong>$theBirthday</p>
-        <a href = 'Pages/blog.php?userid=$userID'><strong>$user_firstName's blog</strong></a>
-        </center>
-        ";
-         ?>
+                        <?php  
+
+                            // get requests that have been received 
+                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
+
+                            $run_requests_as_receiver = mysqli_query($con, $get_requests_as_receiver);
+
+                            while ($rowPosts = mysqli_fetch_array($run_requests_as_receiver)){
+
+                              
+                                      
+                                    $thisFN = $rowPosts['user_firstName'];
+                                    $thisLN = $rowPosts['user_lastName'];
+                                    $thisFriendID = $rowPosts['user_id'];
+                                    
+                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$thisFriendID' AND friendrequests.receiver_id = '$sessionUserID'  )";
+
+                                    $run_request_status = mysqli_query($con, $get_request_status);
+
+                                    $check = mysqli_num_rows($run_request_status);
+
+                                    if($check == 1) {
+
+                                    $rowUsers = mysqli_fetch_array($run_request_status);
+                                    $theRequestStatus = $rowUsers['request_status'];
+
+                                    echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                    };
+
+
+                                    if ($theRequestStatus == '1'){
+                                    echo "
+                                    <li class='list-group-item clearfix'>
+                                    <a href='../home.php?userid=$thisFriendID'>
+
+                                   
+                                    <div class='d-flex w-100 justify-content-between'>
+                                     <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        <h5 class='mb-1'>$thisFN $thisLN</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                </a>
+                                "; 
+
+
+                                 
+                                    echo "
+                                
+
+                                 <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='reject Friend Request'>
+
+                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
+     
+                                </a>
+
+                                <a href=\"../functions/accept_request.php?thisFriend=$thisFriendID\" title='Accept Friend Request'>
+
+                                        <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
+     
+                                </a>
+
+                                </li>
+                                 ";}
+
+                            };
+
+
+
+                        ?>
+
+
+
+        
                         </div>
-                        <!-- /.panel-body -->
+
                     </div>
                 </div>
-                <!-- /.col-lg-8 -->
-                <div class="col-lg-4">
+
+            </div>
+            
+                
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <i class="fa fa-user fa-fw"></i> Friends
+                            <i class="fa fa-edit fa-fw"></i> Friend Requests Sent
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="list-group">
+
+                        <ul class="list-group">
+
+                        </ul>
+
+                       
+<!-- 
+                            // // get requests that have been received 
+                            // $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID";
+ -->
+
+                        <?php  
+
+                            // get requests that have been received 
+                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
+
+                            $run_requests = mysqli_query($con, $get_requests);
+
+                            while ($rowPosts = mysqli_fetch_array($run_requests)){
+
+                                    $thisFN = $rowPosts['user_firstName'];
+                                    $thisLN = $rowPosts['user_lastName'];
+                                    $thisFriendID = $rowPosts['user_id'];
+
+
+                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
+
+                                    $run_request_status = mysqli_query($con, $get_request_status);
+
+                                    $check = mysqli_num_rows($run_request_status);
+
+                                    if($check == 1) {
+
+                                    $rowUsers = mysqli_fetch_array($run_request_status);
+                                    $theRequestStatus = $rowUsers['request_status'];
+
+                                    echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                    };
+
+
+
+                                    if ($theRequestStatus == '1'){
+                                    echo "
+                                    <li class='list-group-item clearfix'>
+                                    <a href='../home.php?userid=$thisFriendID'>
+
+                                   
+                                    <div class='d-flex w-100 justify-content-between'>
+                                     <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        <h5 class='mb-1'>$thisFN $thisLN</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                </a>
+                                "; 
+
+                                echo "
+                                <a href='' title='Pending Friend Request'>
+
+                                        <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
+     
+                                </a>
+
+                                </li>
+                                 ";
+                            }
+
+                            };
+
+
+
+                      
+
+                        ?>
+
+
+
+        
+                        </div>
+
+                    </div>
+                
+
+        
+            <!-- /.row -->
+            <!-- friends list CHANGES here -->
+            <div class="chat-panel panel panel-default">
+                <div class="panel-heading">
+
+                <?php
+
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
+								
+								echo "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)"
+
+                              ?>
+                    <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <ul class="list-group">
 
                               <?php
 
                               $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
-                                                  WHERE friendshipBridge.friend_id = '$userID'
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
                                                   UNION ALL
                                                   SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
                                                   JOIN user ON friendshipBridge.friend_id = user.user_id
-                                                  WHERE friendshipBridge.user_id = '$userID'";
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
-                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
+
+                              // add another query here ??
+                              //
 
                               while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
 
                                 $thisFriendID = $rowPosts['user_id'];
                                 $thisFirstName = $rowPosts['user_firstName'];
                                 $thisLastName = $rowPosts['user_lastName'];
+                                // $thisRelID = $rowPosts['']
+ 								echo "
+                                <li class='list-group-item clearfix'>
+                                <a href='../home.php?userid=$thisFriendID'>
 
-                              echo "
-                                <a href='home.php?userid=$thisFriendID' class='list-group-item'>
-                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
-                                    </span>
+                                   
+                                   	<div class='d-flex w-100 justify-content-between'>
+                                   	 <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                        <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
                                 </a>
+                                <a href=\"../functions/delete_friends.php?thisFriend=$thisFriendID\" title='Delete'>
+
+                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right' ></span>
+     
+                                </a>
+                                </li>
                                 ";
                               };
 
                                 ?>
 
-                            </div>
-                            <!-- /.list-group -->
-                            <a href="#" class="btn btn-default btn-block">See All Friends</a>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Chat
-                            <div class="btn-group pull-right">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-chevron-down"></i>
-                                </button>
-                                <ul class="dropdown-menu slidedown">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-refresh fa-fw"></i> Refresh
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Available
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-clock-o fa-fw"></i> Away
-                                        </a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign Out
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                             <!--    echo "
+                                <a href='home.php?userid=$thisFriendID' class='list-group-item '>
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName 
                                     </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
-                                            </small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="left clearfix">
-                                    <span class="chat-img pull-left">
-                                        <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <strong class="primary-font">Jack Sparrow</strong>
-                                            <small class="pull-right text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 14 mins ago</small>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                                <li class="right clearfix">
-                                    <span class="chat-img pull-right">
-                                        <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
-                                    </span>
-                                    <div class="chat-body clearfix">
-                                        <div class="header">
-                                            <small class=" text-muted">
-                                                <i class="fa fa-clock-o fa-fw"></i> 15 mins ago</small>
-                                            <strong class="pull-right primary-font">Bhaumik Patel</strong>
-                                        </div>
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.
-                                        </p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
-                    </div>
-                    <!-- /.panel .chat-panel -->
+                                </a>
+                                "; -->
+                    </ul>
                 </div>
-                <!-- /.col-lg-4 -->
+                <!-- /.panel-body -->
+                <!-- /.panel-footer -->
             </div>
-            <!-- /.row -->
+
         </div>
         <!-- /#page-wrapper -->
 
@@ -624,21 +645,21 @@ if(isset($_GET['userid'])) {
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="vendor/raphael/raphael.min.js"></script>
-    <script src="vendor/morrisjs/morris.min.js"></script>
-    <script src="data/morris-data.js"></script>
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
+    <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
