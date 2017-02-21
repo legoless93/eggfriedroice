@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include("../includes/connection.php");
@@ -21,12 +22,14 @@ if(isset($_GET['userid'])) {
 <html lang="en">
 
 <head>
+
 <style>
 ul#friends li {
   display: inline-flex;
   padding: 10px;
 }
 </style>
+
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -344,17 +347,20 @@ ul#friends li {
                     <h1 class="page-header">Create new circle</h1>
                 </div>
                 <!-- /.col-lg-12 -->
+
                   <div class="row">
 
 
                     <div class="col-lg-6">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
+
                           <div class="panel-heading">
                             <h5>My Circles</h5>
                           </div>
                           <!--  -->
                           <div class="panel-body">
+
                             <div class="list-group">
                               <ul id="friends">
                             <!-- insert from database -->
@@ -389,11 +395,13 @@ ul#friends li {
                   <h5>Create new circle:</h5>
                   <form method="post">
                   <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
+
                     </div>
                     <!--  -->
                     <div class="col-lg-6">
                       <div class="chat-panel panel panel-default">
                           <div class="panel-heading">
+
 
                           </div>
                           <!--  -->
@@ -437,6 +445,7 @@ ul#friends li {
                             </form>
 
                           <!-- end of friend box -->
+
 
                   </div>
               </div>

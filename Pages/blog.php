@@ -17,7 +17,11 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
+include("../functions/checkPrivacy.php");
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -356,24 +360,28 @@ if(isset($_GET['userid'])) {
 
 
             </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-edit fa-fw"></i> Add a new post
+<!-- /.row -->
+            <?php
+
+            if($userID == $sessionUserID) {
+              echo "
+            <div class='row'>
+                <div class='col-lg-12'>
+                    <div class='panel panel-default'>
+                        <div class='panel-heading'>
+                            <i class='fa fa-edit fa-fw'></i> Add a new post
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
-         <form method="post">
-         <div class="form-group" id="post_form">
+                        <div class='panel-body'>
+         <form method='post'>
+         <div class='form-group' id='post_form'>
              <label> Title</label>
                  <label>Text Input with Placeholder</label>
-                 <input method="post" name="post_title" class="form-control" placeholder="Enter Title" style="margin-bottom:10px;">
+                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
                 <label>Post body</label>
-             <textarea method="post" name="post_body" class="form-control" rows="3"></textarea>
+             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
          </div>
-         <button name="postIt" type="submit" class="btn btn-default" style = "float: right">Post</button>
+         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
        </form>
                         </div>
 
@@ -381,8 +389,15 @@ if(isset($_GET['userid'])) {
                 </div>
 
             </div>
-            <!-- /.row -->
+            ";
+          };
 
+            ?>
+    <!-- /.row -->
+
+
+
+            <!-- Where POSTS begin -->
             <div class="chat-panel panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-comments fa-fw"></i> Posts
@@ -414,6 +429,9 @@ if(isset($_GET['userid'])) {
                                     <small class=\"text-muted\">
                                         <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
                                     </small>
+                                    ";
+                                    if($userID == $sessionUserID) {
+                                    echo "
                                         <div class=\"pull-right btn-group\">
                                           <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
                                               <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
@@ -423,6 +441,9 @@ if(isset($_GET['userid'])) {
                                                 </li>
                                             </ul>
                                         </div>
+                                        ";
+                                      };
+                                      echo "
                                 </div>
                                 <p> $thisBody</p>
                             </div>
