@@ -2,11 +2,13 @@
 <?php
 session_start();
 include("../includes/connection.php");
-include("../functions/new_message.php");
 
 $logged_email = $_SESSION['user_email'];
 $get_circleID = $_GET['circle_id'];
 $_SESSION['pass_circleID'] = $get_circleID;
+
+//Anywhere else...no...
+include("../functions/new_message.php");
 
 $get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
 $run_userID = mysqli_query($con, $get_userID);
@@ -16,7 +18,6 @@ $sessionUserID = $row['user_id'];
 
 if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
-  // echo "<script>alert($userID)</script>";
 }
 
 ?>

@@ -23,7 +23,7 @@ if(isset($_POST['sendCircleMessage'])){
   if($run_insertCircle) {
     echo "<script>alert('new message')</script>";
   } else {
-    echo "<script>alert('unsuccessfull')</script>";
+    echo "<script>alert('$circle_message')</script>";
   }
   // echo "<script>alert('$passed_circleID')</script>";
 }
