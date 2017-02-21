@@ -1,28 +1,3 @@
-<?php
-session_start();
-include("../includes/connection.php");
-include("../functions/new_post.php");
-include("../functions/delete_post.php");
-// include("../functions/retrieve_posts.php");
-
-$logged_email = $_SESSION['user_email'];
-
-$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
-$run_userID = mysqli_query($con, $get_userID);
-$row = mysqli_fetch_array($run_userID);
-
-$sessionUserID = $row['user_id'];
-
-if(isset($_GET['userid'])) {
-  $userID = $_GET['userid'];
-}
-
-include("../functions/checkPrivacy.php");
-
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +9,7 @@ include("../functions/checkPrivacy.php");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>mybebofacespacebook</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +48,7 @@ include("../functions/checkPrivacy.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">MyBeboSpaceBook</a>
+                <a class="navbar-brand" href="index.html">mybebofacespacebook</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -278,7 +253,7 @@ include("../functions/checkPrivacy.php");
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -302,18 +277,10 @@ include("../functions/checkPrivacy.php");
                             <!-- /input-group -->
                         </li>
                         <li>
-                          <?php
-                          echo "
-                            <a href='../home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
-                            ";
-                            ?>
+                            <a href="../home.php"><i class="fa fa-dashboard fa-fw"></i> Profile</a>
                         </li>
                         <li>
-                          <?php
-                          echo "
-                            <a href='../Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
-                            ";
-                            ?>
+                            <a href="Pages/blog.php"><i class="fa fa-bar-chart-o fa-fw"></i> Blog</a>
                         </li>
                         <li>
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
@@ -325,10 +292,10 @@ include("../functions/checkPrivacy.php");
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="panels-wells.html">Circle 1</a>
+                                    <a href="circles.php">My circles</a>
                                 </li>
                                 <li>
-                                    <a href="buttons.html">Circle 2</a>
+                                    <a href="circle_group.php">Circle chat</a>
                                 </li>
                                 <li>
                                     <a href="notifications.html">Circle 3</a>
@@ -349,118 +316,148 @@ include("../functions/checkPrivacy.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blog</h1>
+                    <h1 class="page-header">Create new circle</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-
-
-
-
-            </div>
-<!-- /.row -->
-            <?php
-
-            if($userID == $sessionUserID) {
-              echo "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-edit fa-fw'></i> Add a new post
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class='panel-body'>
-         <form method='post'>
-         <div class='form-group' id='post_form'>
-             <label> Title</label>
-                 <label>Text Input with Placeholder</label>
-                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
-                <label>Post body</label>
-             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
-         </div>
-         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
-       </form>
-                        </div>
-
-                    </div>
-                </div>
-
-            </div>
-            ";
-          };
-
-            ?>
-    <!-- /.row -->
-
-
-
-            <!-- Where POSTS begin -->
-            <div class="chat-panel panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-comments fa-fw"></i> Posts
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <ul class="chat">
-
-                      <?php
-
-                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
-                      $run_myPosts = mysqli_query($con, $get_myPosts);
-                      $checkPosts = mysqli_num_rows($run_myPosts);
-
-                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
-
-                        $thisPostID = $rowPosts['post_id'];
-                        $thisTitle = $rowPosts['post_title'];
-                        $thisBody = $rowPosts['post_body'];
-                        $thisDay = $rowPosts['post_day'];
-                        $thisMonth = $rowPosts['post_month'];
-                        $thisYear = $rowPosts['post_year'];
-                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
-
-                        echo "<li class=\"left clearfix\">
-                            <div class=\"chat-body clearfix\">
-                                <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
-                                    <small class=\"text-muted\">
-                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
-                                    </small>
-                                    ";
-                                    if($userID == $sessionUserID) {
-                                    echo "
-                                        <div class=\"pull-right btn-group\">
-                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
-                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
-                                          </button>
-                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
-                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        ";
-                                      };
-                                      echo "
-                                </div>
-                                <p> $thisBody</p>
+                <div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+                            <h5>My Circles</h5>
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <div class="col-lg-3">
+                              <a href="circle_group.php">
+                                  <!-- <button> -->
+                                      <img src="../circle_assets/circle_default.png" alt="error" class="img-circle" style="width:50px;height:50px;"/>
+                                    <!-- </button> -->
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Circle 1</strong>
+                                        <!-- </div> -->
+                              </a>
                             </div>
-                        </li>";
+                            <div class="col-lg-3">
+                              <a href="circle_group.php">
+                                      <img src="../circle_assets/circle_default.png" alt="User Avatar" class="img-circle" style="width:50px;height:50px;"/>
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Circle 2</strong>
+                                        <!-- </div> -->
+                              </a>
+                            </div>
+                            <div class="col-lg-3">
+                              <a href="circle_group.php">
+                                      <img src="../circle_assets/circle_default.png" alt="User Avatar" class="img-circle" style="width:50px;height:50px;"/>
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Circle 3</strong>
+                                        <!-- </div> -->
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                  <h5>Create new circle:</h5>
+                  <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
+                    </div>
+                    <!--  -->
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search friends...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <form action="form_action.asp">
+                              <select name="cars" multiple>
+                                <!-- <option value="volvo">Volvo</option>
+                                <option value="saab">Saab</option>
+                                <option value="opel">Opel</option>
+                                <option value="audi">Audi</option> -->
+                                <?php $friends = array("John Smith", "Dave Smith", "Jen Smith", "Hannah Smith", "Bill Smith"); ?>
+                                <?php foreach ($friends as $value) { ?>
+                                  <!-- <li>Menu Item <?php echo $i; ?></li> -->
+                                  <option value="$value">
+                                    <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+                                    <?php echo $value; ?>
+                                  </option>
+                                  <?php } ?>
+                              </select>
+                            </form>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
 
-                      };
-                      ?>
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
 
-                    </ul>
-                </div>
-                <!-- /.panel-body -->
-                <!-- /.panel-footer -->
-            </div>
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
 
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/55C1E7/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Jack Sparrow</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <!--  -->
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                            <div class="col-lg-3">
+                                      <img src="http://placehold.it/50/FA6F57/fff" alt="User Avatar" class="img-circle" />
+
+                                      <!-- <div class="header"> -->
+                                          <strong class="primary-font">Bhaumik Patel</strong>
+                                        <!-- </div> -->
+                            </div>
+                          </div>
+                          <!-- end of friend box -->
+                          <div class ="pull-right">
+                            <button><h4>Create circle</h4></button>
+                          </div>
+                  </div>
+              </div>
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

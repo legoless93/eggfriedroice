@@ -9,7 +9,7 @@ include("../includes/connection.php");
     $run_userID = mysqli_query($con, $get_userID);
     $row = mysqli_fetch_array($run_userID);
 
-    $userID = $row['user_id'];
+    $sessionUserID = $row['user_id'];
 
     $postTitle = $_POST['post_title'];
     $postBody = $_POST['post_body'];
@@ -18,7 +18,7 @@ include("../includes/connection.php");
     $dateYear = date('y');
     $dateTime = date('his');
 
-    $insertPost = "INSERT INTO posts (user_id, post_day, post_month, post_year, post_time, post_title, post_body) VALUES ('$userID','$dateDay', '$dateMonth', '$dateYear', '$dateTime', '$postTitle', '$postBody')";
+    $insertPost = "INSERT INTO posts (user_id, post_day, post_month, post_year, post_time, post_title, post_body) VALUES ('$sessionUserID','$dateDay', '$dateMonth', '$dateYear', '$dateTime', '$postTitle', '$postBody')";
     $run_insertPost = mysqli_query($con, $insertPost);
 
     if($run_insertPost) {
