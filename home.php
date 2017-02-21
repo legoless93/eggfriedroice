@@ -347,7 +347,14 @@ if(isset($_GET['userid'])) {
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="Pages/circles.php">My circles</a>
+
+                                    <!-- <a href="Pages/circles.php">My circles</a> -->
+                                    <?php
+                                    echo "
+                                      <a href='Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> My circles</a>
+                                      ";
+                                      ?>
+
                                 </li>
                                 <li>
                                     <a href="Pages/circle_group.php">Circle chat</a>
