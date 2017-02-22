@@ -323,7 +323,7 @@ if(isset($_GET['userid'])) {
                         </li>
                         <li>
 
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
+                            <a href="Pages/photocollection.php"><i class="fa fa-table fa-fw"></i> Photos</a>
                         </li>
                         <li>
                         <!-- CHANGES HERE ** -->

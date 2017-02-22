@@ -370,7 +370,7 @@
                                             Add photo</a>
                                             <div class="collapse" id="addphoto">
                                                 <div class="panel-body">
-                                                    
+
                                                     <form action="uploadaction.php" method="post" enctype="multipart/form-data" class="col-lg-12 col-md-12 col-sm-12">
                                                         <!-- <input type="hidden" name="MAX_FILE_SIZE" value='176942' /> -->
                                                         <label>Click button to selet photo in your PC:</label>
