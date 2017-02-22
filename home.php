@@ -290,17 +290,17 @@ if(isset($_GET['userid'])) {
                             <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
                                 <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
                                 <span class="input-group-btn">
-                               
 
-                                
+
+
                               <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
                                  -->
                             <input type="submit" value="Search" class='btn btn-default'/>
                             </span>
 
-                            
-                            </form> 
-                            
+
+                            </form>
+
                            <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
                                 <input class="search-query" placeholder="Search" type="text" />
                             </form> -->
@@ -344,26 +344,13 @@ if(isset($_GET['userid'])) {
                             <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-
-                                    <!-- <a href="Pages/circles.php">My circles</a> -->
-                                    <?php
-                                    echo "
-                                      <a href='Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> My circles</a>
-                                      ";
-                                      ?>
-
-                                </li>
-                                <li>
-                                    <a href="Pages/circle_group.php">Circle chat</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Circle 3</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                        <!--  -->
+                        <?php
+                          echo "
+                            <a href='Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i>Circles</a>
+                            ";
+                            ?>
+                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Settings</a>

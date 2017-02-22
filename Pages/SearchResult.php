@@ -20,10 +20,10 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-  
-  
 
-?> 
+
+
+?>
 
 <!-- <!DOCTYPE html>
 <html>
@@ -372,9 +372,9 @@ $sessionUserID = $row['user_id'];
             </div>
 
 
-            
 
-        
+
+
             <!-- /.row -->
             <!-- friends list CHANGES here -->
             <div class="chat-panel panel panel-default">
@@ -382,16 +382,16 @@ $sessionUserID = $row['user_id'];
 
 <!--                 <?php
 
-                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
                                                   WHERE friendshipBridge.friend_id = '$sessionUserID'
                                                   UNION ALL
-                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
                                                   JOIN user ON friendshipBridge.friend_id = user.user_id
                                                   WHERE friendshipBridge.user_id = '$sessionUserID'";
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
                               $check_myFriends5 = mysqli_num_rows($run_myFriends5);
-								
+
 								echo "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)"
 
                               ?> -->
@@ -444,17 +444,17 @@ $sessionUserID = $row['user_id'];
 
                               if(strlen($query) >= $min_length){
 
-                              	 $query = htmlspecialchars($query); 
+                              	 $query = htmlspecialchars($query);
         							// changes characters used in html to their equivalents, for example: < to &gt;
-         
+
        							 $query = mysqli_real_escape_string($con,$query);
 
-       							 // makes sure nobody uses SQL injection ??? 
+       							 // makes sure nobody uses SQL injection ???
 
        							 // $results_of_query = "SELECT user_id, user_firstName, user_lastName FROM user WHERE user_firstName OR user_lastName LIKE  '%$query%'"; // use this instead ? '%".$query."%'
 
        							 $results_of_query = "SELECT * FROM user WHERE CONCAT(user_firstName, ' ', user_lastName) LIKE '%".$query."%'";
-       							 // performance may be an issue 
+       							 // performance may be an issue
 
        							 $run_result_of_query = mysqli_query($con, $results_of_query);
 
@@ -464,12 +464,12 @@ $sessionUserID = $row['user_id'];
        							 if ($check_result_of_query > 0){
 
        							 	while ( $rowPosts = mysqli_fetch_array($run_result_of_query)) {
-       							 		
+
 
        							 		$thisFriendID = $rowPosts['user_id'];
                                 		$thisFirstName = $rowPosts['user_firstName'];
                                 		$thisLastName = $rowPosts['user_lastName'];
-
+                                    $thisPhoto = $rowPosts['user_pic'];
 
 
                                 		if ($thisFriendID == $sessionUserID){
@@ -480,9 +480,9 @@ $sessionUserID = $row['user_id'];
                                 			<li class='list-group-item clearfix'>
                                 			<a href='../home.php?userid=$thisFriendID'>
 
-                                   
+
                                    			<div class='d-flex w-100 justify-content-between'>
-                                   	 		<img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                   	 		<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         	<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     		</div>
                                     		<p class='mb-1'>Display timestamp here or number of friends?</p>
@@ -493,15 +493,15 @@ $sessionUserID = $row['user_id'];
 
                                 		} else if ((in_array($thisFriendID, $friends_user_id_array))){
 
-                                			// if the results are already in your friends list 
+                                			// if the results are already in your friends list
 
                                 			echo "
                                 			<li class='list-group-item clearfix'>
                                 				<a href='../home.php?userid=$thisFriendID'>
 
-                                   
+
                                    				<div class='d-flex w-100 justify-content-between'>
-                                   	 			<img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                   	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     			</div>
                                     			<p class='mb-1'>Display timestamp here or number of friends?</p>
@@ -511,22 +511,22 @@ $sessionUserID = $row['user_id'];
                                 				<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
 
                                         		<span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
-     
+
                                 				</a>
                                 			</li>
                                  			";
 
                                 		} else {
 
-                                			// they are not your friend 
+                                			// they are not your friend
 
                                 			echo "
                                 			<li class='list-group-item clearfix'>
                                 				<a href='../home.php?userid=$thisFriendID'>
 
-                                   
+
                                    				<div class='d-flex w-100 justify-content-between'>
-                                   	 			<img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                   	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     			</div>
                                     			<p class='mb-1'>Display timestamp here or number of friends?</p>
@@ -536,7 +536,7 @@ $sessionUserID = $row['user_id'];
                                 			<a href=\"../functions/add_friends.php?thisFriend=$thisFriendID\" title='Send Friend Request'>
 
                                         		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
-     
+
                                 			</a>
                                 			</li>
                                  			";
@@ -552,19 +552,19 @@ $sessionUserID = $row['user_id'];
        							 	echo "<script>alert('No matching results')</script>";
        							 }
 
-                              } else { 
+                              } else {
 
                               	echo "<script>alert('The minimum search term is $min_length')</script>";
 
                               }
 
-                            
+
 
                                 ?>
 
                              <!--    echo "
                                 <a href='home.php?userid=$thisFriendID' class='list-group-item '>
-                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName 
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
                                     </span>
                                 </a>
                                 "; -->
