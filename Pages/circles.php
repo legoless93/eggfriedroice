@@ -11,10 +11,13 @@ $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
+$_SESSION['test'] = $sessionUserID;
 
 if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
+
+// include("../functions/delete_circle.php");
 
 ?>
 
@@ -384,7 +387,7 @@ ul#friends li {
                               <ul id="friends">
                             <!-- insert from database -->
                             <?php
-                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
+                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id, circles.creator_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
                             // $get_myCircles = "SELECT * FROM circles WHERE creator_id = '$userID' ORDER BY circle_id DESC";
                             $run_myCircles = mysqli_query($con, $get_myCircles);
                             $checkCircles = mysqli_num_rows($run_myCircles);
@@ -394,14 +397,23 @@ ul#friends li {
                               // to delete circle later on
                               $thisCircleID = $rowCircles['circle_id'];
                               $thisTitle = $rowCircles['circle_name'];
+                              $thisCreatorID = $rowCircles['creator_id'];
 
                               echo "<li>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
                                   <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
                                   <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
                                 </a>
-                              </li>";
-
+                              ";
+                              if($thisCreatorID == $sessionUserID) {
+                              echo "
+                                  <div>
+                                    <a href=\"../functions/delete_circle.php?circle_id=$thisCircleID\"><i class='fa fa-trash' aria-hidden='true'></i></a>
+                                  </div>
+                                  </li>
+                                  ";
+                                };
+                                include("../functions/delete_circle.php");
                             }
                             ?>
                             <!-- insert from database ENDS -->
