@@ -26,9 +26,10 @@ if(isset($_GET['circle_id'])){
      if($run_delete1 && $run_delete2 && $run_delete3) {
 
         echo "<script>alert('deleted')</script>";
+          echo "<script type='text/javascript'> document.location = '../Pages/circles.php?userid=$user'; </script>";
         // echo "<script>window.open('../Pages/circles.php?userid=$user', '_self')</script>";
         // header("Location:../Pages/circles.php?userid=$user");
-        header("refresh:0.01; url=../Pages/circles.php?userid=$user");
+        // header("refresh:0.01; url=../Pages/circles.php?userid=$user");
         exit;
      }
 }
