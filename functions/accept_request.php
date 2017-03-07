@@ -5,13 +5,13 @@ include ("../includes/connection.php");
 
 
 
-// this should get the session user id 
+// this should get the session user id
 
 // gets the userID of the person you want to delete from the URL
 if(isset($_GET['thisFriend'])) {
 
     $thisFriend = $_GET['thisFriend'];
-    
+
 
     $logged_email = $_SESSION['user_email'];
 
@@ -25,7 +25,7 @@ if(isset($_GET['thisFriend'])) {
         // echo "<script>alert('Friend request accepted. sender is: $thisFriend and receiver is: $sessionUserID !!!')</script>";
 
     $update_accept_friend ="UPDATE friendrequests SET request_status='2' WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID')";
-    $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id, status) VALUES ('$sessionUserID','$thisFriend','1')";
+    $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id) VALUES ('$sessionUserID','$thisFriend')";
 
     // running a multi query
 

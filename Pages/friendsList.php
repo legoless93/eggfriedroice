@@ -307,14 +307,24 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
+                            <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
+                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
                                 <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
+
+
+
+                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
+                                 -->
+                            <input type="submit" value="Search" class='btn btn-default'/>
                             </span>
-                            </div>
+
+
+                            </form>
+
+                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
+                                <input class="search-query" placeholder="Search" type="text" />
+                            </form> -->
+
                             <!-- /input-group -->
                         </li>
                         <li>
@@ -335,23 +345,24 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                             <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a>
+                        <!-- CHANGES HERE ** -->
+                        <?php
+                          echo "
+                            <a href='../Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
+                            ";
+                            ?>
+                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="panels-wells.html">Circle 1</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Circle 2</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Circle 3</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
+                          <li>
+                          <!--  -->
+                          <?php
+                            echo "
+                              <a href='../Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i>Circles</a>
+                              ";
+                              ?>
+                              <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
+                          </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Settings</a>
                         </li>
@@ -387,21 +398,22 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                         </ul>
 
-                        <?php  
+                        <?php
 
-                            // get requests that have been received 
-                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
+                            // get requests that have been received
+                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
 
                             $run_requests_as_receiver = mysqli_query($con, $get_requests_as_receiver);
 
                             while ($rowPosts = mysqli_fetch_array($run_requests_as_receiver)){
 
-                              
-                                      
+
+
                                     $thisFN = $rowPosts['user_firstName'];
                                     $thisLN = $rowPosts['user_lastName'];
                                     $thisFriendID = $rowPosts['user_id'];
-                                    
+                                    $thisPhoto = $rowPosts['user_pic'];
+
                                     $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$thisFriendID' AND friendrequests.receiver_id = '$sessionUserID'  )";
 
                                     $run_request_status = mysqli_query($con, $get_request_status);
@@ -422,30 +434,30 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                     <li class='list-group-item clearfix'>
                                     <a href='../home.php?userid=$thisFriendID'>
 
-                                   
+
                                     <div class='d-flex w-100 justify-content-between'>
-                                     <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                     <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         <h5 class='mb-1'>$thisFN $thisLN</h5>
                                     </div>
                                     <p class='mb-1'>Display timestamp here or number of friends?</p>
                                 </a>
-                                "; 
+                                ";
 
 
-                                 
+
                                     echo "
-                                
+
 
                                  <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='reject Friend Request'>
 
                                         <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
-     
+
                                 </a>
 
                                 <a href=\"../functions/accept_request.php?thisFriend=$thisFriendID\" title='Accept Friend Request'>
 
                                         <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
-     
+
                                 </a>
 
                                 </li>
@@ -459,15 +471,15 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
 
 
-        
+
                         </div>
 
                     </div>
                 </div>
 
             </div>
-            
-                
+
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <i class="fa fa-edit fa-fw"></i> Friend Requests Sent
@@ -479,16 +491,16 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                         </ul>
 
-                       
-<!-- 
-                            // // get requests that have been received 
+
+<!--
+                            // // get requests that have been received
                             // $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID";
  -->
 
-                        <?php  
+                        <?php
 
-                            // get requests that have been received 
-                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
+                            // get requests that have been received
+                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
 
                             $run_requests = mysqli_query($con, $get_requests);
 
@@ -497,6 +509,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                     $thisFN = $rowPosts['user_firstName'];
                                     $thisLN = $rowPosts['user_lastName'];
                                     $thisFriendID = $rowPosts['user_id'];
+                                    $thisPhoto = $rowPosts['user_pic'];
 
 
                                     $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
@@ -520,20 +533,20 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                     <li class='list-group-item clearfix'>
                                     <a href='../home.php?userid=$thisFriendID'>
 
-                                   
+
                                     <div class='d-flex w-100 justify-content-between'>
-                                     <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                     <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         <h5 class='mb-1'>$thisFN $thisLN</h5>
                                     </div>
                                     <p class='mb-1'>Display timestamp here or number of friends?</p>
                                 </a>
-                                "; 
+                                ";
 
                                 echo "
                                 <a href='' title='Pending Friend Request'>
 
                                         <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
-     
+
                                 </a>
 
                                 </li>
@@ -544,19 +557,19 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
 
 
-                      
+
 
                         ?>
 
 
 
-        
+
                         </div>
 
                     </div>
-                
 
-        
+
+
             <!-- /.row -->
             <!-- friends list CHANGES here -->
             <div class="chat-panel panel panel-default">
@@ -573,7 +586,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                                   WHERE friendshipBridge.user_id = '$sessionUserID'";
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
                               $check_myFriends5 = mysqli_num_rows($run_myFriends5);
-								
+
 								echo "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)"
 
                               ?>
@@ -585,11 +598,11 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                               <?php
 
-                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
                                                   WHERE friendshipBridge.friend_id = '$sessionUserID'
                                                   UNION ALL
-                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
                                                   JOIN user ON friendshipBridge.friend_id = user.user_id
                                                   WHERE friendshipBridge.user_id = '$sessionUserID'";
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
@@ -603,14 +616,15 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                 $thisFriendID = $rowPosts['user_id'];
                                 $thisFirstName = $rowPosts['user_firstName'];
                                 $thisLastName = $rowPosts['user_lastName'];
+                                $thisPhoto = $rowPosts['user_pic'];
                                 // $thisRelID = $rowPosts['']
  								echo "
                                 <li class='list-group-item clearfix'>
                                 <a href='../home.php?userid=$thisFriendID'>
 
-                                   
+
                                    	<div class='d-flex w-100 justify-content-between'>
-                                   	 <img class='media-object pull-left'  src='http://placehold.it/50x50/000/fff' alt='Responsive image'/>
+                                   	 <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     </div>
                                     <p class='mb-1'>Display timestamp here or number of friends?</p>
@@ -618,7 +632,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                 <a href=\"../functions/delete_friends.php?thisFriend=$thisFriendID\" title='Delete'>
 
                                         <span  class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right' ></span>
-     
+
                                 </a>
                                 </li>
                                 ";
@@ -628,7 +642,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                              <!--    echo "
                                 <a href='home.php?userid=$thisFriendID' class='list-group-item '>
-                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName 
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
                                     </span>
                                 </a>
                                 "; -->

@@ -90,11 +90,10 @@ html, body {
 
 #user_timeline {
 	background: linear-gradient(#9494b8, white, #9494b8);
-	width: 250px;
-	float: left;
+	width: 30%;
 	height: 600px;
+	float: left;
 	border: 2px solid #e0e0eb;
-	margin-top: 15px;
 }
 
 #footer {
@@ -119,4 +118,20 @@ html, body {
 
 #user_details p {
 	/*margin-left: 24px;*/
+}
+
+#friends_box {
+		background: linear-gradient(#9494b8, white, #9494b8);
+		width: 20%;
+		height: 40%;
+		float: right;
+		border: 2px solid #e0e0eb;
+}
+
+#circles_box {
+		background: linear-gradient(#9494b8, white, #9494b8);
+		width: 20%;
+		height: 40%;
+		float: right;
+		border: 2px solid #e0e0eb;
 }
