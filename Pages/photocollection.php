@@ -452,7 +452,7 @@ include("../functions/checkPrivacy.php");
 
                             <?php
 
-                            $get_collection =  "SELECT * FROM photoCollections ORDER BY collection_id DESC";
+                            $get_collection =  "SELECT * FROM photoCollections WHERE user_id = '$userID' ORDER BY collection_id DESC";
                             $show_collection = mysqli_query($con, $get_collection);
                             $checkPosts = mysqli_num_rows($show_collection);
 
@@ -478,7 +478,7 @@ include("../functions/checkPrivacy.php");
                                     <div id='$this_collection_id' class='panel-collapse collapse in'>
                                       <div class='panel-body'>";
 
-                                      $get_photo =  "SELECT * FROM photos WHERE collection_id='$this_collection_id' ORDER BY photo_id DESC";
+                                      $get_photo =  "SELECT * FROM photos WHERE collection_id='$this_collection_id' AND user_id = '$userID' ORDER BY photo_id DESC";
                                       $show_photo = mysqli_query($con, $get_photo);
                                       $checkPhoto = mysqli_num_rows($show_photo);
 
@@ -634,7 +634,7 @@ include("../functions/checkPrivacy.php");
 
                                 <!--photo gallery-->
                         <?php
-                            $get_photo =  "SELECT * FROM photos  ORDER BY photo_id DESC";
+                            $get_photo =  "SELECT * FROM photos WHERE user_id = '$userID' ORDER BY photo_id DESC";
                             $show_photo = mysqli_query($con, $get_photo);
                             $checkPhoto = mysqli_num_rows($show_photo);
 
