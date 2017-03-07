@@ -403,7 +403,7 @@ include("../functions/checkPrivacy.php");
                     </div>
                 </div>
 
-            </div>
+
             ";
           };
 
@@ -478,7 +478,7 @@ include("../functions/checkPrivacy.php");
 
     </div>
     <!-- /#wrapper -->
-
+</div>
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 
