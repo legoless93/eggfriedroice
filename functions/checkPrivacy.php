@@ -62,9 +62,6 @@ if($sessionUserID != $userID) {
         echo "<script>window.open('../Pages/accessDenied.php', '_self')</script>";
       }
     }
-
   }
-
 }
-
  ?>
