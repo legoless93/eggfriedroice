@@ -1,7 +1,7 @@
 <?php
 include ("../includes/connection.php");
 
-// session_start();
+
 
 $logged_email = $_SESSION['user_email'];
 

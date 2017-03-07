@@ -326,7 +326,11 @@ include("../functions/checkPrivacy.php");
                             ?>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
+                          <?php
+                          echo "
+                            <a href='../Pages/photocollection.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Photos</a>
+                            ";
+                            ?>
                         </li>
                         <li>
                         <!-- CHANGES HERE ** -->
@@ -377,7 +381,7 @@ include("../functions/checkPrivacy.php");
             if($userID == $sessionUserID) {
               echo "
             <div class='row'>
-                <div class='col-lg-12'>
+
                     <div class='panel panel-default'>
                         <div class='panel-heading'>
                             <i class='fa fa-edit fa-fw'></i> Add a new post
