@@ -57,30 +57,4 @@ if(isset($_POST['createCircle'])){
 }
 }
 
-// if (isset($_POST['chk_group'])) {
-//     $optionArray = $_POST['chk_group'];
-//
-//     // NOTE: may have to add timeAdded to the database for extra query as if
-//     // the creator creates anotoher circle with the same name it'll be kinda peak.
-//     $get_CircleID = "SELECT * FROM circles WHERE circle_name = '$circleName'
-//                     AND creator_id = '$userID'";
-//     $run_CircleID = mysqli_query($con, $get_CircleID);
-//     $row2 = mysqli_fetch_array($run_CircleID);
-//
-//     $circleID = $row2['circle_id'];
-//
-//     for ($i=0; $i<count($optionArray); $i++) {
-//
-//       $addFriend2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($optionArray[$i],$circleID)";
-//       $run_insertAddFriend = mysqli_query($con, $addFriend2Circle);
-//       // $addFriend2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($optionArray[$i],99)";
-//       // echo "<script>alert($optionArray[$i])</script>";
-//     }
-//
-//     // insert friends intp friendship bridge
-//     $addCreator2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($userID,$circleID)";
-//     $run_insertAddCreator = mysqli_query($con, $addCreator2Circle);
-//
-// }
-
 ?>

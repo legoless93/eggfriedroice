@@ -134,6 +134,7 @@ ul#friends li {
                             </a>
                         </li>
                     </ul>
+
                     <!-- /.dropdown-messages -->
                 </li>
                 <!-- /.dropdown -->
