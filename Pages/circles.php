@@ -64,6 +64,8 @@ ul#friends li {
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+
 </head>
 
 <body>
@@ -365,15 +367,18 @@ ul#friends li {
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Create new circle</h1>
+                <div class="col-lg-8">
+                    <h1 class="page-header">My Circles</h1>
                 </div>
                 <!-- /.col-lg-12 -->
+                <div class="col-lg-4">
+                    <h1 class="page-header">New Circle</h1>
+                </div>
 
                   <div class="row">
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
@@ -405,35 +410,29 @@ ul#friends li {
                                   <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
                                 </a>
                               ";
-                              if($thisCreatorID == $sessionUserID) {
-                              echo "
-                                  <div>
-                                    <a href=\"../functions/delete_circle.php?circle_id=$thisCircleID\"><i class='fa fa-trash' aria-hidden='true'></i></a>
-                                  </div>
-                                  </li>
-                                  ";
-                                };
-                                include("../functions/delete_circle.php");
                             }
                             ?>
                             <!-- insert from database ENDS -->
+                            <!--  -->
+
                           </ul>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                  <h5>Create new circle:</h5>
+
+                    <div class="col-lg-4">
+                  <!-- <h2>Create new circle:</h2> -->
                   <form method="post">
                   <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
 
                     </div>
                     <!--  -->
-                    <div class="col-lg-6">
+                    <br>
+                    <div class="col-lg-4">
                       <div class="chat-panel panel panel-default">
                           <div class="panel-heading">
-
-
+                            <h5>Invite Friends</h5>
                           </div>
                           <!--  -->
                           <div class="panel-body">
@@ -460,25 +459,24 @@ ul#friends li {
                                 $thisPhoto = $rowPosts['user_pic'];
 
                               echo "
+                                <li class='list-unstyled'>
                                 <input type='checkbox' name='chk_group[]' value=$thisFriendID>
                                   <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
                                   $thisFirstName $thisLastName
                                     </span>
+                                  </li>
                                 ";
                               };
 
                                 ?>
-                            <!-- </form> -->
-                            </div>
-                              <div class ="pull-right">
-                                <button name="createCircle" type="submit"><h4>Create circle</h4></button>
-                              </div>
-                            </form>
 
                           <!-- end of friend box -->
-
-
                   </div>
+                </div>
+                  <div class ="pull-right">
+                    <button name="createCircle" type="submit" class="btn btn-danger"><h4>Create circle</h4></button>
+                  </div>
+                </form>
               </div>
         </div>
         <!-- /#page-wrapper -->

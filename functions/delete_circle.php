@@ -18,13 +18,18 @@ if(isset($_GET['circle_id'])){
     $run_delete1 = mysqli_query($con, $delete_circle1);
     $delete_circle2 = "DELETE FROM circleBridge WHERE circleBridge.circle_id = $circleID";
     $run_delete2 = mysqli_query($con, $delete_circle2);
+    $delete_messages = "DELETE FROM messages WHERE messages.circle_id = $circleID";
+    $run_delete3 = mysqli_query($con, $delete_messages);
 
     // echo "<script>window.open('../Pages/circles.php?userid=$test', '_self')</script>";
 
-     if($run_delete1 && $run_delete2) {
+     if($run_delete1 && $run_delete2 && $run_delete3) {
 
         echo "<script>alert('deleted')</script>";
-        echo "<script>window.open('../Pages/circles.php?userid=$user', '_self')</script>";
+        // echo "<script>window.open('../Pages/circles.php?userid=$user', '_self')</script>";
+        // header("Location:../Pages/circles.php?userid=$user");
+        header("refresh:0.01; url=../Pages/circles.php?userid=$user");
+        exit;
      }
 }
 
