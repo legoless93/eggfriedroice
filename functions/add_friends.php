@@ -28,7 +28,7 @@ if(isset($_GET['thisFriend'])) {
     $sessionUserID = $row['user_id'];
 
 
-    $add_friend = "INSERT INTO friendrequests(sender_id, receiver_id) VALUES ('$sessionUserID','$thisFriend)";
+    $add_friend = "INSERT INTO friendrequests(sender_id, receiver_id, request_status) VALUES ('$sessionUserID','$thisFriend', '1')";
 
     $run_add_friend=mysqli_query($con, $add_friend);
 
