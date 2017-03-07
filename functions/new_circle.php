@@ -49,7 +49,8 @@ if(isset($_POST['createCircle'])){
 
     }
     echo "<script>alert('created new circle')</script>";
-    header("refresh:0.1; url=../Pages/circles.php?userid=$userID");
+    // header("refresh:0.1; url=../Pages/circles.php?userid=$userID");
+    echo "<script type='text/javascript'> document.location = '../Pages/circles.php?userid=$userID'; </script>";
     exit;
   } else {
     echo "<script>alert('unsuccessfull')</script>";
