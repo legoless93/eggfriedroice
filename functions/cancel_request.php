@@ -5,13 +5,13 @@ include ("../includes/connection.php");
 
 
 
-// this should get the session user id
+// this should get the session user id 
 
 // gets the userID of the person you want to delete from the URL
 if(isset($_GET['thisFriend'])) {
 
     $thisFriend = $_GET['thisFriend'];
-
+    
 
     $logged_email = $_SESSION['user_email'];
 
@@ -24,26 +24,31 @@ if(isset($_GET['thisFriend'])) {
 
         // echo "<script>alert('Friend request accepted. sender is: $thisFriend and receiver is: $sessionUserID !!!')</script>";
 
-
     // $update_accept_friend ="UPDATE friendrequests SET request_status='2' WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID')";
+    // $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id, status) VALUES ('$sessionUserID','$thisFriend','1')";
 
-    // edited to delete the friend request when accepted. - copied from delete_requests 
-    
-    $update_accept_friend = "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID') "; 
-    $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id) VALUES ('$sessionUserID','$thisFriend')";
+    // // running a multi query
 
-    // running a multi query
+    // $run_accept_friend = mysqli_query($con, $accept_friend);
+    // $run_update_accept_friend = mysqli_query($con, $update_accept_friend);
 
-    $run_accept_friend = mysqli_query($con, $accept_friend);
-    $run_update_accept_friend = mysqli_query($con, $update_accept_friend);
+    // if ($run_accept_friend && $run_update_accept_friend ){
+    // 	echo "<script>alert('Friend request accepted!!!')</script>";
+    //     echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
+    // }
 
-    if ($run_accept_friend && $run_update_accept_friend ){
-    	echo "<script>alert('Friend request accepted!!!')</script>";
+
+
+    $cancel_request = "DELETE FROM friendrequests WHERE (sender_id='$sessionUserID' AND receiver_id='$thisFriend') ";
+
+   	$run_cancel_request = mysqli_query($con,$cancel_request );
+
+
+   	if( $run_cancel_request){
+
+   		echo "<script>alert('Friend request cancelled!!!')</script>";
         echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
-    }
-
-
-
+   	}
 
 
 

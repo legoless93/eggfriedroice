@@ -417,6 +417,36 @@ $sessionUserID = $row['user_id'];
                               // add another query here ??
                               //
 
+                              // get requests that have been SENT
+                            	$get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
+
+                            	$run_requests = mysqli_query($con, $get_requests);
+
+                            	$request_sent_user_id_array = array();
+
+                            	while ($rowPosts = mysqli_fetch_array($run_requests)){
+                            	
+                            		 $request_sent_user_id_array[] = $rowPosts['user_id'];
+                            	}
+
+                            	/////
+
+                            	// get the requests that have been received
+
+                            	$get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
+
+                            	$run_requests_as_receiver = mysqli_query($con, $get_requests_as_receiver);
+
+                            	$request_received_user_id_array = array();
+
+                            	while ($rowPosts = mysqli_fetch_array($run_requests_as_receiver)){
+                            	
+                            		 $request_received_user_id_array[] = $rowPosts['user_id'];
+                            	}
+
+
+                              /////
+
                                $get_myFriends5 = "SELECT user.user_id from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
                                                   WHERE friendshipBridge.friend_id = '$sessionUserID'
@@ -507,16 +537,84 @@ $sessionUserID = $row['user_id'];
                                     			<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 				</a>
                                 			";
-                                			echo "
+                                			echo " 
+                                				<a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
+
+                                        		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-edit pull-right' ></span>
+
+                                				</a>
+
+
                                 				<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
 
                                         		<span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
 
                                 				</a>
+
                                 			</li>
                                  			";
 
-                                		} else {
+
+                                 			// *** need to add another else here to check if you have send a friend request to them OR if you have received one from them - 
+
+                                		} 
+                                		else if((in_array($thisFriendID, $request_sent_user_id_array))) {
+
+                                			// if you have  pending friend request ( sent )
+                                			echo "
+                                			<li class='list-group-item clearfix'>
+                                				<a href='../home.php?userid=$thisFriendID'>
+
+
+                                   				<div class='d-flex w-100 justify-content-between'>
+                                   	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                        		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    			</div>
+                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
+                                				</a>
+                                			";
+
+                                			echo "
+                                			<a href='' title='Pending Friend Request'>
+
+                                        	<span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
+
+                              				</a>
+
+                                			</li>
+                                 			";
+
+
+                                		} 
+                                		else if((in_array($thisFriendID, $request_received_user_id_array))) {
+
+                                			// if you have  pending friend request ( sent )
+                                			echo "
+                                			<li class='list-group-item clearfix'>
+                                				<a href='../home.php?userid=$thisFriendID'>
+
+
+                                   				<div class='d-flex w-100 justify-content-between'>
+                                   	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                        		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    			</div>
+                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
+                                				</a>
+                                			";
+
+                                			echo "
+                                			<a href='' title='Pending Friend Request'>
+
+                                        	<span  class='label label-primary pull-right' style='padding:5px'>They have sent you a friend request</span>
+
+                              				</a>
+
+                                			</li>
+                                 			";
+
+
+                                		} 
+                                			else {
 
                                 			// they are not your friend
 
