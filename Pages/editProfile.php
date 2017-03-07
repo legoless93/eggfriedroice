@@ -457,6 +457,8 @@ $sessionUserID = $row['user_id'];
 
 <?php
 
+// $curSet="null";
+
 $getPriv = "SELECT * FROM privacy WHERE user_id = '$sessionUserID'";
 $run_getPriv = mysqli_query($con, $getPriv);
 $allPriv = mysqli_fetch_array($run_getPriv);
@@ -470,6 +472,8 @@ if($allPriv['public'] == 1) {
 } else if($allPriv['private'] == 1) {
   $curSet = "private";
 }
+
+ // echo "<script>alert('cur set : $curSet !!!')</script>";
 
  ?>
 

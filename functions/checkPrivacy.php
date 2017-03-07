@@ -1,5 +1,14 @@
 <?php
 
+
+
+// $userID = $_GET['userid'];
+
+// echo "<script>alert('user id : $userID !!!')</script>";
+// echo "<script>alert('session ID  : $sessionUserID !!!')</script>";
+
+// $curSet="public";
+
 if($sessionUserID != $userID) {
 
   $getPriv = "SELECT * FROM privacy WHERE user_id = '$userID'";
@@ -11,11 +20,12 @@ if($sessionUserID != $userID) {
   } else if($allPriv['friendsOfFriends'] == 1) {
     $curSet = "friendsOfFriends";
   } else if($allPriv['friends'] == 1) {
-    $curSet = "friends";
+    $curSet = 'friends';
   } else if($allPriv['private'] == 1) {
     $curSet = "private";
   }
 
+ // echo "<script>alert('cur set : $curSet !!!')</script>";
 
   if($curSet == "friends") {
     $checkStatus = "SELECT * FROM friendshipBridge
