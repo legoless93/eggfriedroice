@@ -13,7 +13,7 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-echo "<script>alert('session user id: $sessionUserID !!!')</script>";
+// echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
 // if(isset($_GET['userid'])) {
 //   $userID = $_GET['userid'];
@@ -74,7 +74,274 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+     <!--  added changes here ( removed the 2 js ones at the bottom of the page )  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+<!-- jQuery and ajax  for mutual friends -->
+<script>
+ $(document).ready(function(){
+
+    $(document).on('click', '#getUser', function(e){
+  
+     e.preventDefault();
+  
+     var uid = $(this).data('id'); // get id of clicked row
+  
+     $('#dynamic-content').html(''); // leave this div blank
+     // $('#modal-loader').show();      // load ajax loader on button click
+ 
+     $.ajax({
+          url: '../functions/Mutual_Friends.php',
+          type: 'POST',
+          data: 'id='+uid,
+          dataType: 'html'
+     })
+     .done(function(data){
+          console.log(data); 
+          // $('#dynamic-content').html(''); // blank before load.
+          $('#dynamic-content').html(data); // load here
+          // $('#modal-loader').hide(); // hide loader  
+     })
+     .fail(function(){
+          $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+          // $('#modal-loader').hide();
+     });
+
+    });
+});
+</script>
+
+
+<!-- jquery and ajax for delete friend confirmation  w/ boot box-->
+
+<script>
+ $(document).ready(function(){
+  
+  $('.delete_product').click(function(e){
+   
+   e.preventDefault();
+   
+   var pid = $(this).attr('data-id');
+   var parent = $(this).parent("li");
+   
+   bootbox.dialog({
+     message: "Are you sure you want to Delete ?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
+     buttons: {
+    success: {
+      label: "No",
+      className: "btn-success",
+      callback: function() {
+      $('.bootbox').modal('hide');
+      }
+    },
+    danger: {
+      label: "Delete!",
+      className: "btn-danger",
+      callback: function() {
+       
+       
+       $.ajax({
+        
+        type: 'POST',
+        url: '../functions/deleteFriendTest.php',
+        data: 'delete='+pid
+        
+       })
+       .done(function(response){
+        
+        bootbox.alert(response);
+        parent.fadeOut('slow');
+
+        // keep this ***************************************** 
+        // but copy this
+        // $('#f_sent').html(response);  
+        
+       })
+       .fail(function(){
+        
+        bootbox.alert('Something Went Wrong ....');
+                
+       })
+              
+      }
+    }
+     }
+   });
+   
+   
+  });
+  
+ });
+
+</script>
+
+
+
+<!-- BOOTBOX FOR accepting friend request -->
+<script>
+ $(document).ready(function(){
+  
+  $('.delete_friend_request_row').click(function(e){
+   
+   e.preventDefault();
+   
+   var pid = $(this).attr('data-id');
+   var parent = $(this).parent("li");
+   
+   bootbox.dialog({
+     message: "Are you sure you want to Accept ?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Accept !",
+     buttons: {
+    success: {
+      label: "Cancel",
+      className: "btn-success",
+      callback: function() {
+      $('.bootbox').modal('hide');
+      }
+    },
+    danger: {
+      label: "Yes",
+      className: "btn-primary",
+      callback: function() {
+       
+       
+       $.ajax({
+        
+        type: 'POST',
+        url: '../functions/accept_requestTEST.php',
+        data: 'accept='+pid
+        
+       })
+       .done(function(response){
+        
+        bootbox.alert('You are now friends');
+        parent.fadeOut('slow');
+
+        // keep this ***************************************** 
+        // but copy this
+        $('#f_list').html(response);  
+
+        
+        // USE THIS FOR RELOCATION *****
+        // window.location='../home.php?userid=<?php echo $sessionUserID;?>';
+
+        
+        
+       })
+       .fail(function(){
+        
+        bootbox.alert('Something Went Wrong ....');
+
+       
+
+        // window.location ='../home.php?userid=$sessionUserID';
+                
+       })
+              
+      }
+    }
+     }
+   });
+   
+   
+  });
+  
+ });
+
+</script>
+
+
+
+<!--  jquery and ajax for accept friend request  - NOT USED  -->
+<script>
+ $(document).ready(function(){
+
+    $(document).on('click', '#getSenderUser', function(e){
+  
+     e.preventDefault();
+  
+     var ID = $(this).data('id'); // get id of clicked row
+  
+     // $('#dynamic-content').html(''); // leave this div blank
+     // $('#modal-loader').show();      // load ajax loader on button click
+
+
+
+ 
+     // $.ajax({
+     //      url: '../functions/accept_requestTEST.php',
+     //      type: 'POST',
+     //      data: 'id='+ID,
+     //      dataType: 'html'
+     // })
+     // .done(function(data){
+     //      console.log(data); 
+     //      // $('#dynamic-content').html(''); // blank before load.
+     //      $('#dyno-content').html(data); // load here
+     //      // $('#modal-loader').hide(); // hide loader  
+     // })
+     // .fail(function(){
+     //      $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+     //      // $('#modal-loader').hide();
+     // });
+
+    $.ajax({  
+    url:'../functions/accept_requestTEST.php',  
+    method:"POST",  
+    data: 'id='+ID,  
+    
+    },
+    .success:function(data){  
+     // $('#insert_form')[0].reset();
+
+      $('#dyno-content').html(data);  
+     $('#accept-modal').modal('hide');  
+     $('#employee_table').html(data);  
+    }  
+   });    
+
+    });
+});
+</script>
+
+
+
 </head>
+
+<!-- modal for viewing mutual friends  -->
+<div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog"> 
+     <div class="modal-content">  
+   
+        <div class="modal-header"> 
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+           <h4 class="modal-title">
+           <i class="glyphicon glyphicon-user"></i> Mutual Friends 
+           </h4> 
+        </div> 
+            
+        <div class="modal-body">                     
+           <!-- <div id="modal-loader" style="display: none; text-align: center;">
+           <!-- ajax loader -->
+<!--            <img src="ajax-loader.gif"> -->
+           <!-- </div> -->
+                            
+           <!-- mysql data will be load here -->                          
+           <div id="dynamic-content"></div>
+        </div> 
+                        
+        <div class="modal-footer"> 
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+        </div> 
+                        
+    </div> 
+  </div>
+</div>
+
+
 
 <body>
 
@@ -392,11 +659,12 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                             <i class="fa fa-edit fa-fw"></i> Friend Requests Received
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body"> 
+                        <!-- where we might put the div id -->
 
-                        <ul class="list-group">
+                        <ul class="list-group" id="f_sent">
 
-                        </ul>
+                        
 
                         <?php
 
@@ -425,7 +693,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                     $rowUsers = mysqli_fetch_array($run_request_status);
                                     $theRequestStatus = $rowUsers['request_status'];
 
-                                    echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                    // echo "<script>alert('the request status is: $theRequestStatus')</script>";
                                     };
 
 
@@ -448,20 +716,25 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                     echo "
 
 
-                                 <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='reject Friend Request'>
+                                 <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='Reject Friend Request'>
 
                                         <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
 
+                                </a>";
+
+                                echo "
+
+                                
+
+
+                                  <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
+                                <i class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right'></i>
                                 </a>
-
-                                <a href=\"../functions/accept_request.php?thisFriend=$thisFriendID\" title='Accept Friend Request'>
-
-                                        <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
-
-                                </a>
-
                                 </li>
-                                 ";}
+                                ";
+
+
+                                 }
 
                             };
 
@@ -469,7 +742,11 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                         ?>
 
+                        </ul>
 
+                                  <!-- <button data-toggle='modal' data-target='#accept-modal' data-id=\"$thisFriendID\" id='getSenderUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-plus'></i> Accept</button>
+
+                                </li> -->
 
 
                         </div>
@@ -489,8 +766,6 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                         <ul class="list-group">
 
-                        </ul>
-
 
 <!--
                             // // get requests that have been received
@@ -499,7 +774,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
                         <?php
 
-                            // get requests that have been received
+                            // get requests that have been SENT
                             $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
 
                             $run_requests = mysqli_query($con, $get_requests);
@@ -523,7 +798,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                     $rowUsers = mysqli_fetch_array($run_request_status);
                                     $theRequestStatus = $rowUsers['request_status'];
 
-                                    echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                    // echo "<script>alert('the request status is: $theRequestStatus')</script>";
                                     };
 
 
@@ -543,7 +818,15 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                 ";
 
                                 echo "
-                                <a href='' title='Pending Friend Request'>
+
+                                    <a href=\"../functions/cancel_request.php?thisFriend=$thisFriendID\" title='Cancel Friend Request'>
+
+                                        <span  class='label label-danger pull-right' style='padding:5px'>Cancel</span>
+
+                                    </a>
+
+
+                                <a href='#' title='Pending Friend Request'>
 
                                         <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
 
@@ -562,8 +845,7 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                         ?>
 
 
-
-
+                        </ul>
                         </div>
 
                     </div>
@@ -594,7 +876,8 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <ul class="list-group">
+                <!--  *********** -->
+                    <ul class="list-group" id='f_list'>
 
                               <?php
 
@@ -628,17 +911,45 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
                                         <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     </div>
                                     <p class='mb-1'>Display timestamp here or number of friends?</p>
-                                </a>
-                                <a href=\"../functions/delete_friends.php?thisFriend=$thisFriendID\" title='Delete'>
 
-                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right' ></span>
 
                                 </a>
+
+
+                                <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                                <i class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right'></i>
+                                </a>
+                                
+
+
+                                <a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
+
+                                                <span  class='btn btn-primary  btn-xs glyphicon glyphicon-edit pull-right' ></span>
+
+                                </a>
+
+                                
+                                
+                                ";
+
+                                 echo "
+
+                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> Mutual Friends</button>
+
                                 </li>
                                 ";
                               };
 
                                 ?>
+
+                                <!-- STUFF BEFORE delete edit goes after their name  -->
+                                <!-- <a href=\"../functions/delete_friends.php?thisFriend=$thisFriendID\" title='Delete'>
+
+                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right' ></span>
+
+                                </a> -->
+
+             
 
                              <!--    echo "
                                 <a href='home.php?userid=$thisFriendID' class='list-group-item '>
@@ -659,10 +970,10 @@ echo "<script>alert('session user id: $sessionUserID !!!')</script>";
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>

@@ -74,135 +74,9 @@ $sessionUserID = $row['user_id'];
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <!--  added changes here ( removed the 2 js ones at the bottom of the page )  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!--     <script>
-    $(document).ready(function(){
-    
-
-      $('.view_data').click(function(){
-      var friend_id = $(this).attr('id');
-
-       $.ajax({
-            method: 'POST',
-            url:'../functions/test.php', // in here you should put your query 
-            data:{friend_id:friend_id}, // here you pass your id via ajax .
-                     // in php you should use $_POST['post_id'] to get this value 
-       success : function(data)
-           {
-              // now you can show output in your modal 
-             
-            $('#friend_detail').html(data);
-            $('#mymodal').modal("show")  // put your modal id 
-           }
-    });
-
-    });
-  });
-</script>
- -->
- <!-- viewing mutual friends -->
-<script>
- $(document).ready(function(){
-
-    $(document).on('click', '#getUser', function(e){
-  
-     e.preventDefault();
-  
-     var uid = $(this).data('id'); // get id of clicked row
-  
-     $('#dynamic-content').html(''); // leave this div blank
-     // $('#modal-loader').show();      // load ajax loader on button click
- 
-     $.ajax({
-          url: '../functions/Mutual_Friends.php',
-          type: 'POST',
-          data: 'id='+uid,
-          dataType: 'html'
-     })
-     .done(function(data){
-          console.log(data); 
-          // $('#dynamic-content').html(''); // blank before load.
-          $('#dynamic-content').html(data); // load here
-          // $('#modal-loader').hide(); // hide loader  
-     })
-     .fail(function(){
-          $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
-          // $('#modal-loader').hide();
-     });
-
-    });
-});
-</script>
-
-
-
 </head>
 
-  <!-- Trigger the modal with a button -->
-  <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
-
-
-  <!-- *** changes here -->
-  <!-- Modal -->
-<!--   <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog"> -->
-    
-      <!-- Modal content-->
-     <!--  <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Test</h4>
-        </div>
-        <div class="modal-body" id="friend_detail"> -->
-
-        
-
-        <!-- <?php
-        
-            // echo "$thisFirstName $thisLastName HEY";
-
-          ?> -->
-
-<!--         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div> -->
-  
-<div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog"> 
-     <div class="modal-content">  
-   
-        <div class="modal-header"> 
-           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
-           <h4 class="modal-title">
-           <i class="glyphicon glyphicon-user"></i> Mutual Friends 
-           </h4> 
-        </div> 
-            
-        <div class="modal-body">                     
-           <div id="modal-loader" style="display: none; text-align: center;">
-           <!-- ajax loader -->
-           <img src="ajax-loader.gif">
-           </div>
-                            
-           <!-- mysql data will be load here -->                          
-           <div id="dynamic-content"></div>
-        </div> 
-                        
-        <div class="modal-footer"> 
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-        </div> 
-                        
-    </div> 
-  </div>
-</div>
+<body>
 
     <div id="wrapper">
 
@@ -586,15 +460,8 @@ $sessionUserID = $row['user_id'];
                                         <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
      
                                 </a>
-                                 ";
-
-
-                                      echo "
-
-                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button>
-
                                 </li>
-                                ";} else {
+                                 ";} else {
 
                                  	echo "
                                 	<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
@@ -602,44 +469,14 @@ $sessionUserID = $row['user_id'];
                                         <span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
      
                                 	</a>
-
-                                   
-
-
-                                    
+                                	</li>
                                  ";
-
-
-                                echo "
-
-                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button>
-
-                                </li>
-                                ";
-
-
-                                //   <button data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button>
-
-                                // </li>
-
-
                                  }
-
-
                              }
                               };
 
 
                                 ?>
-
-
-                                <!-- <button type='button' name='view' value='view'  id='1' class='btn btn-info btn-xs view_data' >Open</button> -->
-
-                               
-
-                                <!-- data-toggle='modal' data-target='#myModal'
- -->
-
 
                              <!--    echo "
                                 <a href='home.php?userid=$thisFriendID' class='list-group-item '>
@@ -648,7 +485,6 @@ $sessionUserID = $row['user_id'];
                                 </a>
                                 "; -->
                     </ul>
-
                 </div>
                 <!-- /.panel-body -->
                 <!-- /.panel-footer -->
@@ -660,13 +496,11 @@ $sessionUserID = $row['user_id'];
     </div>
     <!-- /#wrapper -->
 
-
-
     <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
@@ -682,5 +516,3 @@ $sessionUserID = $row['user_id'];
 </body>
 
 </html>
-
-

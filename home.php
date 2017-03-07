@@ -315,6 +315,7 @@ if(isset($_GET['userid'])) {
                             ?>
                         </li>
                         <li>
+                        <!-- **** CHANGE   to userID ( from sessionID) -->
                           <?php
                           echo "
                             <a href='Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
