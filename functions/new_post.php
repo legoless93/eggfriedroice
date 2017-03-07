@@ -18,7 +18,8 @@ include("../includes/connection.php");
     $dateYear = date('y');
     $dateTime = date('his');
 
-    $insertPost = "INSERT INTO posts (user_id, post_day, post_month, post_year, post_time, post_title, post_body) VALUES ('$sessionUserID','$dateDay', '$dateMonth', '$dateYear', '$dateTime', '$postTitle', '$postBody')";
+    $insertPost = "INSERT INTO posts (user_id, post_day, post_month, post_year, post_time, post_title, post_body)
+    VALUES ('$sessionUserID','$dateDay', '$dateMonth', '$dateYear', '$dateTime', '$postTitle', '$postBody')";
     $run_insertPost = mysqli_query($con, $insertPost);
 
     if($run_insertPost) {

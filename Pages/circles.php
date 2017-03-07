@@ -29,8 +29,6 @@ ul#friends li {
   padding: 10px;
 }
 </style>
-
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -376,7 +374,7 @@ ul#friends li {
 
                           <div class="panel-heading">
                             <h5>My Circles</h5>
-                          </div>
+
                           <!--  -->
                           <div class="panel-body">
 
@@ -401,7 +399,6 @@ ul#friends li {
                                   <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
                                 </a>
                               </li>";
-
                             }
                             ?>
                             <!-- insert from database ENDS -->
