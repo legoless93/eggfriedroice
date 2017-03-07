@@ -7,6 +7,10 @@ $logged_email = $_SESSION['user_email'];
 $get_circleID = $_GET['circle_id'];
 $_SESSION['pass_circleID'] = $get_circleID;
 
+if (!$get_circleID){
+  echo "<script>alert('burrr')</script>";
+}
+
 //Anywhere else...no...
 include("../functions/new_message.php");
 
@@ -58,6 +62,14 @@ if(isset($_GET['userid'])) {
     <![endif]-->
 
 </head>
+
+<script>
+    $('#confirm-delete').on('show.bs.modal', function(e) {
+        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    });
+</script>
 
 <body>
 
@@ -367,16 +379,18 @@ if(isset($_GET['userid'])) {
                   $row = mysqli_fetch_array($run_getName);
 
                   $circleName = $row['circle_name'];
+                  $thisCircleID = $row['circle_id'];
                   // $get_circleName = "SELECT circleBridge.member_id FROM circleBridge
                   // JOIN circles ON circles.circle_id = circleBridge.circle_id
                   // WHERE circles.circle_id = '$get_circleID' ";
 
                   echo "<h1 class='page-header'>$circleName</h1>";
-                    // <h1 class="page-header">*Circle name here*</h1>
-                  ?>
 
+                  ?>
                 </div>
                 <!-- /.col-lg-12 -->
+
+                <!--  -->
                 <div class="row">
                     <div class="col-lg-8">
                       <div class="chat-panel panel panel-default">
@@ -390,7 +404,6 @@ if(isset($_GET['userid'])) {
 
                             <?php
 
-                            // $get_messages = "SELECT * FROM messages WHERE messages.circle_id = '$get_circleID' ORDER BY message_id DESC";
                             $get_messages = "SELECT user.user_firstName, user.user_lastName, user.user_pic, messages.message_body, messages.sender_id, messages.message_time
                                               FROM messages JOIN user ON messages.sender_id = user.user_id WHERE messages.circle_id = '$get_circleID' ORDER BY message_id DESC";
                             $run_messages = mysqli_query($con, $get_messages);
@@ -406,7 +419,6 @@ if(isset($_GET['userid'])) {
                               $thisLast = $rowPosts['user_lastName'];
                               $thisPic = $rowPosts['user_pic'];
 
-                              // LOOK INTO SEPARATING USER MESSAGES BY DIRECTION
                               if ($thisSenderID != $userID){
                               echo "<li class='left clearfix'>
                                   <span class='chat-img pull-left'>
@@ -451,13 +463,13 @@ if(isset($_GET['userid'])) {
               <!-- /.panel-body -->
               <div class="panel-footer">
 
-                <form method="post">
+                <form action="#" method="post">
                   <div class="input-group">
 
                       <input method="post" name="circle_message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                       <span class="input-group-btn">
 
-                          <button name="sendCircleMessage" type="submit" class="btn btn-warning btn-sm">
+                          <button name="sendCircleMessage" onclick="myFunction()" type="submit" class="btn btn-warning btn-sm">
                               Send
                           </button>
 
@@ -466,16 +478,50 @@ if(isset($_GET['userid'])) {
                   </div>
                   </form>
 
+                  <!-- <script>
+                  function myFunction() {
+                      document.getElementById("test1").reset();
+                  }
+                  </script> -->
+
               </div>
             </div>
           </div>
             <!-- /.panel-footer -->
+
+            <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>As the group creator, you have special rights to delete this group.</p>
+                                <p>Do you want to proceed?</p>
+                                <p class="debug-url"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <?php
+                                echo "
+                                <a class='btn btn-danger' href='../functions/delete_circle.php?circle_id=$thisCircleID'>Delete</a>
+                                ";
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
         <!-- /#page-wrapper -->
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
 
-                    <i class="fa fa-users fa-fw"></i> Other circle thugs
+                    <i class="fa fa-users fa-fw"></i> Circle friends
 
                 </div>
         <!-- /.panel -->
@@ -486,7 +532,18 @@ if(isset($_GET['userid'])) {
               <!-- DATABASE QUERY: FIND CIRCLE FRIEND DETAILS FROM USER -->
               <?php
 
-              $get_circleFriends = "SELECT user.user_firstName, user.user_lastName, user.user_pic
+              // this is a check to counter the back button once a circle has been deleted
+              $checkCircleID = "SELECT * FROM circles WHERE circles.circle_id = $get_circleID";
+              $sql = mysqli_query($con, $checkCircleID);
+              $runsql = mysqli_fetch_array($sql);
+
+              $idPresent = $runsql['circle_id'];
+
+              if(!$idPresent){
+                echo "<script>window.open('../Pages/circles.php?userid=$sessionUserID', '_self')</script>";
+              }
+
+              $get_circleFriends = "SELECT user.user_firstName, user.user_lastName, user.user_pic, circles.creator_id, circleBridge.member_id
                               FROM circleBridge
                               JOIN circles
                               ON circleBridge.circle_id = $get_circleID AND circleBridge.circle_id = circles.circle_id
@@ -499,6 +556,8 @@ if(isset($_GET['userid'])) {
                 $member_first = $rowPosts['user_firstName'];
                 $member_last = $rowPosts['user_lastName'];
                 $member_pic = $rowPosts['user_pic'];
+                $member_id = $rowPosts['member_id'];
+                $thisCreatorID = $rowPosts['creator_id'];
 
                 echo "<li class='left clearfix'>
                       <span class='chat-img pull-left'>
@@ -506,16 +565,36 @@ if(isset($_GET['userid'])) {
                       </span>
                       <div class='chat-body clearfix'>
                       <div class='header'>
+                      <a href='../home.php?userid=$member_id'>
                       <strong class='primary-font'>$member_first $member_last</strong>
-                      <small class='pull-right text-muted'>
-                      <i class='fa fa-clock-o fa-fw'></i> 5 mins ago
-                      </small>
+                      </a>
+                      <a href='../Pages/blog.php?userid=$member_id'>
+                      <div class='pull-right'>
+                      <i class='fa fa-rss fa-fw'></i>
+                      </div>
+                      </a>
+                      <a href='../home.php?userid=$member_id'>
+                      <div class='pull-right'>
+                      <i class='fa fa-home fa-fw'></i>
+                      </div>
+                      </a>
                       </div>
                       </div>
                       </li>";
 
               }
+
+              if($thisCreatorID == $sessionUserID) {
+              echo "
+              <div style=\"text-align: center;\">
+              <button center-block class=\"btn btn-danger\" data-href=\"../functions/delete_circle.php?circle_id=$thisCircleID\" data-toggle=\"modal\" data-target=\"#confirm-delete\">
+              Delete Group
+              </button>
+              </div>
+              ";
+            };
               ?>
+
               <ul>
 
               </div>
