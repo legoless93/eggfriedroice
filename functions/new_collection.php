@@ -19,8 +19,8 @@ include("../includes/connection.php");
     $collectionCircle = $_POST['circle'];
 
 
-    $insertCollection = "INSERT INTO photoCollections (collection_name,public,friends,friendsOfFriends,private,circle)
-    VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle')";
+    $insertCollection = "INSERT INTO photoCollections (collection_name,public,friends,friendsOfFriends,private,circle, user_id)
+    VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle', $sessionUserID)";
 
     $run_insertCollection = mysqli_query($con, $insertCollection);
 
