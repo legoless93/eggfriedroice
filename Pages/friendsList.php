@@ -1,8 +1,8 @@
 <?php
 session_start();
 include("../includes/connection.php");
-include("../functions/new_post.php");
-include("../functions/delete_post.php");
+// include("../functions/new_post.php");
+// include("../functions/delete_post.php");
 // include("../functions/retrieve_posts.php");
 
 $logged_email = $_SESSION['user_email'];
@@ -13,14 +13,30 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-if(isset($_GET['userid'])) {
-  $userID = $_GET['userid'];
-}
+echo "<script>alert('session user id: $sessionUserID !!!')</script>";
 
-include("../functions/checkPrivacy.php");
+// if(isset($_GET['userid'])) {
+//   $userID = $_GET['userid'];
+// }
+
+// if(isset($_GET[''])){
+// }
 
 ?>
 
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title>TEST</title>
+</head>
+<body>
+
+<h1>HEY THERE u fuck  </h1>
+
+
+</body>
+</html> -->
 
 
 <!DOCTYPE html>
@@ -360,109 +376,276 @@ include("../functions/checkPrivacy.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blog</h1>
+                    <h1 class="page-header">Friends List</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
             <div class="row">
-
-
-
-
             </div>
-<!-- /.row -->
-            <?php
 
-            if($userID == $sessionUserID) {
-              echo "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-edit fa-fw'></i> Add a new post
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-edit fa-fw"></i> Friend Requests Received
                         </div>
                         <!-- /.panel-heading -->
-                        <div class='panel-body'>
-         <form method='post'>
-         <div class='form-group' id='post_form'>
-             <label> Title</label>
-                 <label>Text Input with Placeholder</label>
-                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
-                <label>Post body</label>
-             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
-         </div>
-         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
-       </form>
+                        <div class="panel-body">
+
+                        <ul class="list-group">
+
+                        </ul>
+
+                        <?php
+
+                            // get requests that have been received
+                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
+
+                            $run_requests_as_receiver = mysqli_query($con, $get_requests_as_receiver);
+
+                            while ($rowPosts = mysqli_fetch_array($run_requests_as_receiver)){
+
+
+
+                                    $thisFN = $rowPosts['user_firstName'];
+                                    $thisLN = $rowPosts['user_lastName'];
+                                    $thisFriendID = $rowPosts['user_id'];
+                                    $thisPhoto = $rowPosts['user_pic'];
+
+                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$thisFriendID' AND friendrequests.receiver_id = '$sessionUserID'  )";
+
+                                    $run_request_status = mysqli_query($con, $get_request_status);
+
+                                    $check = mysqli_num_rows($run_request_status);
+
+                                    if($check == 1) {
+
+                                    $rowUsers = mysqli_fetch_array($run_request_status);
+                                    $theRequestStatus = $rowUsers['request_status'];
+
+                                    echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                    };
+
+
+                                    if ($theRequestStatus == '1'){
+                                    echo "
+                                    <li class='list-group-item clearfix'>
+                                    <a href='../home.php?userid=$thisFriendID'>
+
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                     <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                        <h5 class='mb-1'>$thisFN $thisLN</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                </a>
+                                ";
+
+
+
+                                    echo "
+
+
+                                 <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='reject Friend Request'>
+
+                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
+
+                                </a>
+
+                                <a href=\"../functions/accept_request.php?thisFriend=$thisFriendID\" title='Accept Friend Request'>
+
+                                        <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
+
+                                </a>
+
+                                </li>
+                                 ";}
+
+                            };
+
+
+
+                        ?>
+
+
+
+
                         </div>
 
                     </div>
                 </div>
 
             </div>
-            ";
-          };
-
-            ?>
-    <!-- /.row -->
 
 
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-edit fa-fw"></i> Friend Requests Sent
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
 
-            <!-- Where POSTS begin -->
+                        <ul class="list-group">
+
+                        </ul>
+
+
+<!--
+                            // // get requests that have been received
+                            // $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID";
+ -->
+
+                        <?php
+
+                            // get requests that have been received
+                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
+
+                            $run_requests = mysqli_query($con, $get_requests);
+
+                            while ($rowPosts = mysqli_fetch_array($run_requests)){
+
+                                    $thisFN = $rowPosts['user_firstName'];
+                                    $thisLN = $rowPosts['user_lastName'];
+                                    $thisFriendID = $rowPosts['user_id'];
+                                    $thisPhoto = $rowPosts['user_pic'];
+
+
+                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
+
+                                    $run_request_status = mysqli_query($con, $get_request_status);
+
+                                    $check = mysqli_num_rows($run_request_status);
+
+                                    if($check == 1) {
+
+                                    $rowUsers = mysqli_fetch_array($run_request_status);
+                                    $theRequestStatus = $rowUsers['request_status'];
+
+                                    echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                    };
+
+
+
+                                    if ($theRequestStatus == '1'){
+                                    echo "
+                                    <li class='list-group-item clearfix'>
+                                    <a href='../home.php?userid=$thisFriendID'>
+
+
+                                    <div class='d-flex w-100 justify-content-between'>
+                                     <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                        <h5 class='mb-1'>$thisFN $thisLN</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                </a>
+                                ";
+
+                                echo "
+                                <a href='' title='Pending Friend Request'>
+
+                                        <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
+
+                                </a>
+
+                                </li>
+                                 ";
+                            }
+
+                            };
+
+
+
+
+
+                        ?>
+
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+            <!-- /.row -->
+            <!-- friends list CHANGES here -->
             <div class="chat-panel panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-comments fa-fw"></i> Posts
+
+                <?php
+
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
+
+								echo "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)"
+
+                              ?>
+                    <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <ul class="chat">
+                    <ul class="list-group">
 
-                      <?php
+                              <?php
 
-                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
-                      $run_myPosts = mysqli_query($con, $get_myPosts);
-                      $checkPosts = mysqli_num_rows($run_myPosts);
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
 
-                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
+                              // add another query here ??
+                              //
 
-                        $thisPostID = $rowPosts['post_id'];
-                        $thisTitle = $rowPosts['post_title'];
-                        $thisBody = $rowPosts['post_body'];
-                        $thisDay = $rowPosts['post_day'];
-                        $thisMonth = $rowPosts['post_month'];
-                        $thisYear = $rowPosts['post_year'];
-                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
+                              while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
 
-                        echo "<li class=\"left clearfix\">
-                            <div class=\"chat-body clearfix\">
-                                <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
-                                    <small class=\"text-muted\">
-                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
-                                    </small>
-                                    ";
-                                    if($userID == $sessionUserID) {
-                                    echo "
-                                        <div class=\"pull-right btn-group\">
-                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
-                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
-                                          </button>
-                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
-                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        ";
-                                      };
-                                      echo "
-                                </div>
-                                <p> $thisBody</p>
-                            </div>
-                        </li>";
+                                $thisFriendID = $rowPosts['user_id'];
+                                $thisFirstName = $rowPosts['user_firstName'];
+                                $thisLastName = $rowPosts['user_lastName'];
+                                $thisPhoto = $rowPosts['user_pic'];
+                                // $thisRelID = $rowPosts['']
+ 								echo "
+                                <li class='list-group-item clearfix'>
+                                <a href='../home.php?userid=$thisFriendID'>
 
-                      };
-                      ?>
 
+                                   	<div class='d-flex w-100 justify-content-between'>
+                                   	 <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                        <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
+                                    </div>
+                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                </a>
+                                <a href=\"../functions/delete_friends.php?thisFriend=$thisFriendID\" title='Delete'>
+
+                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right' ></span>
+
+                                </a>
+                                </li>
+                                ";
+                              };
+
+                                ?>
+
+                             <!--    echo "
+                                <a href='home.php?userid=$thisFriendID' class='list-group-item '>
+                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
+                                    </span>
+                                </a>
+                                "; -->
                     </ul>
                 </div>
                 <!-- /.panel-body -->

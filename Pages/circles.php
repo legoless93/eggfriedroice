@@ -1,9 +1,8 @@
+
 <?php
 session_start();
 include("../includes/connection.php");
-include("../functions/new_post.php");
-include("../functions/delete_post.php");
-// include("../functions/retrieve_posts.php");
+include("../functions/new_circle.php");
 
 $logged_email = $_SESSION['user_email'];
 
@@ -17,16 +16,20 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
-include("../functions/checkPrivacy.php");
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+
+<style>
+ul#friends li {
+  display: inline-flex;
+  padding: 10px;
+}
+</style>
+
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +37,7 @@ include("../functions/checkPrivacy.php");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>mybebofacespacebook</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +76,7 @@ include("../functions/checkPrivacy.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">MyBeboSpaceBook</a>
+                <a class="navbar-brand" href="index.html">mybebofacespacebook</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -278,7 +281,7 @@ include("../functions/checkPrivacy.php");
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -360,118 +363,113 @@ include("../functions/checkPrivacy.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blog</h1>
+                    <h1 class="page-header">Create new circle</h1>
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
+
+                  <div class="row">
 
 
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                        <!-- HEADING -->
 
+                          <div class="panel-heading">
+                            <h5>My Circles</h5>
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
 
-            </div>
-<!-- /.row -->
-            <?php
+                            <div class="list-group">
+                              <ul id="friends">
+                            <!-- insert from database -->
+                            <?php
+                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
+                            // $get_myCircles = "SELECT * FROM circles WHERE creator_id = '$userID' ORDER BY circle_id DESC";
+                            $run_myCircles = mysqli_query($con, $get_myCircles);
+                            $checkCircles = mysqli_num_rows($run_myCircles);
 
-            if($userID == $sessionUserID) {
-              echo "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-edit fa-fw'></i> Add a new post
+                            while ($rowCircles = mysqli_fetch_array($run_myCircles)) {
+
+                              // to delete circle later on
+                              $thisCircleID = $rowCircles['circle_id'];
+                              $thisTitle = $rowCircles['circle_name'];
+
+                              echo "<li>
+                                <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
+                                  <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
+                                  <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
+                                </a>
+                              </li>";
+
+                            }
+                            ?>
+                            <!-- insert from database ENDS -->
+                          </ul>
+                          </div>
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class='panel-body'>
-         <form method='post'>
-         <div class='form-group' id='post_form'>
-             <label> Title</label>
-                 <label>Text Input with Placeholder</label>
-                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
-                <label>Post body</label>
-             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
-         </div>
-         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
-       </form>
-                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                  <h5>Create new circle:</h5>
+                  <form method="post">
+                  <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
 
                     </div>
-                </div>
-
-            </div>
-            ";
-          };
-
-            ?>
-    <!-- /.row -->
+                    <!--  -->
+                    <div class="col-lg-6">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
 
 
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <!-- paste here -->
+                            <div class="list-group">
+                              <!-- <form method="post"> -->
+                              <?php
 
-            <!-- Where POSTS begin -->
-            <div class="chat-panel panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-comments fa-fw"></i> Posts
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <ul class="chat">
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$userID'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$userID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
 
-                      <?php
+                              while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
 
-                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
-                      $run_myPosts = mysqli_query($con, $get_myPosts);
-                      $checkPosts = mysqli_num_rows($run_myPosts);
+                                $thisFriendID = $rowPosts['user_id'];
+                                $thisFirstName = $rowPosts['user_firstName'];
+                                $thisLastName = $rowPosts['user_lastName'];
+                                $thisPhoto = $rowPosts['user_pic'];
 
-                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
+                              echo "
+                                <input type='checkbox' name='chk_group[]' value=$thisFriendID>
+                                  <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
+                                  $thisFirstName $thisLastName
+                                    </span>
+                                ";
+                              };
 
-                        $thisPostID = $rowPosts['post_id'];
-                        $thisTitle = $rowPosts['post_title'];
-                        $thisBody = $rowPosts['post_body'];
-                        $thisDay = $rowPosts['post_day'];
-                        $thisMonth = $rowPosts['post_month'];
-                        $thisYear = $rowPosts['post_year'];
-                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
-
-                        echo "<li class=\"left clearfix\">
-                            <div class=\"chat-body clearfix\">
-                                <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
-                                    <small class=\"text-muted\">
-                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
-                                    </small>
-                                    ";
-                                    if($userID == $sessionUserID) {
-                                    echo "
-                                        <div class=\"pull-right btn-group\">
-                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
-                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
-                                          </button>
-                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
-                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        ";
-                                      };
-                                      echo "
-                                </div>
-                                <p> $thisBody</p>
+                                ?>
+                            <!-- </form> -->
                             </div>
-                        </li>";
+                              <div class ="pull-right">
+                                <button name="createCircle" type="submit"><h4>Create circle</h4></button>
+                              </div>
+                            </form>
 
-                      };
-                      ?>
+                          <!-- end of friend box -->
 
-                    </ul>
-                </div>
-                <!-- /.panel-body -->
-                <!-- /.panel-footer -->
-            </div>
 
+                  </div>
+              </div>
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

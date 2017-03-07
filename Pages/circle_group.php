@@ -1,11 +1,14 @@
+
 <?php
 session_start();
 include("../includes/connection.php");
-include("../functions/new_post.php");
-include("../functions/delete_post.php");
-// include("../functions/retrieve_posts.php");
 
 $logged_email = $_SESSION['user_email'];
+$get_circleID = $_GET['circle_id'];
+$_SESSION['pass_circleID'] = $get_circleID;
+
+//Anywhere else...no...
+include("../functions/new_message.php");
 
 $get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
 $run_userID = mysqli_query($con, $get_userID);
@@ -17,11 +20,7 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
-include("../functions/checkPrivacy.php");
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +33,7 @@ include("../functions/checkPrivacy.php");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>mybebofacespacebook</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +72,7 @@ include("../functions/checkPrivacy.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">MyBeboSpaceBook</a>
+                <a class="navbar-brand" href="index.html">mybebofacespacebook</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -278,7 +277,7 @@ include("../functions/checkPrivacy.php");
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -360,118 +359,167 @@ include("../functions/checkPrivacy.php");
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Blog</h1>
+
+                  <?php
+
+                  $get_circleName = "SELECT * FROM circles WHERE circle_id = '$get_circleID'";
+                  $run_getName = mysqli_query($con, $get_circleName);
+                  $row = mysqli_fetch_array($run_getName);
+
+                  $circleName = $row['circle_name'];
+                  // $get_circleName = "SELECT circleBridge.member_id FROM circleBridge
+                  // JOIN circles ON circles.circle_id = circleBridge.circle_id
+                  // WHERE circles.circle_id = '$get_circleID' ";
+
+                  echo "<h1 class='page-header'>$circleName</h1>";
+                    // <h1 class="page-header">*Circle name here*</h1>
+                  ?>
+
                 </div>
                 <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
+                <div class="row">
+                    <div class="col-lg-8">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+                              <i class="fa fa-comments fa-fw"></i> Chat
+                          </div>
+                      <!--  -->
+                      <div class="panel-body">
+                          <ul class="chat">
 
 
+                            <?php
 
+                            // $get_messages = "SELECT * FROM messages WHERE messages.circle_id = '$get_circleID' ORDER BY message_id DESC";
+                            $get_messages = "SELECT user.user_firstName, user.user_lastName, user.user_pic, messages.message_body, messages.sender_id, messages.message_time
+                                              FROM messages JOIN user ON messages.sender_id = user.user_id WHERE messages.circle_id = '$get_circleID' ORDER BY message_id DESC";
+                            $run_messages = mysqli_query($con, $get_messages);
+                            $check_messages = mysqli_num_rows($run_messages);
 
-            </div>
-<!-- /.row -->
-            <?php
+                            while ($rowPosts = mysqli_fetch_array($run_messages)) {
 
-            if($userID == $sessionUserID) {
-              echo "
-            <div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-edit fa-fw'></i> Add a new post
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class='panel-body'>
-         <form method='post'>
-         <div class='form-group' id='post_form'>
-             <label> Title</label>
-                 <label>Text Input with Placeholder</label>
-                 <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
-                <label>Post body</label>
-             <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
-         </div>
-         <button name='postIt' type='submit' class='btn btn-default' style = 'float: right'>Post</button>
-       </form>
-                        </div>
+                              // $thisMessageID = $rowPosts['message_id'];
+                              $thisSenderID = $rowPosts['sender_id'];
+                              $thisMessageTime = $rowPosts['message_time'];
+                              $thisMessageBody = $rowPosts['message_body'];
+                              $thisFirst = $rowPosts['user_firstName'];
+                              $thisLast = $rowPosts['user_lastName'];
+                              $thisPic = $rowPosts['user_pic'];
 
-                    </div>
-                </div>
-
-            </div>
-            ";
-          };
-
-            ?>
-    <!-- /.row -->
-
-
-
-            <!-- Where POSTS begin -->
-            <div class="chat-panel panel panel-default">
-                <div class="panel-heading">
-                    <i class="fa fa-comments fa-fw"></i> Posts
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <ul class="chat">
-
-                      <?php
-
-                      $get_myPosts = "SELECT * FROM posts WHERE user_id = '$userID' ORDER BY post_id DESC";
-                      $run_myPosts = mysqli_query($con, $get_myPosts);
-                      $checkPosts = mysqli_num_rows($run_myPosts);
-
-                      while ($rowPosts = mysqli_fetch_array($run_myPosts)) {
-
-                        $thisPostID = $rowPosts['post_id'];
-                        $thisTitle = $rowPosts['post_title'];
-                        $thisBody = $rowPosts['post_body'];
-                        $thisDay = $rowPosts['post_day'];
-                        $thisMonth = $rowPosts['post_month'];
-                        $thisYear = $rowPosts['post_year'];
-                        $thisFullDate = sprintf("%02d", $thisDay) . "-" . sprintf("%02d", $thisMonth) . "-" . strval($thisYear);
-
-                        echo "<li class=\"left clearfix\">
-                            <div class=\"chat-body clearfix\">
-                                <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle!!!</strong>
-                                    <small class=\"text-muted\">
-                                        <i class=\"fa fa-clock-o fa-fw\"></i> Date of post: $thisFullDate
-                                    </small>
-                                    ";
-                                    if($userID == $sessionUserID) {
-                                    echo "
-                                        <div class=\"pull-right btn-group\">
-                                          <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">
-                                              <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>
-                                          </button>
-                                            <ul class=\"dropdown-menu pull-right\" role=\"menu\">
-                                                <li><a href=\"../functions/delete_post.php?post_id=$thisPostID\"><i class=\"fa fa-edit fa-fw\"></i> Delete post</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        ";
-                                      };
-                                      echo "
-                                </div>
-                                <p> $thisBody</p>
-                            </div>
-                        </li>";
-
-                      };
-                      ?>
+                              // LOOK INTO SEPARATING USER MESSAGES BY DIRECTION
+                              if ($thisSenderID != $userID){
+                              echo "<li class='left clearfix'>
+                                  <span class='chat-img pull-left'>
+                                      <img src='../user/user_images/$thisPic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                  </span>
+                                  <div class='chat-body clearfix'>
+                                      <div class='header'>
+                                          <strong class='primary-font'>$thisFirst $thisLast</strong>
+                                          <small class='pull-right text-muted'>
+                                              <i class='fa fa-clock-o fa-fw'></i> $thisMessageTime
+                                          </small>
+                                      </div>
+                                      <p>
+                                      $thisMessageBody
+                                      </p>
+                                  </div>
+                              </li>";
+                            } else {
+                              echo "<li class='right clearfix'>
+                                      <span class='chat-img pull-right'>
+                                      <img src='../user/user_images/$thisPic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                      </span>
+                                      <div class='chat-body clearfix'>
+                                      <div class='header'>
+                                      <small class=' text-muted'>
+                                      <i class='fa fa-clock-o fa-fw'></i> $thisMessageTime</small>
+                                      <strong class='pull-right primary-font'>$thisFirst $thisLast</strong>
+                                      </div>
+                                      <p>
+                                      $thisMessageBody
+                                      </p>
+                                      </div>
+                                      </li>";
+                            }
+                            };
+                            ?>
+                        <!--  -->
+                        <!--  -->
 
                     </ul>
                 </div>
-                <!-- /.panel-body -->
-                <!-- /.panel-footer -->
+              <!-- /.panel-body -->
+              <div class="panel-footer">
+
+                <form method="post">
+                  <div class="input-group">
+
+                      <input method="post" name="circle_message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
+                      <span class="input-group-btn">
+
+                          <button name="sendCircleMessage" type="submit" class="btn btn-warning btn-sm">
+                              Send
+                          </button>
+
+                      </span>
+
+                  </div>
+                  </form>
+
+              </div>
             </div>
-
-        </div>
+          </div>
+            <!-- /.panel-footer -->
         <!-- /#page-wrapper -->
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
 
+                    <i class="fa fa-users fa-fw"></i> Other circle thugs
+
+                </div>
+        <!-- /.panel -->
+        <div class="panel-body">
+            <ul class="chat">
+
+
+              <!-- DATABASE QUERY: FIND CIRCLE FRIEND DETAILS FROM USER -->
+              <?php
+
+              $get_circleFriends = "SELECT user.user_firstName, user.user_lastName, user.user_pic
+                              FROM circleBridge
+                              JOIN circles
+                              ON circleBridge.circle_id = $get_circleID AND circleBridge.circle_id = circles.circle_id
+                              JOIN user
+                              WHERE circleBridge.member_id = user.user_id AND circleBridge.member_id != $userID";
+              $run_circleFriends = mysqli_query($con, $get_circleFriends);
+              // DO NOT CALL v BEFORE OR YOU LOSE FIRST INDEX
+              while ($rowPosts = mysqli_fetch_array($run_circleFriends)) {
+
+                $member_first = $rowPosts['user_firstName'];
+                $member_last = $rowPosts['user_lastName'];
+                $member_pic = $rowPosts['user_pic'];
+
+                echo "<li class='left clearfix'>
+                      <span class='chat-img pull-left'>
+                      <img src='../user/user_images/$member_pic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                      </span>
+                      <div class='chat-body clearfix'>
+                      <div class='header'>
+                      <strong class='primary-font'>$member_first $member_last</strong>
+                      <small class='pull-right text-muted'>
+                      <i class='fa fa-clock-o fa-fw'></i> 5 mins ago
+                      </small>
+                      </div>
+                      </div>
+                      </li>";
+
+              }
+              ?>
+              <ul>
+
+              </div>
+              </div>
     </div>
     <!-- /#wrapper -->
 
@@ -484,10 +532,14 @@ include("../functions/checkPrivacy.php");
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
+    <!-- Flot Charts JavaScript -->
+    <script src="../vendor/flot/excanvas.min.js"></script>
+    <script src="../vendor/flot/jquery.flot.js"></script>
+    <script src="../vendor/flot/jquery.flot.pie.js"></script>
+    <script src="../vendor/flot/jquery.flot.resize.js"></script>
+    <script src="../vendor/flot/jquery.flot.time.js"></script>
+    <script src="../vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
+    <script src="../data/flot-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

@@ -2,6 +2,9 @@
 session_start();
 include("includes/connection.php");
 
+// include("../functions/searching.php");
+// include("../functions/delete_post.php");
+
 $logged_email = $_SESSION['user_email'];
 
 $get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
@@ -284,14 +287,24 @@ if(isset($_GET['userid'])) {
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
+                            <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
+                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
                                 <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
+
+
+
+                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
+                                 -->
+                            <input type="submit" value="Search" class='btn btn-default'/>
                             </span>
-                            </div>
+
+
+                            </form>
+
+                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
+                                <input class="search-query" placeholder="Search" type="text" />
+                            </form> -->
+
                             <!-- /input-group -->
                         </li>
                         <li>
@@ -309,25 +322,35 @@ if(isset($_GET['userid'])) {
                             ?>
                         </li>
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
+
+                            <a href="Pages/photocollection.php"><i class="fa fa-table fa-fw"></i> Photos</a>
                         </li>
                         <li>
-                            <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a>
+                        <!-- CHANGES HERE ** -->
+                        <?php
+                          echo "
+                            <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
+                            ";
+                            ?>
+                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Circles<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="panels-wells.html">Circle 1</a>
-                                </li>
-                                <li>
-                                    <a href="buttons.html">Circle 2</a>
-                                </li>
-                                <li>
-                                    <a href="notifications.html">Circle 3</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
+                        <!-- CHANGES HERE ** -->
+                        <?php
+                          echo "
+                            <a href='Pages/Members.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Members</a>
+                            ";
+                            ?>
+                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
+                        </li>
+                        <li>
+                        <!--  -->
+                        <?php
+                          echo "
+                            <a href='Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i>Circles</a>
+                            ";
+                            ?>
+                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-sitemap fa-fw"></i> Settings</a>
