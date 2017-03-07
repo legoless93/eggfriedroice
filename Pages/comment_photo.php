@@ -458,7 +458,7 @@ include("../functions/checkPrivacy.php");
                                             $thisFullDate = sprintf("%02d",$thisCommentDay) . "-" . sprintf("%02d", $thisCommentMonth) . "-" . strval($thisCommentYear);
 
 
-                                            echo "<li class='left clearfix'>s
+                                            echo "<li class='left clearfix list-unstyled'>
                                                 <span class='chat-img pull-left'>
                                                     <img src='../user/user_images/default.jpg' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                                 </span>
