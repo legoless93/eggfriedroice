@@ -30,7 +30,7 @@ if(isset($_GET['thisFriend'])) {
     // edited to delete the friend request when accepted. - copied from delete_requests 
     
     $update_accept_friend = "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID') "; 
-    $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id) VALUES ('$sessionUserID','$thisFriend')";
+    $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id, request_status) VALUES ('$sessionUserID','$thisFriend')";
 
     // running a multi query
 
