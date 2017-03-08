@@ -1,3 +1,77 @@
+// table
+
+<table>
+
+  <tr>
+    <!-- <td align="right" style="color: black;">First name:</td> -->
+    <td>
+      <input type="text" name="firstName" placeholder="First name" required="required"/>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- <td align="right" style="color: black;">Surname:</td> -->
+    <td>
+      <input type="text" name="lastName" placeholder="Last name" required="required"/>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- <td align="right" style="color: black;">Email:</td> -->
+    <td>
+      <input type="email" name="e_mail" placeholder="Email address" required="required"/>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- <td align="right" style="color: black;">Password</td> -->
+    <td>
+      <input type="password" name="password" placeholder="Password" required="required"/>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- <td align="right" style="color: black;">Gender:</td> -->
+    <td>
+      <select name="gender">
+        <option>Select a gender</option>
+        <option>Male</option>
+        <option>Female</option>
+      </select>
+    </td>
+  </tr>
+
+  <tr>
+    <!-- <td align="right" style="color: black;">Birthday:</td> -->
+    <td>
+      <input type="date" name="birthday"/>
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="6">
+      <button name="signUp">Sign Up</button>
+    </td>
+  </tr>
+
+</table>
+
+// DELETE CIRCLE DIRECTLY
+if($thisCreatorID == $sessionUserID) {
+echo "
+    <div>
+      <a href=\"../functions/delete_circle.php?circle_id=$thisCircleID\"><i class='fa fa-trash' aria-hidden='true'></i></a>
+      </div>
+
+
+    </li>
+    ";
+  };
+  include("../functions/delete_circle.php");
+
+// END
+
+
 <select name='' multiple>
 
 <?php

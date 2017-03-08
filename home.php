@@ -288,24 +288,11 @@ if(isset($_GET['userid'])) {
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
-                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
+                                <input type="text" name="query" class="form-control" placeholder="Search MyBeboSpaceFaceBook" >
                                 <span class="input-group-btn">
-
-
-
-                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
-                                 -->
-                            <input type="submit" value="Search" class='btn btn-default'/>
-                            </span>
-
-
+                                  <input type="submit" value="Search" class='btn btn-default'/>
+                                </span>
                             </form>
-
-                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
-                                <input class="search-query" placeholder="Search" type="text" />
-                            </form> -->
-
-                            <!-- /input-group -->
                         </li>
                         <li>
                           <?php
@@ -501,17 +488,7 @@ if(isset($_GET['userid'])) {
                             </ul>
                         </div>
                         <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
+
                     </div>
                     <!-- /.panel .chat-panel -->
                 </div>

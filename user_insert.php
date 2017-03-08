@@ -43,6 +43,8 @@ include("includes/connection.php");
         echo "<script>alert('You have successfully registered!!! Yay!!!')</script>";
         echo "<script>window.open('home.php?userid=$rowNewID[0]', '_self')</script>";
         exit();
+      } else {
+        echo "<script>alert('no')</script>";
       }
     }
 
