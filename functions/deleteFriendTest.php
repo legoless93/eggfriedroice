@@ -14,9 +14,9 @@ include ("../includes/connection.php");
 // this should get the session user id 
 
 // gets the userID of the person you want to delete from the URL
-if(isset($_GET['thisFriend'])) {
+if(isset($_REQUEST['delete'])) {
 
-    $thisFriend = $_GET['thisFriend'];
+    $thisFriend = $_REQUEST['delete'];
     
 
     $logged_email = $_SESSION['user_email'];
@@ -28,32 +28,37 @@ if(isset($_GET['thisFriend'])) {
     $sessionUserID = $row['user_id'];
 
 
-    $add_friend = "INSERT INTO friendrequests(sender_id, receiver_id, request_status) VALUES ('$sessionUserID','$thisFriend', '1')";
+    
 
-    $run_add_friend=mysqli_query($con, $add_friend);
-
-
-    if ($run_add_friend){
-    	echo "<script>alert('Friend request sent!!!')</script>";
-        echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
-    }
 
     //   // echo "<script>alert('this friend i want to delete: $thisFriend AND session user is: $sessionUserID !!!')</script>";
 
 
     // UN COMMENT this
-    // $delete_friend = "DELETE FROM friendshipbridge WHERE (user_id = '$thisFriend' AND friend_id = '$sessionUserID') OR ( user_ID = '$sessionUserID' AND friend_id = '$thisFriend')";
+    $delete_friend = "DELETE FROM friendshipbridge WHERE (user_id = '$thisFriend' AND friend_id = '$sessionUserID') OR ( user_ID = '$sessionUserID' AND friend_id = '$thisFriend')";
 
-    // $run_delete_friend = mysqli_query($con, $delete_friend);
+    $run_delete_friend = mysqli_query($con, $delete_friend);
 
-    // if($run_delete_friend){
-    //       echo "<script>alert('Friend deleted!!!')</script>";
-    //       echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
-    //  }
+    if($run_delete_friend){
+          // echo "<script>alert('Friend deleted!!!')</script>";
+        // echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
+
+        echo "Friend deleted successfully...";
+
+        //  $output = '<div>
+        // <h3>this is a test pls work</h3>
+        // </div> ';
+        // echo $output; 
+        // here you would put the whole code of loading up your friend list again 
+     }
 
     // echo "<script>window.open('../Pages/friendsList.php','_self')</script>";
     // echo "<script>window.open('../Pages/blog.php','_self')</script>";
 
+
+    
 }
 
 ?>
+
+

@@ -11,10 +11,13 @@ $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
+$_SESSION['test'] = $sessionUserID;
 
 if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
+
+// include("../functions/delete_circle.php");
 
 ?>
 
@@ -29,6 +32,8 @@ ul#friends li {
   padding: 10px;
 }
 </style>
+
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,6 +63,8 @@ ul#friends li {
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+
 
 </head>
 
@@ -127,6 +134,7 @@ ul#friends li {
                             </a>
                         </li>
                     </ul>
+
                     <!-- /.dropdown-messages -->
                 </li>
                 <!-- /.dropdown -->
@@ -360,21 +368,24 @@ ul#friends li {
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Create new circle</h1>
+                <div class="col-lg-8">
+                    <h1 class="page-header">My Circles</h1>
                 </div>
                 <!-- /.col-lg-12 -->
+                <div class="col-lg-4">
+                    <h1 class="page-header">New Circle</h1>
+                </div>
 
                   <div class="row">
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-8">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
                           <div class="panel-heading">
                             <h5>My Circles</h5>
-
+                          </div>
                           <!--  -->
                           <div class="panel-body">
 
@@ -382,7 +393,7 @@ ul#friends li {
                               <ul id="friends">
                             <!-- insert from database -->
                             <?php
-                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
+                            $get_myCircles = "SELECT circles.circle_name, circles.circle_id, circles.creator_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
                             // $get_myCircles = "SELECT * FROM circles WHERE creator_id = '$userID' ORDER BY circle_id DESC";
                             $run_myCircles = mysqli_query($con, $get_myCircles);
                             $checkCircles = mysqli_num_rows($run_myCircles);
@@ -392,33 +403,37 @@ ul#friends li {
                               // to delete circle later on
                               $thisCircleID = $rowCircles['circle_id'];
                               $thisTitle = $rowCircles['circle_name'];
+                              $thisCreatorID = $rowCircles['creator_id'];
 
                               echo "<li>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
                                   <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
                                   <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
                                 </a>
-                              </li>";
+                              ";
                             }
                             ?>
                             <!-- insert from database ENDS -->
+                            <!--  -->
+
                           </ul>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                  <h5>Create new circle:</h5>
+
+                    <div class="col-lg-4">
+                  <!-- <h2>Create new circle:</h2> -->
                   <form method="post">
                   <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
 
                     </div>
                     <!--  -->
-                    <div class="col-lg-6">
+                    <br>
+                    <div class="col-lg-4">
                       <div class="chat-panel panel panel-default">
                           <div class="panel-heading">
-
-
+                            <h5>Invite Friends</h5>
                           </div>
                           <!--  -->
                           <div class="panel-body">
@@ -445,25 +460,24 @@ ul#friends li {
                                 $thisPhoto = $rowPosts['user_pic'];
 
                               echo "
+                                <li class='list-unstyled'>
                                 <input type='checkbox' name='chk_group[]' value=$thisFriendID>
                                   <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
                                   $thisFirstName $thisLastName
                                     </span>
+                                  </li>
                                 ";
                               };
 
                                 ?>
-                            <!-- </form> -->
-                            </div>
-                              <div class ="pull-right">
-                                <button name="createCircle" type="submit"><h4>Create circle</h4></button>
-                              </div>
-                            </form>
 
                           <!-- end of friend box -->
-
-
                   </div>
+                </div>
+                  <div class ="pull-right">
+                    <button name="createCircle" type="submit" class="btn btn-danger"><h4>Create circle</h4></button>
+                  </div>
+                </form>
               </div>
         </div>
         <!-- /#page-wrapper -->
