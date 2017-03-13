@@ -1,7 +1,6 @@
 <?php
+session_start();
 include ("../includes/connection.php");
-
-// session_start();
 
 $logged_email = $_SESSION['user_email'];
 
@@ -11,18 +10,20 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-if(isset($_GET['post_id'])) {
+if(isset($_POST['deletePhoto'])) {
 
-    $post_id = $_GET['post_id'];
+    $photo_id = $_POST['deletePhoto'];
 
-    $delete_post = "DELETE FROM posts WHERE post_id = '$post_id'";
-    $run_delete = mysqli_query($con, $delete_post);
+    $delete_photo = "DELETE  FROM photos WHERE photo_id = '$photo_id' ";
+    $run_delete_photo = mysqli_query($con, $delete_photo);
 
-    if($run_delete) {
-        echo "<script>alert('Post deleted!!!')</script>";
-        echo "<script>window.open('../Pages/blog.php?userid=$sessionUserID', '_self')</script>";
+    if($run_delete_photo) {
+        echo "<script>alert('Photo deleted!!!')</script>";
+        echo "<script>alert('$sessionUserID,$photo_id')</script>";
+        echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
+    }else {
+        echo "<script>alert('Photo not deleted!!!')</script>";
+        echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
     }
-
 }
-
 ?>

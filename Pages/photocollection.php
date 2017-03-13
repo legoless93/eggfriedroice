@@ -4,6 +4,7 @@ include("../includes/connection.php");
 
 include("../functions/upload_photo.php");
 include("../functions/new_collection.php");
+include("../functions/delete_photo.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -406,26 +407,40 @@ include("../functions/checkPrivacy.php");
                                                 <form  method='post'>
                                                     <div class='form-group' id='post_form'>
                                                         <label>Collection name:</label>
-                                                        <input method='post' name='collection_name' type='string' class='form-control' placeholder='enter your collection name' required = 'required'>
+                                                        <input method='post' name='collection_name' type='string' maxlength='30' class='form-control' placeholder='enter your collection name' required = 'required' data-validation-maxlength-message='Maximum Length is 30 characters'>
                                                     </div>
-
                                                     <label>Who Can see my collection:</label>
-                                                      <div >
+
+                                                    <div class = 'form-group'>
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1'>Public
+                                                        <input type='radio' name='collectionPrivacy' id='showToPublic' value='public' checked >Public
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio2' value='option2'>Private
+                                                        <input type='radio' name='collectionPrivacy' id='showToPrivacy' value='private' checked>Private
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='option3'>My Friends
+                                                        <input type='radio' name='collectionPrivacy' id='showToFriends' value='friends' checked>My Friends
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='option3'>My Circle
+                                                        <input type='radio' name='collectionPrivacy' id='showToCircle' value='circle' checked>My Circle
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='option3'>Friends of my Friends
+                                                        <input type='radio' name='collectionPrivacy' id='showToFoF' value='FoF' checked>Friends of my Friends
                                                       </label>
+                                                      </div>
                                                     </div>
 
                                                     <div class='form-group' style ='margin-top:5px;'>
@@ -433,7 +448,12 @@ include("../functions/checkPrivacy.php");
                                                     </div>
                                                 </form>
                                             </div>
-                                        </div>";
+                                        </div>
+                                        <script>
+                                          $(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );
+                                        </script>
+
+                                        ";
                                       }else{
                                           echo "
                                           <div class='alert alert-danger' role='alert' style='margin-top:5px;'>
@@ -467,7 +487,7 @@ include("../functions/checkPrivacy.php");
                            echo "
 
                                 <div class='panel-group' id='accordion'  >
-                                  <div class='panel panel-default'>
+                                  <div class='panel panel-info'>
                                     <div class='panel-heading' >
                                       <h4 class='panel-title'>
                                         <a data-toggle='collapse' data-parent='#accordion' href='#$this_collection_id'>
@@ -490,11 +510,12 @@ include("../functions/checkPrivacy.php");
 
                                       echo "
 
-                                      <div class='col-lg-4 col-md-4 col-xs-6 thumb'  hero-feature'>
+
+                                      <div class='col-lg-4 col-md-6 col-xs-12 thumb'  hero-feature'>
                                                <div class='thumbnail'>
                                                <div id='$thisPhotoID' class='links'>
                                                   <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
-                                                      <img src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
+                                                      <img style='height=200px;' src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
                                                   </a>
                                               </div>
 
@@ -541,7 +562,9 @@ include("../functions/checkPrivacy.php");
                                                       ";
                                                       if($userID == $sessionUserID) {
                                                       echo "
-                                                      <button name='deletePhoto' type='submit' class='btn btn-danger btn-sm' style='float:right'>Delete</button>
+                                                      <form method='post' action='../functions/delete_photo.php' >
+                                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-right'>DELETE</button>
+                                                      </form>
 
                                                       ";};
                                                       echo "
@@ -650,7 +673,7 @@ include("../functions/checkPrivacy.php");
                                     <div class='thumbnail'>
                                      <div id='$thisPhotoID' class='links'>
                                         <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
-                                            <img src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
+                                            <img style='height=200px;'src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
                                         </a>
                                      </div>
 
@@ -663,7 +686,15 @@ include("../functions/checkPrivacy.php");
                                               links = this.getElementsByTagName('a');
                                           blueimp.Gallery(links, options);
                                       };
-                                      </script>
+                                      </script>";
+                                      if($UserID = $sessionUserID) {
+                                      echo "
+                                      <form method='post' action='../functions/delete_photo.php' >
+                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-right'>DELETE</button>
+                                      </form>
+                                      ";
+                                      }
+                                    echo "
                                   </div>
                             </div>
                           ";};
@@ -714,5 +745,10 @@ include("../functions/checkPrivacy.php");
           <a class="play-pause"></a>
           <ol class="indicator"></ol>
       </div>
+
+      <!-- validation script -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+      <script src="../dist/js/jqBootstrapValidation.js"></script>
+
 </body>
 </html>

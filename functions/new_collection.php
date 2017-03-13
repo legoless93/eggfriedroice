@@ -12,12 +12,20 @@ include("../includes/connection.php");
     $sessionUserID = $row['user_id'];
 
     $collectionName = $_POST['collection_name'];
-    $collectionPublic = $_POST['public'];
-    $collectionFriends = $_POST['friends'];
-    $collectionFOF = $_POST['friendsOfFriends'];
-    $collectionPrivate = $_POST['private'];
-    $collectionCircle = $_POST['circle'];
 
+    $collectionPrivacy = $_POST['collectionPrivacy'];
+
+    if($collectionPrivacy == 'public') {
+        $collectionPublic = '1';
+    }else if ($collectionPrivacy == 'private'){
+        $collectionPrivate = '1';
+    }else if($collectionPrivacy == 'friends'){
+        $collectionFriends = '1';
+    }else if($collectionPrivacy == 'FoF'){
+        $collectionFOF = '1';
+    }else{
+        $collectionCircle = '1';
+    }
 
     $insertCollection = "INSERT INTO photoCollections (collection_name,public,friends,friendsOfFriends,private,circle, user_id)
     VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle', $sessionUserID)";
