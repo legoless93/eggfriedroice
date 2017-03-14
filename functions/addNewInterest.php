@@ -1,7 +1,9 @@
 <?php
 include ("../includes/connection.php");
 
-if(isset($_POST['addInterests']) & ($_POST['newInterest'] != "")) {
+
+if(isset($_POST['addInterests'])) {
+
 
 //mysqli_real_escape_string( connection, the input) will stop the input field from accepting weird names such as code etc.
 
@@ -18,7 +20,9 @@ if(isset($_POST['addInterests']) & ($_POST['newInterest'] != "")) {
     $run_insertInterest = mysqli_query($con, $insertInterest);
 
     if($run_insertInterest) {
-      echo "<script>window.open('home.php?userid=$sessionUserID', '_self')</script>";
+
+      echo "<script>window.open('profile.php?userid=$sessionUserID', '_self')</script>";
+
       exit();
     }
   }

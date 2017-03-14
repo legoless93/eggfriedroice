@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("includes/connection.php");
+include("../includes/connection.php");
 
 $logged_email = $_SESSION['user_email'];
 
@@ -14,7 +14,7 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
-include ("functions/addNewInterest.php");
+include("../functions/addNewInterest.php");
 
 ?>
 
@@ -23,7 +23,7 @@ include ("functions/addNewInterest.php");
 
 <?php
 
-include("template/theme/head.php");
+include("../template/theme/head.php");
 
 ?>
 
@@ -34,26 +34,26 @@ include("template/theme/head.php");
       <!-- NAVIGATION TEMPLATE HERE -->
       <?php
 
-      include("template/theme/header.php");
-      include("template/theme/sidebar.php");
+      include("../template/theme/header.php");
+      include("../template/theme/sidebar.php");
 
       ?>
 
         <div id="page-wrapper">
-            <div class="row">
+          <br>
+            <!-- <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Profile</h1>
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
+            </div> -->
             <!-- /.row -->
 
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-bar-chart-o fa-fw"></i> All About Me
+                        <!-- <div class="panel-heading"> -->
+                            <!-- <i class="fa fa-bar-chart-o fa-fw"></i> All About Me -->
 
                             <?php
 
@@ -67,9 +67,7 @@ include("template/theme/head.php");
                                       <ul class='dropdown-menu pull-right' role='menu'>
                                           <li><a href='../Pages/editProfile.php'>Edit profile info</a>
                                           </li>
-                                          <li class='divider'></li>
-                                          <li><a href='#'>Separated link</a>
-                                          </li>
+
                                       </ul>
                                   </div>
                               </div>
@@ -79,7 +77,9 @@ include("template/theme/head.php");
 
                              ?>
 
-                        </div>
+                        <!-- </div> -->
+
+
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                           <?php
@@ -101,10 +101,10 @@ include("template/theme/head.php");
 
         echo "
         <center>
-        <p><img id='userImg' src='user/user_images/$user_image' width='200' height='200'/></p>
-        <p><strong>Name: </strong>$user_firstName  $user_lastName</p>
-        <p><strong>Birthday: </strong>$theBirthday</p>
-        <a href = '../Pages/blog.php?userid=$userID'><strong>$user_firstName's blog</strong></a>
+        <p align='center'><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
+        <p style=\"font-size:50px\"><strong>$user_firstName  $user_lastName</strong></p>
+        <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
+        <a style=\"font-size:20px\" href = '../Pages/blog.php?userid=$userID'><strong>$user_firstName's blog</strong></a>
         </center>
         ";
          ?>
@@ -134,7 +134,11 @@ include("template/theme/head.php");
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
                               $check_myFriends5 = mysqli_num_rows($run_myFriends5);
 
+                              $friendCount = 0;
+
                               while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
+
+                                if($friendCount <= 3){
 
                                 $thisFriendID = $rowPosts['user_id'];
                                 $thisFirstName = $rowPosts['user_firstName'];
@@ -147,7 +151,7 @@ include("template/theme/head.php");
                                       </span>
                                       <div class='chat-body clearfix'>
                                       <div class='header'>
-                                      <a href='../home.php?userid=$thisFriendID'>
+                                      <a href='../Pages/profile.php?userid=$thisFriendID'>
                                       <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                                       </a>
                                       <a href='../Pages/blog.php?userid=$thisFriendID'>
@@ -155,7 +159,7 @@ include("template/theme/head.php");
                                       <i class='fa fa-rss fa-fw'></i>
                                       </div>
                                       </a>
-                                      <a href='../home.php?userid=$thisFriendID'>
+                                      <a href='../Pages/profile.php?userid=$thisFriendID'>
                                       <div class='pull-right'>
                                       <i class='fa fa-home fa-fw'></i>
                                       </div>
@@ -163,126 +167,92 @@ include("template/theme/head.php");
                                       </div>
                                       </div>
                                       </li>";
+
+                                      $friendCount++;
+
+                                  }
                               };
 
                                 ?>
                                 <ul>
                             <!-- /.list-group -->
+                            <a href="../Pages/friendsList.php?userid=<?php echo"$sessionUserID";?>" style="display:block;text-align:center;" class="btn btn-primary btn-block">See All Friends</a>
 
-                            <a href="#" class="btn btn-default btn-block">See All Friends</a>
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                  </div>
-                  <!-- /.col-lg-4 -->
-                  </div>
-                  <!-- row end -->
-                  <div class = "row">
 
-
-                    <div class="col-lg-8">
-                      <div class="chat-panel panel panel-default">
-                          <div class="panel-heading">
-                            <h5>My Interests</h5>
-                          </div>
-                          <!--  -->
-                          <div class="panel-body">
-                            <!-- paste here -->
-                            <div class="list-group">
-                              <!-- <form method="post"> -->
-                              <form method="post">
-                              <?php
-
-                              $interestQuery = "SELECT interest FROM interests WHERE user_id = $userID";
-                              $run_interestQuery = mysqli_query($con, $interestQuery);
-
-
-                              if($userID == $sessionUserID) {
-
-                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
-                                  $thisInterest = $interestArray['interest'];
-
-                                echo "
-                                  <li class='list-unstyled'>
-                                  <input type='checkbox' name='interest_group[]' value=$thisInterest>
-
-                                    $thisInterest
-                                      </span>
-                                    </li>
-                                  ";
-                                };
-
-                                echo "
-                                <li class='list-unstyled'>
-                                  Add new:
-                                  <input name='newInterest' style='width: 20em;' type='text' placeholder='Please enter another interest'>
-                                </li>
-                                <!-- end of interest box -->
-
-                                </div>
-                                <div class ='pull-right'>
-                                  <button name='addInterests' type='submit' class='btn-primary btn-sm'><h4>Submit Interests</h4></button>
-                                </div>
-                                ";
-                              } else {
-                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
-                                  $thisInterest = $interestArray['interest'];
-
-                                echo "
-                                  <li class='list-unstyled'>
-                                    $thisInterest
-                                      </span>
-                                    </li>
-                                  ";
-                                };
-                                echo "</div>";
-                              }
-
-                                ?>
-                </form>
                 </div>
-
-                </form>
-              </div>
-                    </div>
-                    <!-- /.col-lg-8 -->
-
-
-
-
-
-
-
-                    <?php
-                    if($userID == $sessionUserID) {
-                      echo "
-                      <div class='col-lg-4'>
-                    <div class='chat-panel panel panel-default'>
-                        <div class='panel-heading'>
-                            <i class='fa fa-comments fa-fw'></i> Recommended Friends
-
-                        </div>
-                        <div class='panel-body'>
-                            <ul class='chat'>
-                            ";
-
-                            $recommendedFriendsList = array();
-                                include ('functions/similarInterestsFiltering.php');
-                                include ('functions/recommendedFriends.php');
-
-                                echo "
-
-                            </ul>
-                        </div>
-
-                    </div>
-                    </div>
-                    ";
-                  }
-                    ?>
-
+                <!-- /.col-lg-4 -->
             </div>
             <!-- /.row -->
+
+            <!-- starts here -->
+            <div class="col-lg-8">
+                                  <div class="chat-panel panel panel-default">
+                                      <div class="panel-heading">
+                                        <h5>My Interests</h5>
+                                      </div>
+                                      <!--  -->
+                                      <div class="panel-body">
+                                        <!-- paste here -->
+                                        <div class="list-group">
+                                          <!-- <form method="post"> -->
+                                          <form method="post">
+                                          <?php
+
+                                          $interestQuery = "SELECT interest FROM interests WHERE user_id = $userID";
+                                          $run_interestQuery = mysqli_query($con, $interestQuery);
+
+
+                                          if($userID == $sessionUserID) {
+
+                                            while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                              $thisInterest = $interestArray['interest'];
+
+                                            echo "
+                                              <li class='list-unstyled'>
+                                              <input type='checkbox' name='interest_group[]' value=$thisInterest>
+
+                                                $thisInterest
+                                                  </span>
+                                                </li>
+                                              ";
+                                            };
+
+                                            echo "
+                                            <li class='list-unstyled'>
+                                              Add new:
+                                              <input name='newInterest' style='width: 20em;' type='text' placeholder='Please enter another interest'>
+                                            </li>
+                                            <!-- end of interest box -->
+
+
+                                            <div class ='pull-right'>
+                                              <button name='addInterests' type='submit' class='btn-primary btn-sm'><h4>Submit Interests</h4></button>
+                                            </div>
+                                            ";
+                                          } else {
+                                            while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                              $thisInterest = $interestArray['interest'];
+
+                                            echo "
+                                              <li class='list-unstyled'>
+                                                $thisInterest
+                                                  </span>
+                                                </li>
+                                              ";
+                                            };
+                                            echo "</div>";
+                                          }
+                                          // include("../functions/addNewInterest.php");
+                                            ?>
+                            </form>
+                            </div>
+
+                            </form>
+                          </div>
+                                <!-- </div> -->
         </div>
         <!-- /#page-wrapper -->
 
@@ -290,18 +260,18 @@ include("template/theme/head.php");
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="vendor/raphael/raphael.min.js"></script>
+    <!-- <script src="vendor/raphael/raphael.min.js"></script>
     <script src="vendor/morrisjs/morris.min.js"></script>
-    <script src="data/morris-data.js"></script>
+    <script src="data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>

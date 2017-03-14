@@ -85,14 +85,14 @@ $sessionUserID = $row['user_id'];
  $(document).ready(function(){
 
     $(document).on('click', '#getUser', function(e){
-  
+
      e.preventDefault();
-  
+
      var uid = $(this).data('id'); // get id of clicked row
-  
+
      $('#dynamic-content').html(''); // leave this div blank
      // $('#modal-loader').show();      // load ajax loader on button click
- 
+
      $.ajax({
           url: '../functions/Mutual_Friends.php',
           type: 'POST',
@@ -100,10 +100,10 @@ $sessionUserID = $row['user_id'];
           dataType: 'html'
      })
      .done(function(data){
-          console.log(data); 
+          console.log(data);
           // $('#dynamic-content').html(''); // blank before load.
           $('#dynamic-content').html(data); // load here
-          // $('#modal-loader').hide(); // hide loader  
+          // $('#modal-loader').hide(); // hide loader
      })
      .fail(function(){
           $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
@@ -123,10 +123,10 @@ $sessionUserID = $row['user_id'];
   $('.cancel_product').click(function(e){
    
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Cancel ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Cancel Request",
@@ -142,17 +142,18 @@ $sessionUserID = $row['user_id'];
       label: "Yes",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
+
         url: '../functions/cancel_request.php',
         data: 'cancel='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert(response);
         parent.fadeOut('slow');
 
@@ -163,24 +164,25 @@ $sessionUserID = $row['user_id'];
          $('#logOutD').dropdown();
 
         // keep this ***************************************** 
+
         // but copy this
-        // $('#f_sent').html(response);  
-        
+        // $('#f_sent').html(response);
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -190,14 +192,14 @@ $sessionUserID = $row['user_id'];
 <!-- BOOTBOX FOR accepting friend request -->
 <script>
  $(document).ready(function(){
-  
+
   $('.delete_friend_request_row').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Accept ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Accept !",
@@ -213,23 +215,25 @@ $sessionUserID = $row['user_id'];
       label: "Yes",
       className: "btn-primary",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/accept_requestTEST.php',
         data: 'accept='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert('You are now friends');
         parent.fadeOut('slow');
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
-        $('#f_list').html(response);  
+        $('#f_list').html(response);
+
+
 
 
         // this updates the dropdown for notifications
@@ -241,34 +245,30 @@ $sessionUserID = $row['user_id'];
 
          // load_friends();
 
-
-
-
-        
         // USE THIS FOR RELOCATION *****
         // window.location='../home.php?userid=<?php echo $sessionUserID;?>';
 
-        
-        
+
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
 
-       
+
 
         // window.location ='../home.php?userid=$sessionUserID';
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -451,7 +451,6 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
   });
 
 // init();
-
   
  });
 
@@ -638,31 +637,31 @@ $(document).ready(function(){
 
 <!-- modal for viewing mutual friends  -->
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog"> 
-     <div class="modal-content">  
-   
-        <div class="modal-header"> 
-           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+  <div class="modal-dialog">
+     <div class="modal-content">
+
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
            <h4 class="modal-title">
-           <i class="glyphicon glyphicon-user"></i> Mutual Friends 
-           </h4> 
-        </div> 
-            
-        <div class="modal-body">                     
+           <i class="glyphicon glyphicon-user"></i> Mutual Friends
+           </h4>
+        </div>
+
+        <div class="modal-body">
            <!-- <div id="modal-loader" style="display: none; text-align: center;">
            <!-- ajax loader -->
 <!--            <img src="ajax-loader.gif"> -->
            <!-- </div> -->
-                            
-           <!-- mysql data will be load here -->                          
+
+           <!-- mysql data will be load here -->
            <div id="dynamic-content"></div>
-        </div> 
-                        
-        <div class="modal-footer"> 
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-        </div> 
-                        
-    </div> 
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
   </div>
 </div>
 
@@ -672,303 +671,14 @@ $(document).ready(function(){
 
     <div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">MyBeboSpaceBook</a>
-            </div>
-            <!-- /.navbar-header -->
+      <!-- NAVIGATION TEMPLATE HERE -->
+      <?php
 
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-messages -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-tasks">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 1</strong>
-                                        <span class="pull-right text-muted">40% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 2</strong>
-                                        <span class="pull-right text-muted">20% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                            <span class="sr-only">20% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 3</strong>
-                                        <span class="pull-right text-muted">60% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 4</strong>
-                                        <span class="pull-right text-muted">80% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                            <span class="sr-only">80% Complete (danger)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Tasks</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-tasks -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle test" data-toggle="dropdown" href="#" id='getTest'>
-                      <!--   <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a> -->
-                    <span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="fa fa-bell fa-fw" style="font-size:18px;"></span></a>
-                    <ul class="dropdown-menu dropdown-alerts" id='d_list'>
-                        
+      include("../template/theme/header.php");
+      include("../template/theme/sidebar.php");
 
-                    </ul>
-                    <!-- <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul> -->
-                    <!-- /.dropdown-alerts -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id='logOutD'>
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="../functions/logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
+      ?>
 
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
-                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
-                                <span class="input-group-btn">
-
-
-
-                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
-                                 -->
-                            <input type="submit" value="Search" class='btn btn-default'/>
-                            </span>
-
-
-                            </form>
-
-                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
-                                <input class="search-query" placeholder="Search" type="text" />
-                            </form> -->
-
-                            <!-- /input-group -->
-                        </li>
-                        <li>
-                          <?php
-                          echo "
-                            <a href='../home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
-                            ";
-                            ?>
-                        </li>
-                        <li>
-                          <?php
-                          echo "
-                            <a href='../Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
-                            ";
-                            ?>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
-                        </li>
-                        <li>
-                        <!-- CHANGES HERE ** -->
-                        <?php
-                          echo "
-                            <a href='../Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
-                            ";
-                            ?>
-                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
-                        </li>
-                        <li>
-                          <li>
-                          <!--  -->
-                          <?php
-                            echo "
-                              <a href='../Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i>Circles</a>
-                              ";
-                              ?>
-                              <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
-                          </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Settings</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
 
         <div id="page-wrapper">
             <div class="row">
@@ -989,12 +699,12 @@ $(document).ready(function(){
                             <i class="fa fa-edit fa-fw"></i> Friend Requests Received
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body"> 
+                        <div class="panel-body">
                         <!-- where we might put the div id -->
 
                         <ul class="list-group" id="f_sent">
 
-                        
+
 
                         <?php
 
@@ -1063,7 +773,7 @@ $(document).ready(function(){
 
                                 echo "
 
-                                
+
 
 
                                   <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
@@ -1248,7 +958,7 @@ $(document).ready(function(){
                                 <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                 <i class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right'></i>
                                 </a>
-                                
+
 
 
                                 <a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
@@ -1257,8 +967,8 @@ $(document).ready(function(){
 
                                 </a>
 
-                                
-                                
+
+
                                 ";
 
                                 echo "
@@ -1279,7 +989,7 @@ $(document).ready(function(){
 
                                 </a> -->
 
-             
+
 
                              <!--    echo "
                                 <a href='home.php?userid=$thisFriendID' class='list-group-item '>
@@ -1309,9 +1019,9 @@ $(document).ready(function(){
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
+    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
+    <script src="../data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
