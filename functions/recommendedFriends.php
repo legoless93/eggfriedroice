@@ -74,7 +74,7 @@ while ($rowRecFriends = mysqli_fetch_array($run_recFriends)) {
               <strong class='primary-font'>$thisRecFriendName</strong>
           </div>
           <p>
-              Hello...Please be my friend. One of my friends is your friend.
+              We have a mutual friend!
           </p>
       </div>
   </li>

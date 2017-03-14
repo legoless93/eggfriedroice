@@ -2,6 +2,7 @@
 // session_start();
 include("includes/connection.php");
 include("login.php");
+include("user_insert.php");
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +16,7 @@ include("login.php");
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>mybebofacespacebook</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -58,6 +59,20 @@ include("login.php");
 
             </div>
             <!-- /.navbar-header -->
+          <ul class="nav navbar-top-links navbar-right" style="transform: translateY(50%); padding-right: 5px;">
+            <form method="post" action="" id="form1">
+
+              <input type="email" name="logEmail" placeholder="Email" required="required" width="100px"/>
+              <!-- <br> -->
+
+              <input type="password" name="logPass" placeholder="Password" required="required"/>
+              <!-- <br> -->
+              <button class="btn btn-primary btn-sm" name="login">Log in</button>
+              <?php
+              // include("login.php");
+              ?>
+            </form>
+          </ul>
 
         </nav>
 
@@ -67,55 +82,113 @@ include("login.php");
           </div> -->
 
           <div class="container">
+
+            <div class="title" style="padding-top: 25px; padding-bottom:25px">
+            <style>
+div.title h1 {
+  display: block;
+  /*font-size: 6em;*/
+  font-size: 6vw;
+  /*padding-left: 10%;*/
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+</style>
+            <h1 class="test">Welcome to mybebofacespacebook.</h1>
+          </div>
           <div class="row">
-          <div class="col-xs-4">
+
+            <script>
+            .center {
+    margin: auto;
+    width: 100%
+    padding: 100px;
+}
+            </script>
+          <div class="col-xs-6" class="center">
+
           <!-- <div class="container"> -->
-            <h2>Sign Up</h2>
+            <!-- <h1>Sign Up</h1> -->
             <div class="panel panel-default" style="text-align: center;">
-              <div class="panel-body">
-                <div id="form2">
-                  <form action="" method="post" style="padding:50px">
+              <!-- <div class="panel-heading" style="background-color:#428bca">
+                <h2 style="color:white">Sign Up</h2>
+              </div> -->
 
+              <style>
+
+              div.test input {
+                  width: 100%;
+                  height: 50px;
+                  font-size: 21px;
+                  color: grey;
+              }
+              span {
+                  display: block;
+                  overflow: hidden;
+                  /*padding-right:10px;*/
+              }
+              div.test button {
+                  /*float: right;*/
+                  width: 100%;
+                  height: 50px;
+                  font-size: 21px;
+              }
+              select {
+                width: 100%;
+                height: 50px;
+                font-size: 21px;
+                color: grey;
+              }
+}
+              </style>
+
+              <!-- <div class="panel-body"> -->
+                <!-- <h1 style="font-weight:bold">Sign Up</h1> -->
+
+                <div id="form2" class="test">
+                  <form action="" method="post">
                           <input type="text" name="firstName" placeholder="First name" required="required"/>
-
+                          <br>
                           <input type="text" name="lastName" placeholder="Last name" required="required"/>
-
+                          <br>
                           <input type="email" name="e_mail" placeholder="Email address" required="required"/>
-
+                          <br>
                           <input type="password" name="password" placeholder="Password" required="required"/>
-
+                          <br>
                           <select name="gender">
                             <option>Select a gender</option>
                             <option>Male</option>
                             <option>Female</option>
                           </select>
-
+                          <br>
                           <input type="date" name="birthday"/>
                           <br>
-                          <button name="signUp">Sign Up</button>
+                          <button class="btn btn-primary" name="signUp">Sign Up</button>
 
                   </form>
 
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
           <!-- </div> -->
         </div>
 
-        <div class="col-xs-2">
+        <!-- <div class="col-xs-2">
 
-      </div>
+        </div> -->
 
-        <div class="col-xs-4">
-        <!-- <div class="container"> -->
+        <!-- <div class="col-xs-4">
           <h2>Login</h2>
           <div class="panel panel-default">
             <div class="panel-body" style="text-align: center; padding:50px">
               <form method="post" action="" id="form1">
-                <!-- <strong>Email:</strong> -->
+
                 <input type="email" name="logEmail" placeholder="Email" required="required" width="100px"/>
                 <br>
-                <!-- <strong>Password:</strong> -->
+
                 <input type="password" name="logPass" placeholder="Password" required="required"/>
                 <br>
                 <button name="login">Log in</button>
@@ -125,75 +198,12 @@ include("login.php");
               </form>
             </div>
           </div>
-        <!-- </div> -->
-      </div>
 
-      </div>
-      </div>
+        </div> -->
 
+        </div>
+        </div>
 
-
-          <div id="form2">
-            <form action="" method="post">
-              <h1 style="color: black; padding-bottom: 20px;"> Sign Up </h1>
-              <table>
-
-                <tr>
-                  <td align="right" style="color: black;">First name:</td>
-                  <td>
-                    <input type="text" name="firstName" placeholder="Please enter your first name" required="required"/>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td align="right" style="color: black;">Surname:</td>
-                  <td>
-                    <input type="text" name="lastName" placeholder="Please enter your first surname" required="required"/>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td align="right" style="color: black;">Email:</td>
-                  <td>
-                    <input type="email" name="e_mail" placeholder="Please enter your email address" required="required"/>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td align="right" style="color: black;">Password</td>
-                  <td>
-                    <input type="password" name="password" placeholder="Please enter a password" required="required"/>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td align="right" style="color: black;">Gender:</td>
-                  <td>
-                    <select name="gender">
-                      <option>Select a gender</option>
-                      <option>Male</option>
-                      <option>Female</option>
-                    </select>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td align="right" style="color: black;">Birthday:</td>
-                  <td>
-                    <input type="date" name="birthday"/>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td colspan="6">
-                    <button name="signUp">Sign Up</button>
-                  </td>
-                </tr>
-
-              </table>
-            </form>
-
-          </div>
 
         </div>
 

@@ -35,13 +35,21 @@ include("../template/theme/head.php");
 
 ?>
 
-<script>
+<!-- <script>
     $('#confirm-delete').on('show.bs.modal', function(e) {
         $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
         $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     });
+</script> -->
+
+<script>
+ $(document).ready(function(){
+var d = $('#div1');
+d.scrollTop(d.prop("scrollHeight"));
+});
 </script>
+
 
 <body>
 
@@ -85,14 +93,14 @@ include("../template/theme/head.php");
                               <i class="fa fa-comments fa-fw"></i> Chat
                           </div>
                       <!--  -->
-                      <div class="panel-body">
+                      <div class="panel-body" id="div1">
                           <ul class="chat">
 
 
                             <?php
 
                             $get_messages = "SELECT user.user_firstName, user.user_lastName, user.user_pic, messages.message_body, messages.sender_id, messages.message_time
-                                              FROM messages JOIN user ON messages.sender_id = user.user_id WHERE messages.circle_id = '$get_circleID' ORDER BY message_id DESC";
+                                              FROM messages JOIN user ON messages.sender_id = user.user_id WHERE messages.circle_id = '$get_circleID' ORDER BY message_id ASC";
                             $run_messages = mysqli_query($con, $get_messages);
                             $check_messages = mysqli_num_rows($run_messages);
 
@@ -143,10 +151,10 @@ include("../template/theme/head.php");
                             };
                             ?>
                         <!--  -->
-                        <!--  -->
 
                     </ul>
                 </div>
+
               <!-- /.panel-body -->
               <div class="panel-footer">
 
@@ -156,7 +164,7 @@ include("../template/theme/head.php");
                       <input method="post" name="circle_message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
                       <span class="input-group-btn">
 
-                          <button name="sendCircleMessage" onclick="myFunction()" type="submit" class="btn btn-warning btn-sm">
+                          <button name="sendCircleMessage" type="submit" class="btn btn-warning btn-sm">
                               Send
                           </button>
 
@@ -164,12 +172,6 @@ include("../template/theme/head.php");
 
                   </div>
                   </form>
-
-                  <!-- <script>
-                  function myFunction() {
-                      document.getElementById("test1").reset();
-                  }
-                  </script> -->
 
               </div>
             </div>
@@ -202,13 +204,41 @@ include("../template/theme/head.php");
                         </div>
                     </div>
                 </div>
+                <!-- delete modal above-->
+
+                <div class="modal fade" id="confirm-leave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">Leaving Group</h4>
+                                </div>
+
+                                <div class="modal-body">
+                                    <p>You're leaving the group? The others won't be happy....</p>
+                                    <p>Are you sure?</p>
+                                    <p class="debug-url"></p>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                    <?php
+                                    echo "
+                                    <a class='btn btn-danger' href='../functions/leave_circle.php?circle_id=$thisCircleID&user_id=$sessionUserID'>Leave</a>
+                                    ";
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
         <!-- /#page-wrapper -->
         <div class="col-lg-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
 
-                    <i class="fa fa-users fa-fw"></i> Circle friends
+                    <i class="fa fa-users fa-fw"></i> Circle members:
 
                 </div>
         <!-- /.panel -->
@@ -235,7 +265,7 @@ include("../template/theme/head.php");
                               JOIN circles
                               ON circleBridge.circle_id = $get_circleID AND circleBridge.circle_id = circles.circle_id
                               JOIN user
-                              WHERE circleBridge.member_id = user.user_id AND circleBridge.member_id != $userID";
+                              WHERE circleBridge.member_id = user.user_id";
               $run_circleFriends = mysqli_query($con, $get_circleFriends);
               // DO NOT CALL v BEFORE OR YOU LOSE FIRST INDEX
               while ($rowPosts = mysqli_fetch_array($run_circleFriends)) {
@@ -245,6 +275,20 @@ include("../template/theme/head.php");
                 $member_pic = $rowPosts['user_pic'];
                 $member_id = $rowPosts['member_id'];
                 $thisCreatorID = $rowPosts['creator_id'];
+
+                if ($sessionUserID == $member_id){
+                  echo "<li class='left clearfix'>
+                        <span class='chat-img pull-left'>
+                        <img src='../user/user_images/$member_pic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                        </span>
+                        <div class='chat-body clearfix'>
+                        <div class='header'>
+                        <strong class='primary-font'>$member_first $member_last</strong>
+                        <p>(You)</p>
+                        </div>
+                        </div>
+                        </li>";
+                } else {
 
                 echo "<li class='left clearfix'>
                       <span class='chat-img pull-left'>
@@ -268,6 +312,7 @@ include("../template/theme/head.php");
                       </div>
                       </div>
                       </li>";
+                    }
 
               }
 
@@ -279,7 +324,18 @@ include("../template/theme/head.php");
               </button>
               </div>
               ";
-            };
+            }
+            else {
+              echo "
+              <div style=\"text-align: center;\">
+              <button center-block class=\"btn btn-primary\" data-href=\"../functions/leave_circle.php?circle_id=$thisCircleID&user_id=$sessionUserID\" data-toggle=\"modal\" data-target=\"#confirm-leave\">
+              Leave Group
+              </button>
+              </div>
+              ";
+            }
+
+            ;
               ?>
 
               <ul>
@@ -289,23 +345,25 @@ include("../template/theme/head.php");
     </div>
     <!-- /#wrapper -->
 
+    <!-- TEST -->
+
     <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> --> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Flot Charts JavaScript -->
-    <script src="../vendor/flot/excanvas.min.js"></script>
+    <!-- <script src="../vendor/flot/excanvas.min.js"></script>
     <script src="../vendor/flot/jquery.flot.js"></script>
     <script src="../vendor/flot/jquery.flot.pie.js"></script>
     <script src="../vendor/flot/jquery.flot.resize.js"></script>
     <script src="../vendor/flot/jquery.flot.time.js"></script>
     <script src="../vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
-    <script src="../data/flot-data.js"></script>
+    <script src="../data/flot-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

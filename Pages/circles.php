@@ -45,18 +45,11 @@ include("../template/theme/head.php");
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-12">
                     <h1 class="page-header">My Circles</h1>
                 </div>
-                <!-- /.col-lg-12 -->
-                <div class="col-lg-4">
-                    <h1 class="page-header">New Circle</h1>
-                </div>
 
-                  <div class="row">
-
-
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
@@ -84,7 +77,7 @@ include("../template/theme/head.php");
 
                               echo "<li>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
-                                  <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
+                                  <img src='../circle_assets/circle_logo.png' alt='error' class='img-circle' style='width:100px;height:100px;' align='middle'/>
                                   <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
                                 </a>
                               ";
@@ -99,13 +92,6 @@ include("../template/theme/head.php");
                       </div>
                     </div>
 
-                    <div class="col-lg-4">
-                  <!-- <h2>Create new circle:</h2> -->
-                  <form method="post">
-                  <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
-                  <!--  -->
-                  <!--  -->
-                    </div>
                     <!--  -->
                     <br>
                     <style>
@@ -114,13 +100,20 @@ include("../template/theme/head.php");
                       padding: 10px;
                     }
                     </style>
-                    <div class="col-lg-4">
+                    <div class="col-lg-12">
                       <div class="chat-panel panel panel-default">
                           <div class="panel-heading">
-                            <h5>Invite Friends</h5>
+                            <h5>New Circle</h5>
                           </div>
                           <!--  -->
                           <div class="panel-body">
+                            <div>
+                            <form method="post">
+                            <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
+                            <br>
+                            <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h4>Create circle</h4></button>
+
+                          </div>
                             <!-- paste here -->
                             <div class="list-group">
                               <!-- <form method="post"> -->
@@ -157,30 +150,31 @@ include("../template/theme/head.php");
 
                           <!-- end of friend box -->
                   </div>
+                  <!-- <div class ="pull-right"> -->
+                    <!-- <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h4>Create circle</h4></button> -->
+                  <!-- </div> -->
                 </div>
-                  <div class ="pull-right">
-                    <button name="createCircle" type="submit" class="btn btn-danger"><h4>Create circle</h4></button>
-                  </div>
                 </form>
               </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
+    <!-- mute above -->
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
+    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
+    <!-- <script src="../vendor/raphael/raphael.min.js"></script> -->
+    <!-- <script src="../vendor/morrisjs/morris.min.js"></script> -->
+    <!-- <script src="../data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

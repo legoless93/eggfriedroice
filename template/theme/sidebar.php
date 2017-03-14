@@ -14,7 +14,7 @@
             <li>
               <?php
               echo "
-                <a href='../home.php?userid=$sessionUserID'><i class='fa fa-user fa-fw'></i> Profile</a>
+                <a href='../Pages/profile.php?userid=$sessionUserID'><i class='fa fa-user fa-fw'></i> Profile</a>
                 ";
                 ?>
             </li>
@@ -41,7 +41,6 @@
                 ?>
                 <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
             </li>
-            <li>
               <li>
               <!--  -->
               <?php
