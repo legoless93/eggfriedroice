@@ -8,9 +8,13 @@ include ("../includes/connection.php");
 // this should get the session user id 
 
 // gets the userID of the person you want to delete from the URL
-if(isset($_GET['thisFriend'])) {
+// if(isset($_GET['thisFriend'])) {
 
-    $thisFriend = $_GET['thisFriend'];
+//     $thisFriend = $_GET['thisFriend'];
+
+if(isset($_REQUEST['cancel'])) {
+
+    $thisFriend = $_REQUEST['cancel'];
     
 
     $logged_email = $_SESSION['user_email'];
@@ -46,8 +50,10 @@ if(isset($_GET['thisFriend'])) {
 
    	if( $run_cancel_request){
 
-   		echo "<script>alert('Friend request cancelled!!!')</script>";
-        echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
+   		// echo "<script>alert('Friend request cancelled!!!')</script>";
+     //    echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
+
+        echo "Friend request cancelled successfully...";
    	}
 
 
