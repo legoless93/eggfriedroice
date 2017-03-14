@@ -149,8 +149,8 @@ include("../functions/checkPrivacy.php");
                                         <span class="pull-right text-muted">40% Complete</span>
                                     </p>
                                     <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
+                                        <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (primary)</span>
                                         </div>
                                     </div>
                                 </div>
@@ -397,7 +397,7 @@ include("../functions/checkPrivacy.php");
                             <div class="col-lg-12 col-md-12 col-sm-12 col">
                                 <div class="row" style="margin-top:10px;">
                                     <div class="container-fluid" style="margin-top:10px;">
-                                        <a class="btn btn-success" role="button" data-toggle="collapse" href="#addcollection" aria-expanded="false" aria-controls="collapseExample1">
+                                        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addcollection" aria-expanded="false" aria-controls="collapseExample1">
                                         Add new collection</a>
 
                                         <?php
@@ -445,7 +445,7 @@ include("../functions/checkPrivacy.php");
                                                     </div>
 
                                                     <div class='form-group' style ='margin-top:5px;'>
-                                                        <button name='createCollection' type='submit' class='btn btn-success'>Create</button>
+                                                        <button name='createCollection' type='submit' class='btn btn-primary'>Create</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -453,7 +453,6 @@ include("../functions/checkPrivacy.php");
                                         <script>
                                           $(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );
                                         </script>
-
                                         ";
                                       }else{
                                           echo "
@@ -469,10 +468,8 @@ include("../functions/checkPrivacy.php");
 
 
                             <!--collection gallery-->
-
-
+                            <h3>Collection Gallery</h3>
                             <?php
-
                             $get_collection =  "SELECT * FROM photoCollections WHERE user_id = '$userID' ORDER BY collection_id DESC";
                             $show_collection = mysqli_query($con, $get_collection);
                             $checkPosts = mysqli_num_rows($show_collection);
@@ -486,9 +483,8 @@ include("../functions/checkPrivacy.php");
 
 
                            echo "
-
                                 <div class='panel-group' id='accordion'  >
-                                  <div class='panel panel-info'>
+                                  <div class='panel panel-primary'>
                                     <div class='panel-heading' >
                                       <h4 class='panel-title'>
                                         <a data-toggle='collapse' data-parent='#accordion' href='#$this_collection_id'>
@@ -535,7 +531,7 @@ include("../functions/checkPrivacy.php");
                                                       <h5>$thisPhotoDescription</h5>
                                                       <p>
                                                       <form method='post' action='../functions/like_photo.php' >
-                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default glyphicon glyphicon-heart-empty btn-sm'>";
+                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default  btn-sm'>LIKE ";
                                                       // like button starts from echo above
 
                                                       // $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
@@ -571,7 +567,6 @@ include("../functions/checkPrivacy.php");
                                               </div>
                                       </div>
                                     ";};
-
                                             echo "
                                       </div>
                                     </div>
@@ -593,7 +588,8 @@ include("../functions/checkPrivacy.php");
                                 <div class="col-lg-12 col-md-12 col-sm-12 col">
                                     <div class="row" style="margin-top:10px;">
                                         <div class="container-fluid" style="margin-top:10px;">
-                                            <a class="btn btn-success" role="button" data-toggle="collapse" href="#addphoto" aria-expanded="false" aria-controls="collapseExample1">
+                                        </br>
+                                            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addphoto" aria-expanded="false" aria-controls="collapseExample1">
                                             Add photo</a>
                                             <?php
                                             if($userID == $sessionUserID) {
@@ -630,16 +626,18 @@ include("../functions/checkPrivacy.php");
                                                         echo "
 
                                                           <input type='radio' name='select_collection[]' value='$this_collection_id' required = 'required'>
-                                                            <img src='../user/user_images/default.jpg' alt='error' style='width:10px;height:10px;'/>
-                                                            $this_collection_name,$this_collection_id
+
+                                                            $this_collection_name
                                                               </span>
+                                                              </br>
+                                                              </br>
                                                           ";
                                                         };
 
                                               if($userID == $sessionUserID) {
                                           echo "
                                                         <div class='form-group' style ='margin-top:35px;'>
-                                                            <button name='uploadsPhoto' type='submit' class='btn btn-success'>upload</button>
+                                                            <button name='uploadsPhoto' type='submit' class='btn btn-primary'>upload</button>
                                                         </div>
                                                     </form>
                                                 </div>

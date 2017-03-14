@@ -20,11 +20,9 @@ $sessionUserID = $row['user_id'];
     $run_insertLike = mysqli_query($con, $insertLike);
 
     if($run_insertLike) {
-      echo "<script>alert('Yay!!! New post!!!')</script>";
-      echo "<script>alert('$sessionUserID,$likePhotoID')</script>";
       echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
     } else {
-      echo "<script>alert('Ahhh crap...')</script>";
+      echo "<script>alert('can not like this photo')</script>";
     }
   }
 ?>

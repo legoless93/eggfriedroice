@@ -431,9 +431,9 @@ include("../functions/checkPrivacy.php");
 
                 <!-- comment area -->
                   <div class="row text-left col-lg-12 col-md-12 col-xs-12 thumb" >
-                   <div class="panel panel-default">
+                   <div class="panel panel-primary">
                      <!-- panel heading -->
-                       <div class="panel-heading">Panel Heading</div>
+                       <div class="panel-heading">Comment</div>
                     <!-- panel heading ends -->
 
                                     <!-- panel body   -->
@@ -456,7 +456,7 @@ include("../functions/checkPrivacy.php");
                                             $thisFirst = $rowComment['user_firstName'];
                                             $thisLast = $rowComment['user_lastName'];
                                             $thisUserPic = $rowComment['user_pic'];
-                                            $thisFullDate = sprintf("%02d",$thisCommentDay) . "-" . sprintf("%02d", $thisCommentMonth) . "-" . strval($thisCommentYear);
+                                            $thisFullDate = sprintf("%02d",$thisCommentDay)."-".sprintf("%02d", $thisCommentMonth)."-".strval($thisCommentYear);
 
 
                                             echo "<li class='left clearfix list-unstyled'>
@@ -467,10 +467,10 @@ include("../functions/checkPrivacy.php");
                                                     <div class='header'>
                                                         <strong class='primary-font'>$thisFirst $thisLast</strong>
                                                         <small class='pull-right text-muted'>
-                                                        <i class='fa fa-clock-o fa-fw'>$thisFullDate</i>
+                                                        <i class='fa fa-clock-o fa-fw'></i>Comment time:$thisFullDate
                                                         </small>
                                                     </div>
-                                                    <p>$thisCommentBody</p>
+                                                    <p><h5>$thisCommentBody<h5></p>
                                                 </div>
                                             </li>
                                             ";
@@ -486,7 +486,7 @@ include("../functions/checkPrivacy.php");
                            <div class="input-group">
                                <input method="post" name="photo_commnet_cotent" type="text" class="form-control input-sm" placeholder="Enter your comment" />
                                <span class="input-group-btn">
-                                   <button name="addPhotoComment" type="submit" class="btn btn-success btn-sm">
+                                   <button name="addPhotoComment" type="submit" class="btn btn-primary btn-sm">
                                    Send</button>
                                </span>
                            </div>
