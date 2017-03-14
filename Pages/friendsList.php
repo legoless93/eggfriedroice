@@ -639,8 +639,10 @@ $(document).ready(function(){
 
     <div id="wrapper">
 
+
       <!-- NAVIGATION TEMPLATE HERE -->
       <?php
+
 
       include("../template/theme/header.php");
       include("../template/theme/sidebar.php");
