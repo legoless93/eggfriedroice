@@ -431,9 +431,9 @@ include("../functions/checkPrivacy.php");
 
                 <!-- comment area -->
                   <div class="row text-left col-lg-12 col-md-12 col-xs-12 thumb" >
-                   <div class="panel panel-default">
+                   <div class="panel panel-primary">
                      <!-- panel heading -->
-                       <div class="panel-heading">Panel Heading</div>
+                       <div class="panel-heading">Comment</div>
                     <!-- panel heading ends -->
 
                                     <!-- panel body   -->
@@ -441,7 +441,7 @@ include("../functions/checkPrivacy.php");
                                         <ul class="photo_comment_content">
 
                                           <?php
-                                          $get_comment = "SELECT user.user_firstName,user.user_lastName,comments.photo_id,comments.comment_body,comments.comment_day,comments.comment_month,comments.comment_year,comments.comment_time
+                                          $get_comment = "SELECT user.user_firstName,user.user_lastName,user.user_pic,comments.photo_id,comments.comment_body,comments.comment_day,comments.comment_month,comments.comment_year,comments.comment_time
                                                           FROM comments INNER JOIN user ON comments.commenter_id = user.user_id WHERE comments.photo_id = '$get_photo_id'";
                                           $run_comment = mysqli_query($con, $get_comment);
                                           $checkCommnent = mysqli_num_rows($run_comment);
@@ -455,21 +455,22 @@ include("../functions/checkPrivacy.php");
                                             $thisCommentTime = $rowComment['comment_time'];
                                             $thisFirst = $rowComment['user_firstName'];
                                             $thisLast = $rowComment['user_lastName'];
-                                            $thisFullDate = sprintf("%02d",$thisCommentDay) . "-" . sprintf("%02d", $thisCommentMonth) . "-" . strval($thisCommentYear);
+                                            $thisUserPic = $rowComment['user_pic'];
+                                            $thisFullDate = sprintf("%02d",$thisCommentDay)."-".sprintf("%02d", $thisCommentMonth)."-".strval($thisCommentYear);
 
 
                                             echo "<li class='left clearfix list-unstyled'>
                                                 <span class='chat-img pull-left'>
-                                                    <img src='../user/user_images/default.jpg' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                                    <img src='../user/user_images/$thisUserPic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                                 </span>
                                                 <div class='chat-body clearfix'>
                                                     <div class='header'>
                                                         <strong class='primary-font'>$thisFirst $thisLast</strong>
                                                         <small class='pull-right text-muted'>
-                                                        <i class='fa fa-clock-o fa-fw'>$thisFullDate</i>
+                                                        <i class='fa fa-clock-o fa-fw'></i>Comment time:$thisFullDate
                                                         </small>
                                                     </div>
-                                                    <p>$thisCommentBody</p>
+                                                    <p><h5>$thisCommentBody<h5></p>
                                                 </div>
                                             </li>
                                             ";
@@ -485,7 +486,7 @@ include("../functions/checkPrivacy.php");
                            <div class="input-group">
                                <input method="post" name="photo_commnet_cotent" type="text" class="form-control input-sm" placeholder="Enter your comment" />
                                <span class="input-group-btn">
-                                   <button name="addPhotoComment" type="submit" class="btn btn-success btn-sm">
+                                   <button name="addPhotoComment" type="submit" class="btn btn-primary btn-sm">
                                    Send</button>
                                </span>
                            </div>
