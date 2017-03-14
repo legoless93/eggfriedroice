@@ -45,22 +45,23 @@ include("../template/theme/head.php");
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
+              <br>
+                <!-- <div class="col-lg-12">
                     <h1 class="page-header">My Circles</h1>
-                </div>
+                </div> -->
 
                     <div class="col-lg-12">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
-                          <div class="panel-heading">
+                          <!-- <div class="panel-heading">
                             <h5>My Circles</h5>
-                          </div>
+                          </div> -->
                           <!--  -->
                           <div class="panel-body">
 
                             <div class="list-group">
-                              <ul id="friends">
+                              <ul class="chat">
                             <!-- insert from database -->
                             <?php
                             $get_myCircles = "SELECT circles.circle_name, circles.circle_id, circles.creator_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
@@ -75,12 +76,42 @@ include("../template/theme/head.php");
                               $thisTitle = $rowCircles['circle_name'];
                               $thisCreatorID = $rowCircles['creator_id'];
 
-                              echo "<li>
+                              $get_user = "SELECT user_firstName, user_lastName FROM user WHERE user_id = '$thisCreatorID'";
+                              $run_user = mysqli_query($con, $get_user);
+                              $row = mysqli_fetch_array($run_user);
+
+                              echo "<li class='left clearfix'>
+                              <div class='pull-right'>
+                              <a class='btn btn-primary' href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>Open
+                              </a>
+                              </div>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
-                                  <img src='../circle_assets/circle_logo.png' alt='error' class='img-circle' style='width:100px;height:100px;' align='middle'/>
-                                  <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
+                                <span class='chat-img pull-left'>
+                                <img src='../circle_assets/circlelogo.png' alt='User Avatar' class='img-circle' style='width:100px;height:100px;' hspace='10'/>
+                                </span>
                                 </a>
+                                <div class='chat-body clearfix'>
+                                 <div class='header'>
+                                  <h2 class='primary-font'>$thisTitle</h2>
+                                </div>
+                                  <small class='primary-font'> Group creator: $row[0] $row[1]</small>
+                                </div>
+
+                                <br>
+
                               ";
+
+                              // <li class='left clearfix'>
+                              //       <span class='chat-img pull-left'>
+                              //       <img src='../user/user_images/$member_pic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                              //       </span>
+                              //       <div class='chat-body clearfix'>
+                              //       <div class='header'>
+                              //       <strong class='primary-font'>$member_first $member_last</strong>
+                              //       <p>(You)</p>
+                              //       </div>
+                              //       </div>
+                              //       </li>
                             }
                             ?>
                             <!-- insert from database ENDS -->
@@ -100,8 +131,8 @@ include("../template/theme/head.php");
                       padding: 10px;
                     }
                     </style>
-                    <div class="col-lg-12">
-                      <div class="chat-panel panel panel-default">
+                    <div class="col-lg-5">
+                      <div class="chat-panel panel panel-primary">
                           <div class="panel-heading">
                             <h5>New Circle</h5>
                           </div>
@@ -110,8 +141,8 @@ include("../template/theme/head.php");
                             <div>
                             <form method="post">
                             <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
-                            <br>
-                            <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h4>Create circle</h4></button>
+
+                            <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h5>Create</h5></button>
 
                           </div>
                             <!-- paste here -->
@@ -138,9 +169,10 @@ include("../template/theme/head.php");
 
                               echo "
                                 <li class='list-unstyled'>
+                                <h4>
                                 <input type='checkbox' name='chk_group[]' value=$thisFriendID>
                                   <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
-                                  $thisFirstName $thisLastName
+                                  $thisFirstName $thisLastName</h4>
                                     </span>
                                   </li>
                                 ";

@@ -35,14 +35,6 @@ include("../template/theme/head.php");
 
 ?>
 
-<!-- <script>
-    $('#confirm-delete').on('show.bs.modal', function(e) {
-        $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-
-        $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
-    });
-</script> -->
-
 <script>
  $(document).ready(function(){
 var d = $('#div1');
@@ -65,8 +57,8 @@ d.scrollTop(d.prop("scrollHeight"));
 
         <div id="page-wrapper">
             <div class="row">
-                <div class="col-lg-12">
-
+              <br>
+                <!-- <div class="col-lg-12"> -->
                   <?php
 
                   $get_circleName = "SELECT * FROM circles WHERE circle_id = '$get_circleID'";
@@ -75,25 +67,31 @@ d.scrollTop(d.prop("scrollHeight"));
 
                   $circleName = $row['circle_name'];
                   $thisCircleID = $row['circle_id'];
-                  // $get_circleName = "SELECT circleBridge.member_id FROM circleBridge
-                  // JOIN circles ON circles.circle_id = circleBridge.circle_id
-                  // WHERE circles.circle_id = '$get_circleID' ";
 
-                  echo "<h1 class='page-header'>$circleName</h1>";
+                  // echo "<h1 class='page-header'>$circleName</h1>";
 
                   ?>
-                </div>
-                <!-- /.col-lg-12 -->
+                <!-- </div> -->
 
-                <!--  -->
+                <style>
+                .fixed-panel {
+  min-height: 100;
+  max-height: 100;
+  overflow-y: scroll;
+}
+                </style>
+
                 <div class="row">
                     <div class="col-lg-8">
                       <div class="chat-panel panel panel-default">
-                          <div class="panel-heading">
-                              <i class="fa fa-comments fa-fw"></i> Chat
-                          </div>
-                      <!--  -->
-                      <div class="panel-body" id="div1">
+                          <!-- <div class="panel-heading">
+                              <i class="fa fa-comments fa-fw"></i>
+                              <?php
+                              // echo "$circleName";
+                              ?>
+                          </div> -->
+
+                      <div class="panel-body" id="div1" style="min-height: 600px;">
                           <ul class="chat">
 
 
@@ -158,7 +156,7 @@ d.scrollTop(d.prop("scrollHeight"));
               <!-- /.panel-body -->
               <div class="panel-footer">
 
-                <form action="#" method="post">
+                <form action="" method="post">
                   <div class="input-group">
 
                       <input method="post" name="circle_message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
@@ -204,7 +202,7 @@ d.scrollTop(d.prop("scrollHeight"));
                         </div>
                     </div>
                 </div>
-                <!-- delete modal above-->
+                <!-- delete modal above -->
 
                 <div class="modal fade" id="confirm-leave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
@@ -235,10 +233,10 @@ d.scrollTop(d.prop("scrollHeight"));
 
         <!-- /#page-wrapper -->
         <div class="col-lg-4">
-            <div class="panel panel-default">
+            <div class="panel panel-primary">
                 <div class="panel-heading">
 
-                    <i class="fa fa-users fa-fw"></i> Circle members:
+                    <i class="fa fa-users fa-fw"></i> People
 
                 </div>
         <!-- /.panel -->
@@ -296,7 +294,7 @@ d.scrollTop(d.prop("scrollHeight"));
                       </span>
                       <div class='chat-body clearfix'>
                       <div class='header'>
-                      <a href='../home.php?userid=$member_id'>
+                      <a href='../Pages/profile.php?userid=$member_id'>
                       <strong class='primary-font'>$member_first $member_last</strong>
                       </a>
                       <a href='../Pages/blog.php?userid=$member_id'>
@@ -304,7 +302,7 @@ d.scrollTop(d.prop("scrollHeight"));
                       <i class='fa fa-rss fa-fw'></i>
                       </div>
                       </a>
-                      <a href='../home.php?userid=$member_id'>
+                      <a href='../Pages/profile.php?userid=$member_id'>
                       <div class='pull-right'>
                       <i class='fa fa-home fa-fw'></i>
                       </div>
@@ -351,7 +349,7 @@ d.scrollTop(d.prop("scrollHeight"));
     <!-- <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> --> -->
+    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>

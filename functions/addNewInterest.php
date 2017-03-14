@@ -6,8 +6,8 @@ if(isset($_POST['addInterests'])) {
 
 
 //mysqli_real_escape_string( connection, the input) will stop the input field from accepting weird names such as code etc.
-
   $newInterest = $_POST['newInterest'];
+  $interest = mysqli_real_escape_string($con,$newInterest);
 
   $get_interests = "SELECT * FROM interests WHERE (user_id = $sessionUserID AND interest = '$newInterest')";
   $run_interests = mysqli_query($con, $get_interests);
@@ -16,7 +16,10 @@ if(isset($_POST['addInterests'])) {
   if($checkExists >= 1) {
   echo "<script>alert('This interest is already in your likes!!!')</script>";
   } else {
-    $insertInterest = "INSERT INTO interests (user_id, interest) VALUES ('$sessionUserID', '$newInterest')";
+
+    if ($interest != "") {
+
+    $insertInterest = "INSERT INTO interests (user_id, interest) VALUES ('$sessionUserID', '$interest')";
     $run_insertInterest = mysqli_query($con, $insertInterest);
 
     if($run_insertInterest) {
@@ -25,6 +28,8 @@ if(isset($_POST['addInterests'])) {
 
       exit();
     }
+  }
+
   }
 
 }

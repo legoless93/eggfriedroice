@@ -43,42 +43,11 @@ $sessionUserID = $row['user_id'];
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<?php
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+include("../template/theme/head.php");
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-     <!--  added changes here ( removed the 2 js ones at the bottom of the page )  -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+?>
 
 <!-- jQuery and ajax  for mutual friends -->
 <script>
@@ -119,9 +88,9 @@ $sessionUserID = $row['user_id'];
 
 <script>
  $(document).ready(function(){
-  
+
   $('.cancel_product').click(function(e){
-   
+
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
@@ -147,7 +116,6 @@ $sessionUserID = $row['user_id'];
        $.ajax({
 
         type: 'POST',
-
         url: '../functions/cancel_request.php',
         data: 'cancel='+pid
 
@@ -163,8 +131,7 @@ $sessionUserID = $row['user_id'];
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this ***************************************** 
-
+        // keep this *****************************************
         // but copy this
         // $('#f_sent').html(response);
 
@@ -234,8 +201,6 @@ $sessionUserID = $row['user_id'];
         $('#f_list').html(response);
 
 
-
-
         // this updates the dropdown for notifications
          $('#getTest').dropdown();
          //updates the dropdown for logout
@@ -244,6 +209,10 @@ $sessionUserID = $row['user_id'];
 
 
          // load_friends();
+
+
+
+
 
         // USE THIS FOR RELOCATION *****
         // window.location='../home.php?userid=<?php echo $sessionUserID;?>';
@@ -279,7 +248,7 @@ $sessionUserID = $row['user_id'];
 <!-- script for fetching the notifications -->
 <script>
 $(document).ready(function(){
- 
+
  function load_unseen_notification(view = '')
  {
   $.ajax({
@@ -291,13 +260,13 @@ $(document).ready(function(){
     })
 
    .done(function(data){
-   
+
 
     // <?php
     // echo "<script>alert('in success!!!')</script>";
     // ?>
 
-    
+
     // if(data.unseen_notification > 0)
     // {
     //  $('.count').html(data.unseen_notification);
@@ -314,10 +283,10 @@ $(document).ready(function(){
           $('#d_list').html('get NOTIFICATIONS failed WHYYYYYYy');
           // $('#modal-loader').hide();
      });
-   }    
- 
+   }
+
   load_unseen_notification();
- 
+
  // $('#comment_form').on('submit', function(event){
  //  event.preventDefault();
  //  if($('#subject').val() != '' && $('#comment').val() != '')
@@ -339,35 +308,35 @@ $(document).ready(function(){
  //   alert("Both Fields are Required");
  //  }
  // });
- 
+
  $(document).on('click', '#getTest', function(){
   $('.count').html('');
 
   // uncomment below to read the notification
-  // load_unseen_notification('yes');
+  load_unseen_notification('yes');
 
-  // uncomment below to not remove the notification 
-  load_unseen_notification();
+  // uncomment below to not remove the notification
+  // load_unseen_notification();
 
 
  });
 
 
 
- 
- // setInterval(function(){ 
- //  load_unseen_notification();; 
+
+ // setInterval(function(){
+ //  load_unseen_notification();;
  // }, 5000);
 
 
  // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
- 
+
 });
 </script>
 
 
 <!-- <script>
- $(document).ready(function(){   
+ $(document).ready(function(){
 $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 });
 </script> -->
@@ -377,14 +346,14 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 
 <script>
  $(document).ready(function(){
-  
+
   $('.delete_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Delete ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
@@ -400,19 +369,19 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
       label: "Delete!",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/deleteFriendTest.php',
         data: 'delete='+pid
-        
+
        })
        .done(function(response){
-        
 
-        // load_friends(); 
+
+        // load_friends();
         // init();
         bootbox.alert(response);
         parent.fadeOut('slow');
@@ -422,36 +391,37 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
         // $('#f_sent').html(response);
-         // load_friends();  
+         // load_friends();
 
 
 
-        
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
 
        // init();
-        // load_friends();  
+        // load_friends();
 
 
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
 
 // init();
-  
+
+
  });
 
 </script>
@@ -462,14 +432,14 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 
 <script>
  $(document).ready(function(){
-  
+
   $('.reject_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Reject?",
      title: "<i class='glyphicon glyphicon-trash'></i> Reject Friend Quest",
@@ -485,17 +455,17 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
       label: "Yes",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/reject_request.php',
         data: 'reject='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert(response);
         parent.fadeOut('slow');
 
@@ -505,25 +475,25 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
-        // $('#f_sent').html(response);  
-        
+        // $('#f_sent').html(response);
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -532,7 +502,7 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 <!-- script for fetching friend number  -->
 <script type="text/javascript">
 $(document).ready(function(){
- 
+
  function load_friends(id = '')
  {
   $.ajax({
@@ -544,13 +514,13 @@ $(document).ready(function(){
     })
 
    .done(function(data){
-   
+
 
     // <?php
     // echo "<script>alert('in success!!!')</script>";
     // ?>
 
-    
+
     // if(data.unseen_notification > 0)
     // {
     //  $('.count').html(data.unseen_notification);
@@ -567,10 +537,10 @@ $(document).ready(function(){
           $('#f_no').html('failed friends no');
           // $('#modal-loader').hide();
      });
-   }    
- 
+   }
+
   load_friends();
- 
+
  // $('#comment_form').on('submit', function(event){
  //  event.preventDefault();
  //  if($('#subject').val() != '' && $('#comment').val() != '')
@@ -592,13 +562,13 @@ $(document).ready(function(){
  //   alert("Both Fields are Required");
  //  }
  // });
- 
+
  // $(document).on('click', '#getTest', function(){
  //  $('.count').html('');
  //  // uncomment below to read the notification
  //  // load_unseen_notification('yes');
 
- //  // uncomment below to not remove the notification 
+ //  // uncomment below to not remove the notification
  //  load_unseen_notification();
 
 
@@ -606,14 +576,14 @@ $(document).ready(function(){
 
 
 
- 
- setInterval(function(){ 
-  load_friends(); 
+
+ setInterval(function(){
+  load_friends();
  }, 5000);
 
 
  // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
- 
+
 });
 </script>
 
@@ -632,8 +602,6 @@ $(document).ready(function(){
 
  -->
 
-
-</head>
 
 <!-- modal for viewing mutual friends  -->
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -678,7 +646,6 @@ $(document).ready(function(){
       include("../template/theme/sidebar.php");
 
       ?>
-
 
         <div id="page-wrapper">
             <div class="row">
@@ -740,7 +707,7 @@ $(document).ready(function(){
                                     if ($theRequestStatus == '1'){
                                     echo "
                                     <li class='list-group-item clearfix'>
-                                    <a href='../home.php?userid=$thisFriendID'>
+                                    <a href='../profile.php?userid=$thisFriendID'>
 
 
                                     <div class='d-flex w-100 justify-content-between'>
@@ -753,7 +720,7 @@ $(document).ready(function(){
 
 
 
-                                    
+
 
 
                                 //  <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='Reject Friend Request'>
@@ -855,7 +822,7 @@ $(document).ready(function(){
                                     if ($theRequestStatus == '1'){
                                     echo "
                                     <li class='list-group-item clearfix'>
-                                    <a href='../home.php?userid=$thisFriendID'>
+                                    <a href='../profile.php?userid=$thisFriendID'>
 
 
                                     <div class='d-flex w-100 justify-content-between'>
@@ -866,7 +833,7 @@ $(document).ready(function(){
                                 </a>
                                 ";
 
-                                
+
 
                                     // <a href=\"../functions/cancel_request.php?thisFriend=$thisFriendID\" title='Cancel Friend Request'>
 
@@ -942,7 +909,7 @@ $(document).ready(function(){
                                 // $thisRelID = $rowPosts['']
  								echo "
                                 <li class='list-group-item clearfix'>
-                                <a href='../home.php?userid=$thisFriendID'>
+                                <a href='../profile.php?userid=$thisFriendID'>
 
 
                                    	<div class='d-flex w-100 justify-content-between'>
@@ -977,7 +944,7 @@ $(document).ready(function(){
 
                                 </li>
                                 ";
-                              
+
                               };
 
                                 ?>
@@ -1019,9 +986,9 @@ $(document).ready(function(){
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

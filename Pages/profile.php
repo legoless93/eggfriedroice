@@ -104,7 +104,9 @@ include("../template/theme/head.php");
         <p align='center'><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
         <p style=\"font-size:50px\"><strong>$user_firstName  $user_lastName</strong></p>
         <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
-        <a style=\"font-size:20px\" href = '../Pages/blog.php?userid=$userID'><strong>$user_firstName's blog</strong></a>
+        <a style=\"font-size:20px\" href = '../Pages/blog.php?userid=$userID'><strong><i class='fa fa-rss fa-fw'></i>Blog</strong></a>
+
+        <a style='font-size:20px' href='../Pages/photocollection.php?userid=$userID'><strong><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Photos</strong></a>
         </center>
         ";
          ?>
@@ -115,9 +117,9 @@ include("../template/theme/head.php");
                 <!-- /.col-lg-8 -->
                 <div class="col-lg-4">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
+                        <!-- <div class="panel-heading">
                             <i class="fa fa-user fa-fw"></i> Friends
-                        </div>
+                        </div> -->
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <ul class="chat">
@@ -184,75 +186,77 @@ include("../template/theme/head.php");
 
                 </div>
                 <!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                                      <div class="chat-panel panel panel-primary">
+                                          <div class="panel-heading">
+                                            <h5>Interests</h5>
+                                          </div>
+                                          <!--  -->
+                                          <div class="panel-body">
+                                            <!-- paste here -->
+                                            <div class="list-group">
+                                              <!-- <form method="post"> -->
+                                              <form method="post">
+                                              <?php
+
+                                              $interestQuery = "SELECT interest FROM interests WHERE user_id = $userID";
+                                              $run_interestQuery = mysqli_query($con, $interestQuery);
+
+
+                                              if($userID == $sessionUserID) {
+
+                                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                                  $thisInterest = $interestArray['interest'];
+
+                                                echo "
+                                                  <li class='list-unstyled'>
+                                                  <h4>
+                                                  <input type='checkbox' name='interest_group[]' value=$thisInterest>
+                                                    $thisInterest</h4>
+                                                      </span>
+                                                    </li>
+                                                  ";
+                                                };
+
+                                                echo "
+                                                <li class='list-unstyled'>
+                                                  Add new:
+                                                  <input name='newInterest' style='width: 20em;' type='text' placeholder='Please enter another interest'>
+                                                </li>
+                                                <!-- end of interest box -->
+
+
+                                                <div class ='pull-right'>
+                                                  <button name='addInterests' type='submit' class='btn btn-primary btn-sm'>Add</button>
+                                                </div>
+                                                ";
+                                              } else {
+                                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                                  $thisInterest = $interestArray['interest'];
+
+                                                echo "
+                                                  <li class='list-unstyled'>
+                                                    <h4>$thisInterest</h4>
+                                                      </span>
+                                                    </li>
+                                                  ";
+                                                };
+                                                echo "</div>";
+                                              }
+                                              // include("../functions/addNewInterest.php");
+                                                ?>
+                                </form>
+                                </div>
+
+                                </form>
+                              </div>
+                                    <!-- </div> -->
+            </div>
+
             </div>
             <!-- /.row -->
 
-            <!-- starts here -->
-            <div class="col-lg-8">
-                                  <div class="chat-panel panel panel-default">
-                                      <div class="panel-heading">
-                                        <h5>My Interests</h5>
-                                      </div>
-                                      <!--  -->
-                                      <div class="panel-body">
-                                        <!-- paste here -->
-                                        <div class="list-group">
-                                          <!-- <form method="post"> -->
-                                          <form method="post">
-                                          <?php
 
-                                          $interestQuery = "SELECT interest FROM interests WHERE user_id = $userID";
-                                          $run_interestQuery = mysqli_query($con, $interestQuery);
-
-
-                                          if($userID == $sessionUserID) {
-
-                                            while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
-                                              $thisInterest = $interestArray['interest'];
-
-                                            echo "
-                                              <li class='list-unstyled'>
-                                              <input type='checkbox' name='interest_group[]' value=$thisInterest>
-
-                                                $thisInterest
-                                                  </span>
-                                                </li>
-                                              ";
-                                            };
-
-                                            echo "
-                                            <li class='list-unstyled'>
-                                              Add new:
-                                              <input name='newInterest' style='width: 20em;' type='text' placeholder='Please enter another interest'>
-                                            </li>
-                                            <!-- end of interest box -->
-
-
-                                            <div class ='pull-right'>
-                                              <button name='addInterests' type='submit' class='btn-primary btn-sm'><h4>Submit Interests</h4></button>
-                                            </div>
-                                            ";
-                                          } else {
-                                            while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
-                                              $thisInterest = $interestArray['interest'];
-
-                                            echo "
-                                              <li class='list-unstyled'>
-                                                $thisInterest
-                                                  </span>
-                                                </li>
-                                              ";
-                                            };
-                                            echo "</div>";
-                                          }
-                                          // include("../functions/addNewInterest.php");
-                                            ?>
-                            </form>
-                            </div>
-
-                            </form>
-                          </div>
-                                <!-- </div> -->
         </div>
         <!-- /#page-wrapper -->
 

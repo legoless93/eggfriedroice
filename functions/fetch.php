@@ -46,7 +46,7 @@ if(isset($_POST["view"]))
 
   // END OF THIS WORKS
 
-// EDIT 
+// EDIT
 
 
   // if($_POST["view"] != '')
@@ -67,7 +67,7 @@ if($_POST["view"] != '')
   $update_query = "UPDATE notifications SET status=1 WHERE status= '0' AND receiver_id = '$sessionUserID'";
   mysqli_query($con, $update_query);
 
- } else { 
+ } 
 
 $get_notifications = "SELECT * FROM notifications WHERE receiver_id = '$sessionUserID' ORDER BY notification_id DESC LIMIT 5";
 $run_get_notifications = mysqli_query($con, $get_notifications);
@@ -76,9 +76,9 @@ $checknotifications = mysqli_num_rows($run_get_notifications);
 
 
 
-$output =''; 
+$output ='';
 
-// error here 
+// error here
 if(($checknotifications) > 0 ){
 
 
@@ -98,7 +98,7 @@ if(($checknotifications) > 0 ){
 
 
 
-                    } 
+                    }
                     else {
 
                       $output .= '
@@ -106,7 +106,7 @@ if(($checknotifications) > 0 ){
                               <a href="#">
                                  <div>
                                     <i class="fa fa-comment fa-fw"></i> No Notifications
-                                   
+
                                 </div>
                             </a>
                         </li>
@@ -127,13 +127,13 @@ if(($checknotifications) > 0 ){
 
 
                        echo json_encode($data);
-                     }
+
  }
 
 
 
 
-// END of EDIT 
+// END of EDIT
 
  // if($_POST["view"] != '')
  // {
@@ -148,7 +148,7 @@ if(($checknotifications) > 0 ){
  // $query = "SELECT * FROM notifications ORDER BY notification_id DESC LIMIT 5";
  // $result = mysqli_query($con, $query);
  // $output = '';
- 
+
  // if(mysqli_num_rows($result) > 0)
  // {
 
@@ -172,7 +172,7 @@ if(($checknotifications) > 0 ){
  // {
  //  $output .= '<li><a href="#" class="text-bold text-italic">No Notification Found</a></li>';
  // }
- 
+
  // $query_1 = "SELECT * FROM notifications WHERE status=0";
  // $result_1 = mysqli_query($con, $query_1);
  // $count = mysqli_num_rows($result_1);

@@ -44,9 +44,10 @@ $sessionUserID = $row['user_id'];
 <?php
 
 include("../template/theme/head.php");
+?>
 
 
-      <!--  added changes here ( removed the 2 js ones at the bottom of the page )  -->
+      <!-- added changes here ( removed the 2 js ones at the bottom of the page ) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
@@ -54,14 +55,14 @@ include("../template/theme/head.php");
 
     <script>
  $(document).ready(function(){
-  
+
   $('.send_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to send a Friend Request ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Send Friend Request",
@@ -77,21 +78,21 @@ include("../template/theme/head.php");
       label: "Yes",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/add_friends.php',
         data: 'send='+pid
-        
+
        })
        .done(function(response){
-        
+
         // parent.fadeOut('slow');
         window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
         bootbox.alert(response);
-        
+
 
         // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
         // ../Pages/friendsList.php'
@@ -99,22 +100,22 @@ include("../template/theme/head.php");
          // <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
 
         // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
 
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -125,14 +126,14 @@ include("../template/theme/head.php");
  $(document).ready(function(){
 
     $(document).on('click', '#getUser', function(e){
-  
+
      e.preventDefault();
-  
+
      var uid = $(this).data('id'); // get id of clicked row
-  
+
      $('#dynamic-content').html(''); // leave this div blank
      // $('#modal-loader').show();      // load ajax loader on button click
- 
+
      $.ajax({
           url: '../functions/Mutual_Friends.php',
           type: 'POST',
@@ -140,10 +141,10 @@ include("../template/theme/head.php");
           dataType: 'html'
      })
      .done(function(data){
-          console.log(data); 
+          console.log(data);
           // $('#dynamic-content').html(''); // blank before load.
           $('#dynamic-content').html(data); // load here
-          // $('#modal-loader').hide(); // hide loader  
+          // $('#modal-loader').hide(); // hide loader
      })
      .fail(function(){
           $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
@@ -160,31 +161,31 @@ include("../template/theme/head.php");
 
 
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog"> 
-     <div class="modal-content">  
-   
-        <div class="modal-header"> 
-           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+  <div class="modal-dialog">
+     <div class="modal-content">
+
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
            <h4 class="modal-title">
-           <i class="glyphicon glyphicon-user"></i> Mutual Friends 
-           </h4> 
-        </div> 
-            
-        <div class="modal-body">                     
+           <i class="glyphicon glyphicon-user"></i> Mutual Friends
+           </h4>
+        </div>
+
+        <div class="modal-body">
            <div id="modal-loader" style="display: none; text-align: center;">
            <!-- ajax loader -->
            <img src="ajax-loader.gif">
            </div>
-                            
-           <!-- mysql data will be load here -->                          
+
+           <!-- mysql data will be load here -->
            <div id="dynamic-content"></div>
-        </div> 
-                        
-        <div class="modal-footer"> 
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-        </div> 
-                        
-    </div> 
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
   </div>
 </div>
 
@@ -348,7 +349,7 @@ include("../template/theme/head.php");
 
                                 			echo "
                                 			<li class='list-group-item clearfix'>
-                                			<a href='../home.php?userid=$thisFriendID'>
+                                			<a href='../profile.php?userid=$thisFriendID'>
 
 
                                    			<div class='d-flex w-100 justify-content-between'>
@@ -367,7 +368,7 @@ include("../template/theme/head.php");
 
                                 			echo "
                                 			<li class='list-group-item clearfix'>
-                                				<a href='../home.php?userid=$thisFriendID'>
+                                				<a href='../profile.php?userid=$thisFriendID'>
 
 
                                    				<div class='d-flex w-100 justify-content-between'>
@@ -409,7 +410,7 @@ include("../template/theme/head.php");
                                 			// if you have  pending friend request ( sent )
                                 			echo "
                                 			<li class='list-group-item clearfix'>
-                                				<a href='../home.php?userid=$thisFriendID'>
+                                				<a href='../profile.php?userid=$thisFriendID'>
 
 
                                    				<div class='d-flex w-100 justify-content-between'>
@@ -443,7 +444,7 @@ include("../template/theme/head.php");
                                 			// if you have  pending friend request ( sent )
                                 			echo "
                                 			<li class='list-group-item clearfix'>
-                                				<a href='../home.php?userid=$thisFriendID'>
+                                				<a href='../profile.php?userid=$thisFriendID'>
 
 
                                    				<div class='d-flex w-100 justify-content-between'>
@@ -479,7 +480,7 @@ include("../template/theme/head.php");
 
                                 			echo "
                                 			<li class='list-group-item clearfix'>
-                                				<a href='../home.php?userid=$thisFriendID'>
+                                				<a href='../profile.php?userid=$thisFriendID'>
 
 
                                    				<div class='d-flex w-100 justify-content-between'>
@@ -489,7 +490,7 @@ include("../template/theme/head.php");
                                     			<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 				</a>
                                 			";
-                                				
+
                                 			// <a href=\"../functions/add_friends.php?thisFriend=$thisFriendID\" title='Send Friend Request'>
 
                                    //      		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>

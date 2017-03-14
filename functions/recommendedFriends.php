@@ -1,7 +1,7 @@
 <?php
-// include ("../includes/connection.php");
+include ("../includes/connection.php");
 
-$con = mysqli_connect("localhost","root","","team21","3306") or die("Connection not established");
+// $con = mysqli_connect("localhost","root","","team21","3306") or die("Connection not established");
 
 // include ("../home.php");
 $logged_email = $_SESSION['user_email'];

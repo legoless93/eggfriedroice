@@ -102,16 +102,19 @@ function fade(id=""){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">
+                    <br>
+                    <h1>Blog:
                       <?php
                       $currentBlog = $_GET['userid'];
 
                       $queryName = "SELECT user_firstName, user_lastName FROM user WHERE user_id = $currentBlog";
                       $runQueryName = mysqli_query($con, $queryName);
                       $rowQueryName = mysqli_fetch_array($runQueryName);
-                      echo "$rowQueryName[0] $rowQueryName[1]'s ";
+                      echo
+                      "$rowQueryName[0] $rowQueryName[1]";
                       ?>
-                      Blog</h1>
+                      </h1>
+                        <br>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -121,9 +124,10 @@ function fade(id=""){
 
 
             <div class="chat-panel panel panel-default">
-                <div class="panel-heading">
+                <!-- <div class="panel-heading">
                     <i class="fa fa-comments fa-fw"></i> Posts
-                </div>
+                </div> -->
+
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                     <ul class="chat">
@@ -172,33 +176,6 @@ function fade(id=""){
                     </ul>
                 </div>
                 <!-- /.panel-body -->
-                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
-                                </div>
-
-                                <div class="modal-body">
-                                    <p>As the group creator, you have special rights to delete this group.</p>
-                                    <p>Do you want to proceed?</p>
-                                    <p class="debug-url"></p>
-                                </div>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                    <?php
-                                    echo "
-                                    <a class='btn btn-danger' href='../functions/delete_post.php?post_id=$thisPostID'>Delete</a>
-                                    ";
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <!-- /.panel-footer -->
             </div>
             <!-- chat panel above -->
 
@@ -209,7 +186,7 @@ function fade(id=""){
                           echo "
 
 
-                                <div class='panel panel-default'>
+                                <div class='panel panel-primary'>
                                     <div class='panel-heading'>
                                         <i class='fa fa-edit fa-fw'></i> Add a new post
                                     </div>
@@ -221,7 +198,7 @@ function fade(id=""){
                              <label>Text Input with Placeholder</label>
                              <input method='post' name='post_title' class='form-control' placeholder='Enter Title' style='margin-bottom:10px;'>
                             <label>Post body</label>
-                         <textarea method='post' name='post_body' class='form-control' rows='3'></textarea>
+                         <textarea method='post' name='post_body' class='form-control' rows='10'></textarea>
                      </div>
                      <button name='postIt' type='submit' class='btn btn-primary' style = 'float: right'>Post</button>
                    </form>
