@@ -13,9 +13,12 @@ $sessionUserID = $row['user_id'];
   if(isset($_POST['likes'])) {
 
     $likePhotoID = $_POST['likes'];
+    // get the corresponding photo id via user's click the like icon
 
     $insertLike = "INSERT INTO likes (photo_id,liker_id)
     VALUES ('$likePhotoID','$sessionUserID')";
+    // isnert the like information into the table
+    // like id will auto increase, as the primary key
 
     $run_insertLike = mysqli_query($con, $insertLike);
 
