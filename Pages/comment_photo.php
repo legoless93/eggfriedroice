@@ -441,7 +441,7 @@ include("../functions/checkPrivacy.php");
                                         <ul class="photo_comment_content">
 
                                           <?php
-                                          $get_comment = "SELECT user.user_firstName,user.user_lastName,comments.photo_id,comments.comment_body,comments.comment_day,comments.comment_month,comments.comment_year,comments.comment_time
+                                          $get_comment = "SELECT user.user_firstName,user.user_lastName,user.user_pic,comments.photo_id,comments.comment_body,comments.comment_day,comments.comment_month,comments.comment_year,comments.comment_time
                                                           FROM comments INNER JOIN user ON comments.commenter_id = user.user_id WHERE comments.photo_id = '$get_photo_id'";
                                           $run_comment = mysqli_query($con, $get_comment);
                                           $checkCommnent = mysqli_num_rows($run_comment);
@@ -455,12 +455,13 @@ include("../functions/checkPrivacy.php");
                                             $thisCommentTime = $rowComment['comment_time'];
                                             $thisFirst = $rowComment['user_firstName'];
                                             $thisLast = $rowComment['user_lastName'];
+                                            $thisUserPic = $rowComment['user_pic'];
                                             $thisFullDate = sprintf("%02d",$thisCommentDay) . "-" . sprintf("%02d", $thisCommentMonth) . "-" . strval($thisCommentYear);
 
 
                                             echo "<li class='left clearfix list-unstyled'>
                                                 <span class='chat-img pull-left'>
-                                                    <img src='../user/user_images/default.jpg' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                                    <img src='../user/user_images/$thisUserPic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                                 </span>
                                                 <div class='chat-body clearfix'>
                                                     <div class='header'>

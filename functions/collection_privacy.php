@@ -1,14 +1,5 @@
 <?php
 
-
-
-// $userID = $_GET['userid'];
-
-// echo "<script>alert('user id : $userID !!!')</script>";
-// echo "<script>alert('session ID  : $sessionUserID !!!')</script>";
-
-// $curSet="public";
-
 if($sessionUserID != $userID) {
 
   $getPriv = "SELECT * FROM  WHERE user_id = '$userID'";

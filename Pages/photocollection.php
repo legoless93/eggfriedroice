@@ -462,7 +462,11 @@ include("../functions/checkPrivacy.php");
                                           </div>";
                                         };
                                     ?>
-                                        <hr>
+
+                                    </br>
+                                    <hr>
+                                   <h3>Collection Gallery</h3>
+                                   <hr style='width: 100%; color: black; height: 2px; background-color:black;'>
                                     </div>
                                 </div>
                             </div>
@@ -477,8 +481,6 @@ include("../functions/checkPrivacy.php");
                             $show_collection = mysqli_query($con, $get_collection);
                             $checkPosts = mysqli_num_rows($show_collection);
 
-
-
                             while ($rowCollection = mysqli_fetch_array($show_collection)) {
 
                             $this_collection_name = $rowCollection['collection_name'];
@@ -487,16 +489,17 @@ include("../functions/checkPrivacy.php");
 
                            echo "
 
-                                <div class='panel-group' id='accordion'  >
+                                <div class='panel-group' id='accordion' role='tablist' aria-multiselectable='true'>
                                   <div class='panel panel-info'>
-                                    <div class='panel-heading' >
+                                    <div class='panel-heading'role='tab' >
                                       <h4 class='panel-title'>
                                         <a data-toggle='collapse' data-parent='#accordion' href='#$this_collection_id'>
                                           $this_collection_name
                                         </a>
                                       </h4>
                                     </div>
-                                    <div id='$this_collection_id' class='panel-collapse collapse in'>
+
+                                    <div id='$this_collection_id' class='panel-collapse collapse in' role='tabpanel'>
                                       <div class='panel-body'>";
 
                                       $get_photo =  "SELECT * FROM photos WHERE collection_id='$this_collection_id' AND user_id = '$userID' ORDER BY photo_id DESC";
@@ -512,7 +515,7 @@ include("../functions/checkPrivacy.php");
                                       echo "
 
                                       <div class='col-lg-4 col-md-6 col-xs-12 thumb'  hero-feature'>
-                                               <div class='thumbnail'>
+                                            <div class='thumbnail'>
                                                <div id='$thisPhotoID' class='links'>
                                                   <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
                                                       <img style='height=200px;' src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
@@ -561,14 +564,14 @@ include("../functions/checkPrivacy.php");
                                                       if($userID == $sessionUserID) {
                                                       echo "
                                                       <form method='post' action='../functions/delete_photo.php' >
-                                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-right'>DELETE</button>
+                                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm '>DELETE</button>
                                                       </form>
 
                                                       ";};
                                                       echo "
                                                       </p>
                                                   </div>
-                                              </div>
+                                            </div>
                                       </div>
                                     ";};
 
@@ -577,6 +580,7 @@ include("../functions/checkPrivacy.php");
                                     </div>
                                   </div>
                                 </div>
+
 
                           ";
                         };
@@ -599,7 +603,7 @@ include("../functions/checkPrivacy.php");
                                             if($userID == $sessionUserID) {
                                           echo "
                                             <div class='collapse' id='addphoto'>
-                                                <div class='panel-body'>
+                                                <div class='panel-body panel-info'>
                                                      <form action='' method='post' id='a'  class='aa' enctype='multipart/form-data'>
                                                         <div class='form-group' id='post_form'>
                                                             <label>1.Photo name:</label>
@@ -612,11 +616,11 @@ include("../functions/checkPrivacy.php");
                                                         <input type='file' name='myFile1' required = 'required' /><br>
 
                                                         <label>3.Add to Collection:</label><br>
-                                                        ";};
+                                                        ";
 
 
 
-                                                        $get_collection_id = "SELECT collection_id,collection_name from photocollections";
+                                                        $get_collection_id = "SELECT collection_id,collection_name from photocollections WHERE user_id = $sessionUserID";
 
                                                         $run_collection_id = mysqli_query($con, $get_collection_id);
                                                         $check_collection_id = mysqli_num_rows($run_collection_id);
@@ -644,7 +648,7 @@ include("../functions/checkPrivacy.php");
                                                     </form>
                                                 </div>
                                             </div>";
-                                            };
+                                          };};
 
                                         ?>
 
@@ -666,7 +670,6 @@ include("../functions/checkPrivacy.php");
                             $thisPhotoID = $rowPhoto['photo_id'];
 
                             echo "
-
                             <div class='col-lg-3 col-md-4 col-xs-6 thumb'  hero-feature'>
                                     <div class='thumbnail'>
                                      <div id='$thisPhotoID' class='links'>
@@ -687,9 +690,13 @@ include("../functions/checkPrivacy.php");
                                       </script>";
                                       if($UserID = $sessionUserID) {
                                       echo "
+                                      <div class='caption'>
+                                      <p>
                                       <form method='post' action='../functions/delete_photo.php' >
-                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-right'>DELETE</button>
+                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-center>DELETE</button>
                                       </form>
+                                      </p>
+                                      </div>
                                       ";
                                       }
                                     echo "
