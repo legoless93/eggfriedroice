@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../functions/upload_photo.php");
 
 $logged_email = $_SESSION['user_email'];
 
@@ -89,7 +90,16 @@ include("../template/theme/head.php");
 
         echo "
         <center>
+        <form action='' method='post' id='a'  class='aa' enctype='multipart/form-data'>
         <p><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
+        <label>change profile image</label>
+        <input type='file' name='myFile2' required = 'required' /><br>
+
+        <div class='form-group' style ='margin-top:5px;'>
+            <button name='upload_user_img' type='submit' class='btn btn-primary'>Update</button>
+        </div>
+
+        </form>
         </center>
         <form action='' method='post'>
         <div class='form-group' id='post_form'>

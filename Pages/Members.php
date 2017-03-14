@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../functions/functions.php");
 // include("../functions/new_post.php");
 // include("../functions/delete_post.php");
 // include("../functions/retrieve_posts.php");
@@ -21,6 +22,45 @@ $sessionUserID = $row['user_id'];
 
 // if(isset($_GET[''])){
 // }
+
+
+
+// function getMut($sesID, $curID){
+
+// include("../includes/connection.php");
+  
+// $checkMutualFriends = "SELECT * FROM (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic  FROM friendshipBridge
+//                           JOIN user ON friendshipBridge.user_id = user.user_id
+//                           WHERE friendshipBridge.friend_id = $curID
+//                           UNION ALL
+//                           SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+//                           JOIN user ON friendshipBridge.friend_id = user.user_id
+//                           WHERE friendshipBridge.user_id = $curID) clickeeFriends
+//                           JOIN (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+//                                               JOIN user ON friendshipBridge.user_id = user.user_id
+//                                               WHERE friendshipBridge.friend_id = $sesID
+//                                               UNION ALL
+//                                               SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+//                                               JOIN user ON friendshipBridge.friend_id = user.user_id
+//                                               WHERE friendshipBridge.user_id = $sesID) myFriends
+//                                               ON clickeeFriends.user_id = myFriends.user_id";
+
+//                         $run_checkMutualFriends = mysqli_query($con, $checkMutualFriends);
+//                         $checkMutualFriendsCount = mysqli_num_rows($run_checkMutualFriends);
+
+
+
+//   // echo "<script>alert($checkMutualFriendsCount)</script>";
+
+//   echo "($checkMutualFriendsCount)";
+
+// }
+
+
+// getMut($sessionUserID, 5);
+ 
+
+
 
 ?>
 
@@ -136,6 +176,160 @@ $sessionUserID = $row['user_id'];
     });
 });
 </script>
+
+
+<!-- script for fetching friend number  -->
+<script type="text/javascript">
+$(document).ready(function(){
+ 
+ function load_mutual_no(uid = '')
+ {
+
+  
+
+   
+
+     // var uid = $(this).data('id');
+
+
+  // $.ajax({
+  //  url:"../functions/friendNO.php",
+  //  method:"POST",
+  //  data:{id:id},
+  //  dataType:"json"
+
+  //   })
+
+  //  .done(function(data){
+   
+
+  //   // <?php
+  //   // echo "<script>alert('in success!!!')</script>";
+  //   // ?>
+
+    
+  //   // if(data.unseen_notification > 0)
+  //   // {
+  //   //  $('.count').html(data.unseen_notification);
+  //   // }
+  //   $('#f_no').html(data);
+  //   // if(data.unseen_notification > 0)
+  //   // {
+  //   //  $('.count').html(data.unseen_notification);
+  //   // }
+
+  //  })
+
+  //  .fail(function(){
+  //         $('#f_no').html('failed friends no');
+  //         // $('#modal-loader').hide();
+  //    });
+   }    
+ 
+  // load_friends();
+ 
+
+
+
+});
+</script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+   load_mutual_no("");
+});
+</script>
+
+
+<script>
+$(document).ready(function(){
+ 
+ function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"../functions/fetch.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json"
+
+    })
+
+   .done(function(data){
+   
+
+    // <?php
+    // echo "<script>alert('in success!!!')</script>";
+    // ?>
+
+    
+    // if(data.unseen_notification > 0)
+    // {
+    //  $('.count').html(data.unseen_notification);
+    // }
+    $('#d_list').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+    }
+
+   })
+
+   .fail(function(){
+          $('#d_list').html('get NOTIFICATIONS failed WHYYYYYYy');
+          // $('#modal-loader').hide();
+     });
+   }    
+ 
+  load_unseen_notification();
+ 
+ // $('#comment_form').on('submit', function(event){
+ //  event.preventDefault();
+ //  if($('#subject').val() != '' && $('#comment').val() != '')
+ //  {
+ //   var form_data = $(this).serialize();
+ //   $.ajax({
+ //    url:"insert.php",
+ //    method:"POST",
+ //    data:form_data,
+ //    success:function(data)
+ //    {
+ //     $('#comment_form')[0].reset();
+ //     load_unseen_notification();
+ //    }
+ //   });
+ //  }
+ //  else
+ //  {
+ //   alert("Both Fields are Required");
+ //  }
+ // });
+ 
+ $(document).on('click', '#getTest', function(){
+  $('.count').html('');
+  // uncomment below to read the notification
+  // load_unseen_notification('yes');
+
+  // uncomment below to not remove the notification 
+  load_unseen_notification();
+
+
+ });
+
+
+
+ 
+ // setInterval(function(){ 
+ //  load_unseen_notification();; 
+ // }, 5000);
+
+
+ // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
+ 
+});
+</script>
+
+
 
 
 
@@ -315,9 +509,9 @@ $sessionUserID = $row['user_id'];
                                  ";
 
 
-                                      echo "
+                                   echo "
 
-                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button>
+                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
 
                                 </li>
                                 ";} else {
@@ -338,7 +532,7 @@ $sessionUserID = $row['user_id'];
 
                                 echo "
 
-                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View</button>
+                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
 
                                 </li>
                                 ";

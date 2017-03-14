@@ -2,6 +2,7 @@
 
 session_start();
 include("../includes/connection.php");
+include("../functions/functions.php");
 // if(isset($_GET['thisFriend'])){
 
 
@@ -44,7 +45,148 @@ $sessionUserID = $row['user_id'];
 
 include("../template/theme/head.php");
 
-?>
+
+      <!--  added changes here ( removed the 2 js ones at the bottom of the page )  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+
+
+    <script>
+ $(document).ready(function(){
+  
+  $('.send_product').click(function(e){
+   
+   e.preventDefault();
+   
+   var pid = $(this).attr('data-id');
+   var parent = $(this).parent("li");
+   
+   bootbox.dialog({
+     message: "Are you sure you want to send a Friend Request ?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Send Friend Request",
+     buttons: {
+    success: {
+      label: "No",
+      className: "btn-success",
+      callback: function() {
+      $('.bootbox').modal('hide');
+      }
+    },
+    danger: {
+      label: "Yes",
+      className: "btn-danger",
+      callback: function() {
+       
+       
+       $.ajax({
+        
+        type: 'POST',
+        url: '../functions/add_friends.php',
+        data: 'send='+pid
+        
+       })
+       .done(function(response){
+        
+        // parent.fadeOut('slow');
+        window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
+        bootbox.alert(response);
+        
+
+        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
+        // ../Pages/friendsList.php'
+
+         // <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
+       })
+       .fail(function(){
+        
+        bootbox.alert('Something Went Wrong ....');
+                
+       })
+
+        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
+
+              
+      }
+    }
+     }
+   });
+   
+   
+  });
+  
+ });
+
+</script>
+
+
+<!-- viewing mutual friends -->
+<script>
+ $(document).ready(function(){
+
+    $(document).on('click', '#getUser', function(e){
+  
+     e.preventDefault();
+  
+     var uid = $(this).data('id'); // get id of clicked row
+  
+     $('#dynamic-content').html(''); // leave this div blank
+     // $('#modal-loader').show();      // load ajax loader on button click
+ 
+     $.ajax({
+          url: '../functions/Mutual_Friends.php',
+          type: 'POST',
+          data: 'id='+uid,
+          dataType: 'html'
+     })
+     .done(function(data){
+          console.log(data); 
+          // $('#dynamic-content').html(''); // blank before load.
+          $('#dynamic-content').html(data); // load here
+          // $('#modal-loader').hide(); // hide loader  
+     })
+     .fail(function(){
+          $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+          // $('#modal-loader').hide();
+     });
+
+    });
+});
+</script>
+
+
+</head>
+
+
+
+<div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog"> 
+     <div class="modal-content">  
+   
+        <div class="modal-header"> 
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+           <h4 class="modal-title">
+           <i class="glyphicon glyphicon-user"></i> Mutual Friends 
+           </h4> 
+        </div> 
+            
+        <div class="modal-body">                     
+           <div id="modal-loader" style="display: none; text-align: center;">
+           <!-- ajax loader -->
+           <img src="ajax-loader.gif">
+           </div>
+                            
+           <!-- mysql data will be load here -->                          
+           <div id="dynamic-content"></div>
+        </div> 
+                        
+        <div class="modal-footer"> 
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
+        </div> 
+                        
+    </div> 
+  </div>
+</div>
 
 <body>
 
@@ -243,14 +385,20 @@ include("../template/theme/head.php");
                                 				</a>
 
 
-                                				<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
+                                				<a href='#' title='You are friends'>
 
                                         		<span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
 
                                 				</a>
 
-                                			</li>
                                  			";
+
+                                 			echo "
+
+                                  		<button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
+
+                                		</li>
+                                		";
 
 
                                  			// *** need to add another else here to check if you have send a friend request to them OR if you have received one from them -
@@ -273,14 +421,20 @@ include("../template/theme/head.php");
                                 			";
 
                                 			echo "
-                                			<a href='' title='Pending Friend Request'>
+                                			<a href='#' title='Pending Friend Request'>
 
                                         	<span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
 
                               				</a>
 
-                                			</li>
+
                                  			";
+                                 			echo "
+
+                                  		<button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
+
+                                		</li>
+                                		";
 
 
                                 		}
@@ -307,8 +461,15 @@ include("../template/theme/head.php");
 
                               				</a>
 
-                                			</li>
+
                                  			";
+
+                                 			echo "
+
+                                  		<button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
+
+                                		</li>
+                                		";
 
 
                                 		}
@@ -328,14 +489,27 @@ include("../template/theme/head.php");
                                     			<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 				</a>
                                 			";
-                                				echo "
-                                			<a href=\"../functions/add_friends.php?thisFriend=$thisFriendID\" title='Send Friend Request'>
+                                				
+                                			// <a href=\"../functions/add_friends.php?thisFriend=$thisFriendID\" title='Send Friend Request'>
 
-                                        		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
+                                   //      		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right' ></span>
+
+                                			// </a>
+
+                                			echo "
+                                			<a class='send_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                                			<span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right'></span>
 
                                 			</a>
-                                			</li>
+
                                  			";
+
+                                 			echo "
+
+                                  			<button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
+
+                                			</li>
+                                			";
 
 
                                 		}

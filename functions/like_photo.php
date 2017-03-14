@@ -1,29 +1,28 @@
 <?php
+session_start();
 include("../includes/connection.php");
 
-  if(isset($_POST['createCollection'])) {
+$logged_email = $_SESSION['user_email'];
 
-    $logged_email = $_SESSION['user_email'];
+$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
+$run_userID = mysqli_query($con, $get_userID);
+$row = mysqli_fetch_array($run_userID);
 
-    $get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
-    $run_userID = mysqli_query($con, $get_userID);
-    $row = mysqli_fetch_array($run_userID);
+$sessionUserID = $row['user_id'];
 
-    $sessionUserID = $row['user_id'];
+  if(isset($_POST['likes'])) {
 
-    $likeID = $sessionUserID;
-    $likePhotoID= $_POST['public'];
-
+    $likePhotoID = $_POST['likes'];
 
     $insertLike = "INSERT INTO likes (photo_id,liker_id)
-    VALUES ('$collectionName','$sessionUserID')";
+    VALUES ('$likePhotoID','$sessionUserID')";
 
-    $run_insertCollection = mysqli_query($con, $insertCollection);
+    $run_insertLike = mysqli_query($con, $insertLike);
 
-    if($run_insertCollection) {
-      echo "<script>alert('Yay!!! New post!!!')</script>";
+    if($run_insertLike) {
+      echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
     } else {
-      echo "<script>alert('Ahhh crap...')</script>";
+      echo "<script>alert('can not like this photo')</script>";
     }
   }
 ?>

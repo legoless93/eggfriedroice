@@ -4,6 +4,8 @@ include("../includes/connection.php");
 
 include("../functions/upload_photo.php");
 include("../functions/new_collection.php");
+include("../functions/delete_photo.php");
+include("../functions/like_photo.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -43,6 +45,7 @@ include("../template/theme/head.php");
 
       ?>
 
+
 <!-- Page Content -->
 
 <div id="page-wrapper">
@@ -64,7 +67,7 @@ include("../template/theme/head.php");
                             <div class="col-lg-12 col-md-12 col-sm-12 col">
                                 <div class="row" style="margin-top:10px;">
                                     <div class="container-fluid" style="margin-top:10px;">
-                                        <a class="btn btn-success" role="button" data-toggle="collapse" href="#addcollection" aria-expanded="false" aria-controls="collapseExample1">
+                                        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addcollection" aria-expanded="false" aria-controls="collapseExample1">
                                         Add new collection</a>
 
                                         <?php
@@ -75,34 +78,52 @@ include("../template/theme/head.php");
                                                 <form  method='post'>
                                                     <div class='form-group' id='post_form'>
                                                         <label>Collection name:</label>
-                                                        <input method='post' name='collection_name' type='string' class='form-control' placeholder='enter your collection name' required = 'required'>
+                                                        <input method='post' name='collection_name' type='string' maxlength='30' class='form-control' placeholder='enter your collection name' required = 'required' data-validation-maxlength-message='Maximum Length is 30 characters'>
                                                     </div>
-
                                                     <label>Who Can see my collection:</label>
-                                                      <div >
+
+                                                    <div class = 'form-group'>
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio1' value='option1'>Public
+                                                        <input type='radio' name='collectionPrivacy' id='showToPublic' value='public' checked >Public
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio2' value='option2'>Private
+                                                        <input type='radio' name='collectionPrivacy' id='showToPrivacy' value='private' checked>Private
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='option3'>My Friends
+                                                        <input type='radio' name='collectionPrivacy' id='showToFriends' value='friends' checked>My Friends
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='option3'>My Circle
+                                                        <input type='radio' name='collectionPrivacy' id='showToCircle' value='circle' checked>My Circle
                                                       </label>
+                                                      </div>
+
+                                                      <div class='radio'>
                                                       <label class='radio-inline'>
-                                                        <input type='radio' name='inlineRadioOptions' id='inlineRadio3' value='option3'>Friends of my Friends
+                                                        <input type='radio' name='collectionPrivacy' id='showToFoF' value='FoF' checked>Friends of my Friends
                                                       </label>
+                                                      </div>
                                                     </div>
 
                                                     <div class='form-group' style ='margin-top:5px;'>
-                                                        <button name='createCollection' type='submit' class='btn btn-success'>Create</button>
+                                                        <button name='createCollection' type='submit' class='btn btn-primary'>Create</button>
                                                     </div>
                                                 </form>
                                             </div>
-                                        </div>";
+                                        </div>
+                                        <script>
+                                          $(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );
+                                        </script>
+                                        ";
                                       }else{
                                           echo "
                                           <div class='alert alert-danger' role='alert' style='margin-top:5px;'>
@@ -117,10 +138,8 @@ include("../template/theme/head.php");
 
 
                             <!--collection gallery-->
-
-
+                            <h3>Collection Gallery</h3>
                             <?php
-
                             $get_collection =  "SELECT * FROM photoCollections WHERE user_id = '$userID' ORDER BY collection_id DESC";
                             $show_collection = mysqli_query($con, $get_collection);
                             $checkPosts = mysqli_num_rows($show_collection);
@@ -134,9 +153,8 @@ include("../template/theme/head.php");
 
 
                            echo "
-
                                 <div class='panel-group' id='accordion'  >
-                                  <div class='panel panel-default'>
+                                  <div class='panel panel-primary'>
                                     <div class='panel-heading' >
                                       <h4 class='panel-title'>
                                         <a data-toggle='collapse' data-parent='#accordion' href='#$this_collection_id'>
@@ -159,11 +177,11 @@ include("../template/theme/head.php");
 
                                       echo "
 
-                                      <div class='col-lg-4 col-md-4 col-xs-6 thumb'  hero-feature'>
+                                      <div class='col-lg-4 col-md-6 col-xs-12 thumb'  hero-feature'>
                                                <div class='thumbnail'>
                                                <div id='$thisPhotoID' class='links'>
                                                   <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
-                                                      <img src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
+                                                      <img style='height=200px;' src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
                                                   </a>
                                               </div>
 
@@ -182,35 +200,37 @@ include("../template/theme/head.php");
                                                    <div class='caption'>
                                                       <h5>$thisPhotoDescription</h5>
                                                       <p>
-
-                                                      <button name='likes' type='submit' class='btn btn-default glyphicon glyphicon-heart-empty btn-sm'>";
+                                                      <form method='post' action='../functions/like_photo.php' >
+                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default btn-sm pull-left'>LIKE ";
                                                       // like button starts from echo above
 
-                                                      $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
-                                                      $show_likes = mysqli_query($con, $get_likes);
+                                                      // $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
+                                                      $get_likes_count = "SELECT COUNT(*) FROM likes WHERE photo_id = $thisPhotoID";
+                                                      $show_likes = mysqli_query($con, $get_likes_count);
                                                       $checkLikes = mysqli_num_rows($show_likes);
 
                                                       while ($rowLikes = mysqli_fetch_array($show_likes)) {
 
                                                       $thisLikePhotoID = $rowLikes['photo_id'];
-                                                      $thisLikerID = $rowLikes['liker_id'];
-                                                      if($thisLikePhotoID=$thisPhotoID){
-                                                      echo "
-                                                      $this
-                                                      ";};};
+                                                      $thisCount = $rowLikes['COUNT(*)'];
+
+
+                                                      echo "$thisCount";};
 
                                                       // like button ends at echo below
                                                       echo "
-                                                      </button>
-
-                                                      <a href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
-                                                        <button  name='photoComment' type='submit' class='btn btn-primary btn-sm'>comment</button>
-                                                      </a>
-
+                                                      </button></form>
+                                                      <form href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
+                                                        <button  name='photoComment' type='submit' class='btn btn-primary btn-sm pull-right'>comment</button>
+                                                      </form>
                                                       ";
                                                       if($userID == $sessionUserID) {
                                                       echo "
-                                                      <button name='deletePhoto' type='submit' class='btn btn-danger btn-sm' style='float:right'>Delete</button>
+                                                      <p>
+                                                      <form method='post' action='../functions/delete_photo.php' >
+                                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm btn-block '>DELETE</button>
+                                                      </form>
+                                                      </p>
 
                                                       ";};
                                                       echo "
@@ -219,7 +239,6 @@ include("../template/theme/head.php");
                                               </div>
                                       </div>
                                     ";};
-
                                             echo "
                                       </div>
                                     </div>
@@ -241,7 +260,8 @@ include("../template/theme/head.php");
                                 <div class="col-lg-12 col-md-12 col-sm-12 col">
                                     <div class="row" style="margin-top:10px;">
                                         <div class="container-fluid" style="margin-top:10px;">
-                                            <a class="btn btn-success" role="button" data-toggle="collapse" href="#addphoto" aria-expanded="false" aria-controls="collapseExample1">
+                                        </br>
+                                            <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addphoto" aria-expanded="false" aria-controls="collapseExample1">
                                             Add photo</a>
                                             <?php
                                             if($userID == $sessionUserID) {
@@ -257,14 +277,14 @@ include("../template/theme/head.php");
 
 
                                                         <label>2.Select photo:</label>
-                                                        <input type='file' name='myFile1' required = 'required' /><br>
+                                                        <input type='file' name='myFile1' required = 'required' /></br>
 
-                                                        <label>3.Add to Collection:</label><br>
-                                                        ";};
+                                                        <label>3.Add to Collection:</label>
+                                                        ";
 
 
 
-                                                        $get_collection_id = "SELECT collection_id,collection_name from photocollections";
+                                                        $get_collection_id = "SELECT collection_id,collection_name from photocollections WHERE user_id = $sessionUserID";
 
                                                         $run_collection_id = mysqli_query($con, $get_collection_id);
                                                         $check_collection_id = mysqli_num_rows($run_collection_id);
@@ -277,22 +297,23 @@ include("../template/theme/head.php");
 
                                                         echo "
 
-                                                          <input type='radio' name='select_collection[]' value='$this_collection_id' required = 'required'>
-                                                            <img src='../user/user_images/default.jpg' alt='error' style='width:10px;height:10px;'/>
-                                                            $this_collection_name,$this_collection_id
+                                                          <input type='radio' name='select_collection[]' class='text-primary' value='$this_collection_id' required = 'required'>
+                                                            $this_collection_name
                                                               </span>
+                                                              </br>
+
                                                           ";
                                                         };
 
                                               if($userID == $sessionUserID) {
                                           echo "
                                                         <div class='form-group' style ='margin-top:35px;'>
-                                                            <button name='uploadsPhoto' type='submit' class='btn btn-success'>upload</button>
+                                                            <button name='uploadsPhoto' type='submit' class='btn btn-primary'>upload</button>
                                                         </div>
                                                     </form>
                                                 </div>
                                             </div>";
-                                            };
+                                          };};
 
                                         ?>
 
@@ -319,7 +340,7 @@ include("../template/theme/head.php");
                                     <div class='thumbnail'>
                                      <div id='$thisPhotoID' class='links'>
                                         <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
-                                            <img src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
+                                            <img style='height=200px;'src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
                                         </a>
                                      </div>
 
@@ -332,7 +353,15 @@ include("../template/theme/head.php");
                                               links = this.getElementsByTagName('a');
                                           blueimp.Gallery(links, options);
                                       };
-                                      </script>
+                                      </script>";
+                                      if($UserID = $sessionUserID) {
+                                      echo "
+                                      <form method='post' action='../functions/delete_photo.php' >
+                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm btn-block'>DELETE</button>
+                                      </form>
+                                      ";
+                                      }
+                                    echo "
                                   </div>
                             </div>
                           ";};
@@ -383,5 +412,10 @@ include("../template/theme/head.php");
           <a class="play-pause"></a>
           <ol class="indicator"></ol>
       </div>
+
+      <!-- validation script -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+      <script src="../dist/js/jqBootstrapValidation.js"></script>
+
 </body>
 </html>

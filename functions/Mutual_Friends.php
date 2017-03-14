@@ -105,6 +105,7 @@ include("../includes/connection.php");
                                               JOIN user ON friendshipBridge.friend_id = user.user_id
                                               WHERE friendshipBridge.user_id = '$sessionUserID') myFriends
                                               ON clickeeFriends.user_id = myFriends.user_id";
+                                              
       					$run_checkMutualFriends = mysqli_query($con, $checkMutualFriends);
       					$checkMutualFriendsCount = mysqli_num_rows($run_checkMutualFriends);
 
