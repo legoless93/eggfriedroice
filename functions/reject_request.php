@@ -8,10 +8,12 @@ include ("../includes/connection.php");
 // this should get the session user id 
 
 // gets the userID of the person you want to delete from the URL
-if(isset($_GET['thisFriend'])) {
+// if(isset($_GET['thisFriend'])) {
 
-    $thisFriend = $_GET['thisFriend'];
-    
+//     $thisFriend = $_GET['thisFriend'];
+    if(isset($_REQUEST['reject'])) {
+
+    $thisFriend = $_REQUEST['reject'];
 
     $logged_email = $_SESSION['user_email'];
 
@@ -39,15 +41,19 @@ if(isset($_GET['thisFriend'])) {
 
 
 
-    $reject_request = "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID') ";
+    $reject_request = 
+    "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID')";
 
    	$run_reject_request = mysqli_query($con,$reject_request );
 
 
    	if( $run_reject_request){
 
-   		echo "<script>alert('Friend request deleted!!!')</script>";
-        echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
+   		// echo "<script>alert('Friend request deleted!!!')</script>";
+     //    echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
+
+        echo "Friend request rejected successfully...";
+
    	}
 
 
