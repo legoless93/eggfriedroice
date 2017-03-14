@@ -550,9 +550,9 @@ include("../functions/checkPrivacy.php");
                                                       // like button ends at echo below
                                                       echo "
                                                       </button></form>
-                                                      <form href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
+                                                      <a href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
                                                         <button  name='photoComment' type='submit' class='btn btn-primary btn-sm pull-right'>comment</button>
-                                                      </form>
+                                                      </a>
                                                       ";
                                                       if($userID == $sessionUserID) {
                                                       echo "
