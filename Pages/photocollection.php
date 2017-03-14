@@ -5,6 +5,7 @@ include("../includes/connection.php");
 include("../functions/upload_photo.php");
 include("../functions/new_collection.php");
 include("../functions/delete_photo.php");
+include("../functions/like_photo.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -510,7 +511,6 @@ include("../functions/checkPrivacy.php");
 
                                       echo "
 
-
                                       <div class='col-lg-4 col-md-6 col-xs-12 thumb'  hero-feature'>
                                                <div class='thumbnail'>
                                                <div id='$thisPhotoID' class='links'>
@@ -534,31 +534,29 @@ include("../functions/checkPrivacy.php");
                                                    <div class='caption'>
                                                       <h5>$thisPhotoDescription</h5>
                                                       <p>
-
-                                                      <button name='likes' type='submit' class='btn btn-default glyphicon glyphicon-heart-empty btn-sm'>";
+                                                      <form method='post' action='../functions/like_photo.php' >
+                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default glyphicon glyphicon-heart-empty btn-sm'>";
                                                       // like button starts from echo above
 
-                                                      $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
-                                                      $show_likes = mysqli_query($con, $get_likes);
+                                                      // $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
+                                                      $get_likes_count = "SELECT COUNT(*) FROM likes WHERE photo_id = $thisPhotoID";
+                                                      $show_likes = mysqli_query($con, $get_likes_count);
                                                       $checkLikes = mysqli_num_rows($show_likes);
 
                                                       while ($rowLikes = mysqli_fetch_array($show_likes)) {
 
                                                       $thisLikePhotoID = $rowLikes['photo_id'];
-                                                      $thisLikerID = $rowLikes['liker_id'];
-                                                      if($thisLikePhotoID=$thisPhotoID){
-                                                      echo "
-                                                      $this
-                                                      ";};};
+                                                      $thisCount = $rowLikes['COUNT(*)'];
+
+
+                                                      echo "$thisCount";};
 
                                                       // like button ends at echo below
                                                       echo "
-                                                      </button>
-
+                                                      </button></form>
                                                       <a href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
                                                         <button  name='photoComment' type='submit' class='btn btn-primary btn-sm'>comment</button>
                                                       </a>
-
                                                       ";
                                                       if($userID == $sessionUserID) {
                                                       echo "

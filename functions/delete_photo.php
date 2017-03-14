@@ -17,6 +17,10 @@ if(isset($_POST['deletePhoto'])) {
     $delete_photo = "DELETE  FROM photos WHERE photo_id = '$photo_id' ";
     $run_delete_photo = mysqli_query($con, $delete_photo);
 
+    $delete_photo_like = "DELETE  FROM likes WHERE photo_id = '$photo_id' ";
+    $run_delete_photo_like = mysqli_query($con, $delete_photo_like);
+
+
     if($run_delete_photo) {
         echo "<script>alert('Photo deleted!!!')</script>";
         echo "<script>alert('$sessionUserID,$photo_id')</script>";
