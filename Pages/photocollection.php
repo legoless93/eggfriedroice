@@ -574,14 +574,11 @@ include("../functions/checkPrivacy.php");
                                             </div>
                                       </div>
                                     ";};
-
                                             echo "
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-
-
                           ";
                         };
                         ?>
@@ -610,15 +607,11 @@ include("../functions/checkPrivacy.php");
                                                             <input method='post' name='photo_description' type='string' class='form-control' placeholder='enter your photo description' required = 'required'>
                                                         </div>
 
-
-
                                                         <label>2.Select photo:</label>
                                                         <input type='file' name='myFile1' required = 'required' /><br>
 
                                                         <label>3.Add to Collection:</label><br>
                                                         ";
-
-
 
                                                         $get_collection_id = "SELECT collection_id,collection_name from photocollections WHERE user_id = $sessionUserID";
 
@@ -629,7 +622,6 @@ include("../functions/checkPrivacy.php");
 
                                                           $this_collection_id = $rowPosts['collection_id'];
                                                           $this_collection_name = $rowPosts['collection_name'];
-
 
                                                         echo "
 
@@ -651,7 +643,6 @@ include("../functions/checkPrivacy.php");
                                           };};
 
                                         ?>
-
                                           </div>
                                           <hr>
                                       </div>
@@ -751,9 +742,6 @@ include("../functions/checkPrivacy.php");
           <ol class="indicator"></ol>
       </div>
 
-      <!-- validation script -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-      <script src="../dist/js/jqBootstrapValidation.js"></script>
 
 </body>
 </html>

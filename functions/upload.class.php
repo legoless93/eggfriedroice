@@ -27,7 +27,7 @@ class upload{
 		$this->fileInfo=$_FILES[$this->fileName];
 	}
 	/**
-	 * 检测上传文件是否出错
+	 * check for errors
 	 * @return boolean
 	 */
 	protected function checkError(){
@@ -35,25 +35,25 @@ class upload{
 			if($this->fileInfo['error']>0){
 				switch($this->fileInfo['error']){
 					case 1:
-						$this->error='超过了PHP配置文件中upload_max_filesize选项的值';
+						$this->error='The file size is larger than the upload_max_filesize value in the php config file';
 						break;
 					case 2:
-						$this->error='超过了表单中MAX_FILE_SIZE设置的值';
+						$this->error='The file size is larger than the MAX_FILE_SIZE value for html form table';
 						break;
 					case 3:
-						$this->error='文件部分被上传';
+						$this->error='file is partly uploaded';
 						break;
 					case 4:
-						$this->error='没有选择上传文件';
+						$this->error='no selected file';
 						break;
 					case 6:
-						$this->error='没有找到临时目录';
+						$this->error='can not find the upload directory';
 						break;
 					case 7:
-						$this->error='文件不可写';
+						$this->error='file can not be writed';
 						break;
 					case 8:
-						$this->error='由于PHP的扩展程序中断文件上传';
+						$this->error='php API breaks the file upload';
 						break;
 
 				}
@@ -62,76 +62,76 @@ class upload{
 				return true;
 			}
 		}else{
-			$this->error='文件上传出错';
+			$this->error='uploading error ';
 			return false;
 		}
 	}
 	/**
-	 * 检测上传文件的大小
+	 * file size test
 	 * @return boolean
 	 */
 	protected function checkSize(){
 		if($this->fileInfo['size']>$this->maxSize){
-			$this->error='上传文件过大';
+			$this->error='file is too large';
 			return false;
 		}
 		return true;
 	}
 	/**
-	 * 检测扩展名
+	 * file suffix
 	 * @return boolean
 	 */
 	protected function checkExt(){
 		$this->ext=strtolower(pathinfo($this->fileInfo['name'],PATHINFO_EXTENSION));
 		if(!in_array($this->ext,$this->allowExt)){
-			$this->error='不允许的扩展名';
+			$this->error='invalid image suffix';
 			return false;
 		}
 		return true;
 	}
 	/**
-	 * 检测文件的类型
+	 * file type
 	 * @return boolean
 	 */
 	protected function checkMime(){
 		if(!in_array($this->fileInfo['type'],$this->allowMime)){
-			$this->error='不允许的文件类型';
+			$this->error='file type not accept';
 			return false;
 		}
 		return true;
 	}
 	/**
-	 * 检测是否是真实图片
+	 * real image?
 	 * @return boolean
 	 */
 	protected function checkTrueImg(){
 		if($this->imgFlag){
 			if(!@getimagesize($this->fileInfo['tmp_name'])){
-				$this->error='不是真实图片';
+				$this->error='not real image type';
 				return false;
 			}
 			return true;
 		}
 	}
 	/**
-	 * 检测是否通过HTTP POST方式上传上来的
+	 * uploaded via HTTP POST?
 	 * @return boolean
 	 */
 	protected function checkHTTPPost(){
 		if(!is_uploaded_file($this->fileInfo['tmp_name'])){
-			$this->error='文件不是通过HTTP POST方式上传上来的';
+			$this->error='file is not uploaded via HTTP POST';
 			return false;
 		}
 		return true;
 	}
 	/**
-	 *显示错误
+	 *show error
 	 */
 	protected function showError(){
 		exit('<span style="color:red">'.$this->error.'</span>');
 	}
 	/**
-	 * 检测目录不存在则创建
+	 * upload directory exist?
 	 */
 	protected function checkUploadPath(){
 		if(!file_exists($this->uploadPath)){
@@ -139,14 +139,14 @@ class upload{
 		}
 	}
 	/**
-	 * 产生唯一字符串
+	 * set unique name
 	 * @return string
 	 */
 	protected function getUniName(){
 		return md5(uniqid(microtime(true),true));
 	}
 	/**
-	 * 上传文件
+	 * file upload
 	 * @return string
 	 */
 	public function uploadFile(){
@@ -157,7 +157,7 @@ class upload{
 			if(@move_uploaded_file($this->fileInfo['tmp_name'], $this->destination)){
 				return  $this->uniName.'.'.$this->ext;
 			}else{
-				$this->error='文件移动失败';
+				$this->error='fail to move the file from tmp folder to upload directory';
 				$this->showError();
 			}
 		}else{

@@ -72,7 +72,4 @@ if(isset($_POST['upload_user_img'])) {
   }
 }
 
-
-
-
 ?>
