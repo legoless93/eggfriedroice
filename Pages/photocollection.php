@@ -638,7 +638,7 @@ include("../functions/checkPrivacy.php");
                                               if($userID == $sessionUserID) {
                                           echo "
                                                         <div class='form-group' style ='margin-top:35px;'>
-                                                            <button name='uploadsPhoto' type='submit' >upload</button>
+                                                            <button name='uploadsPhoto' type='submit' class='btn btn-primary'>upload</button>
                                                         </div>
                                                     </form>
                                                 </div>
