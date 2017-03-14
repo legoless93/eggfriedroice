@@ -14,16 +14,25 @@ if(isset($_REQUEST['accept'])) {
     $row = mysqli_fetch_array($run_userID);
 
     $sessionUserID = $row['user_id'];
+    $FirstName = $row['user_firstName'];
+    $LastName = $row['user_lastName'];
 
 
     $update_accept_friend = "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID') "; 
     $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id) VALUES ('$sessionUserID','$thisFriend')";
+
+    $accepted_friend_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('Friend Request accepted from $FirstName $LastName','0', '$thisFriend' )";
+
+    
+
+
     $run_accept_friend = mysqli_query($con, $accept_friend);
     $run_update_accept_friend = mysqli_query($con, $update_accept_friend);
+    $run_accepted_friend_notification =mysqli_query($con, $accepted_friend_notification);
 
 
 
- 	if ($run_accept_friend && $run_update_accept_friend ){
+ 	if ($run_accept_friend && $run_update_accept_friend && $run_accepted_friend_notification ){
     	// echo "<script>alert('Friend request accepted!!!')</script>";
      //    echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
 
@@ -172,10 +181,100 @@ if(isset($_REQUEST['accept'])) {
  });
 
 </script>
+
+
+<!-- script for fetching the notifications -->
+<script>
+$(document).ready(function(){
+ 
+ function load_unseen_notification(view = '')
+ {
+  $.ajax({
+   url:"../functions/fetch.php",
+   method:"POST",
+   data:{view:view},
+   dataType:"json"
+
+    })
+
+   .done(function(data){
+   
+
+    // <?php
+    // echo "<script>alert('in success!!!')</script>";
+    // ?>
+
+    
+    // if(data.unseen_notification > 0)
+    // {
+    //  $('.count').html(data.unseen_notification);
+    // }
+    $('#d_list').html(data.notification);
+    if(data.unseen_notification > 0)
+    {
+     $('.count').html(data.unseen_notification);
+    }
+
+   })
+
+   .fail(function(){
+          $('#d_list').html('get NOTIFICATIONS failed WHYYYYYYy');
+          // $('#modal-loader').hide();
+     });
+   }    
+ 
+  load_unseen_notification();
+ 
+ // $('#comment_form').on('submit', function(event){
+ //  event.preventDefault();
+ //  if($('#subject').val() != '' && $('#comment').val() != '')
+ //  {
+ //   var form_data = $(this).serialize();
+ //   $.ajax({
+ //    url:"insert.php",
+ //    method:"POST",
+ //    data:form_data,
+ //    success:function(data)
+ //    {
+ //     $('#comment_form')[0].reset();
+ //     load_unseen_notification();
+ //    }
+ //   });
+ //  }
+ //  else
+ //  {
+ //   alert("Both Fields are Required");
+ //  }
+ // });
+ 
+ $(document).on('click', '#getTest', function(){
+  $('.count').html('');
+  // uncomment below to read the notification
+  // load_unseen_notification('yes');
+
+  // uncomment below to not remove the notification 
+  load_unseen_notification();
+
+
+ });
+
+
+
+ 
+ // setInterval(function(){ 
+ //  load_unseen_notification();; 
+ // }, 5000);
+
+
+ // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
+ 
+});
+</script>
 </head>
 
 
 <body>
 
+  
 </body>
 </html>

@@ -27,6 +27,7 @@ ORDER BY rank DESC";
 $run_topFriends = mysqli_query($con, $topFriendsQuery);
 $topFriend = mysqli_fetch_array($run_topFriends);
 $topFriendUserID = $topFriend['user_id'];
+
 if($topFriendUserID) {
   $recFriendsQuery = "SELECT * FROM user WHERE user.user_id IN (SELECT user.user_id
 FROM friendshipBridge
@@ -46,8 +47,13 @@ FROM friendshipBridge
        JOIN user ON friendshipBridge.friend_id = user.user_id
 WHERE friendshipBridge.user_id = '$sessionUserID') AND user.user_id <> '$sessionUserID'";
 $run_recFriends = mysqli_query($con, $recFriendsQuery);
+
 while ($rowRecFriends = mysqli_fetch_array($run_recFriends)) {
   $thisRecFriendName = $rowRecFriends['user_firstName'] . " " . $rowRecFriends['user_lastName'];
+  if(in_array($thisRecFriendName, $recommendedFriendsList)) {
+
+  } else {
+    array_push($recommendedFriendsList, $thisRecFriendName);
   echo "
   <li class='left clearfix'>
       <span class='chat-img pull-left'>
@@ -63,6 +69,8 @@ while ($rowRecFriends = mysqli_fetch_array($run_recFriends)) {
       </div>
   </li>
   ";
+
+}
 }
 }
  ?>

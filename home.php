@@ -7,7 +7,7 @@ include("includes/connection.php");
 
 $logged_email = $_SESSION['user_email'];
 
-$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
+$get_userID = "SELECT user_id FROM user WHERE user_email = '$logged_email'";
 $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
@@ -16,6 +16,8 @@ $sessionUserID = $row['user_id'];
 if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
+
+include ("functions/addNewInterest.php");
 
 ?>
 
@@ -423,8 +425,8 @@ if(isset($_GET['userid'])) {
         $user_id = $row['user_id'];
         $user_firstName = $row['user_firstName'];
         $user_lastName = $row['user_lastName'];
-        $user_pass = $row['user_password'];
-        $user_email = $row['user_email'];
+        // $user_pass = $row['user_password'];
+        // $user_email = $row['user_email'];
         $user_image = $row['user_pic'];
         $user_birthday = $row['user_DoB'];
         $formatDoB = strtotime($user_birthday);
@@ -487,35 +489,114 @@ if(isset($_GET['userid'])) {
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                    <div class="chat-panel panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-comments fa-fw"></i> Recommended Friends
+                  </div>
+                  <!-- /.col-lg-4 -->
+                  </div>
+                  <!-- row end -->
+                  <div class = "row">
+
+
+                    <div class="col-lg-8">
+                      <div class="chat-panel panel panel-default">
+                          <div class="panel-heading">
+                            <h5>My Interests</h5>
+                          </div>
+                          <!--  -->
+                          <div class="panel-body">
+                            <!-- paste here -->
+                            <div class="list-group">
+                              <!-- <form method="post"> -->
+                              <form method="post">
+                              <?php
+
+                              $interestQuery = "SELECT interest FROM interests WHERE user_id = $userID";
+                              $run_interestQuery = mysqli_query($con, $interestQuery);
+
+
+                              if($userID == $sessionUserID) {
+
+                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                  $thisInterest = $interestArray['interest'];
+
+                                echo "
+                                  <li class='list-unstyled'>
+                                  <input type='checkbox' name='interest_group[]' value=$thisInterest>
+
+                                    $thisInterest
+                                      </span>
+                                    </li>
+                                  ";
+                                };
+
+                                echo "
+                                <li class='list-unstyled'>
+                                  Add new:
+                                  <input name='newInterest' style='width: 20em;' type='text' placeholder='Please enter another interest'>
+                                </li>
+                                <!-- end of interest box -->
+
+                                </div>
+                                <div class ='pull-right'>
+                                  <button name='addInterests' type='submit' class='btn-primary btn-sm'><h4>Submit Interests</h4></button>
+                                </div>
+                                ";
+                              } else {
+                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                  $thisInterest = $interestArray['interest'];
+
+                                echo "
+                                  <li class='list-unstyled'>
+                                    $thisInterest
+                                      </span>
+                                    </li>
+                                  ";
+                                };
+                                echo "</div>";
+                              }
+
+                                ?>
+                </form>
+                </div>
+
+                </form>
+              </div>
+                    </div>
+                    <!-- /.col-lg-8 -->
+
+
+
+
+
+
+
+                    <?php
+                    if($userID == $sessionUserID) {
+                      echo "
+                      <div class='col-lg-4'>
+                    <div class='chat-panel panel panel-default'>
+                        <div class='panel-heading'>
+                            <i class='fa fa-comments fa-fw'></i> Recommended Friends
 
                         </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <ul class="chat">
-                                <?php
-                                include ("functions/recommendedFriends.php");
-                                 ?>
+                        <div class='panel-body'>
+                            <ul class='chat'>
+                            ";
+
+                            $recommendedFriendsList = array();
+                                include ('functions/similarInterestsFiltering.php');
+                                include ('functions/recommendedFriends.php');
+
+                                echo "
+
                             </ul>
                         </div>
-                        <!-- /.panel-body -->
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                                <span class="input-group-btn">
-                                    <button class="btn btn-warning btn-sm" id="btn-chat">
-                                        Send
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <!-- /.panel-footer -->
+
                     </div>
-                    <!-- /.panel .chat-panel -->
-                </div>
-                <!-- /.col-lg-4 -->
+                    </div>
+                    ";
+                  }
+                    ?>
+
             </div>
             <!-- /.row -->
         </div>
