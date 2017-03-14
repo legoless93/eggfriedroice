@@ -531,7 +531,7 @@ include("../functions/checkPrivacy.php");
                                                       <h5>$thisPhotoDescription</h5>
                                                       <p>
                                                       <form method='post' action='../functions/like_photo.php' >
-                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default  btn-sm'>LIKE ";
+                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default btn-sm pull-left'>LIKE ";
                                                       // like button starts from echo above
 
                                                       // $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
@@ -550,15 +550,17 @@ include("../functions/checkPrivacy.php");
                                                       // like button ends at echo below
                                                       echo "
                                                       </button></form>
-                                                      <a href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
-                                                        <button  name='photoComment' type='submit' class='btn btn-primary btn-sm'>comment</button>
-                                                      </a>
+                                                      <form href='comment_photo.php?photo_id=$thisPhotoID&userid=$sessionUserID'>
+                                                        <button  name='photoComment' type='submit' class='btn btn-primary btn-sm pull-right'>comment</button>
+                                                      </form>
                                                       ";
                                                       if($userID == $sessionUserID) {
                                                       echo "
+                                                      <p>
                                                       <form method='post' action='../functions/delete_photo.php' >
-                                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-right'>DELETE</button>
+                                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm btn-block '>DELETE</button>
                                                       </form>
+                                                      </p>
 
                                                       ";};
                                                       echo "
@@ -605,9 +607,9 @@ include("../functions/checkPrivacy.php");
 
 
                                                         <label>2.Select photo:</label>
-                                                        <input type='file' name='myFile1' required = 'required' /><br>
+                                                        <input type='file' name='myFile1' required = 'required' /></br>
 
-                                                        <label>3.Add to Collection:</label><br>
+                                                        <label>3.Add to Collection:</label>
                                                         ";
 
 
@@ -625,19 +627,18 @@ include("../functions/checkPrivacy.php");
 
                                                         echo "
 
-                                                          <input type='radio' name='select_collection[]' value='$this_collection_id' required = 'required'>
-
+                                                          <input type='radio' name='select_collection[]' class='text-primary' value='$this_collection_id' required = 'required'>
                                                             $this_collection_name
                                                               </span>
                                                               </br>
-                                                              </br>
+
                                                           ";
                                                         };
 
                                               if($userID == $sessionUserID) {
                                           echo "
                                                         <div class='form-group' style ='margin-top:35px;'>
-                                                            <button name='uploadsPhoto' type='submit' class='btn btn-primary'>upload</button>
+                                                            <button name='uploadsPhoto' type='submit' >upload</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -686,7 +687,7 @@ include("../functions/checkPrivacy.php");
                                       if($UserID = $sessionUserID) {
                                       echo "
                                       <form method='post' action='../functions/delete_photo.php' >
-                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm pull-right'>DELETE</button>
+                                        <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='btn btn-danger btn-sm btn-block'>DELETE</button>
                                       </form>
                                       ";
                                       }

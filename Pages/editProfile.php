@@ -394,11 +394,11 @@ $sessionUserID = $row['user_id'];
         <center>
         <form action='' method='post' id='a'  class='aa' enctype='multipart/form-data'>
         <p><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
-        <label>2.Select photo:</label>
+        <label>change profile image</label>
         <input type='file' name='myFile2' required = 'required' /><br>
 
         <div class='form-group' style ='margin-top:5px;'>
-            <button name='upload_user_img' type='submit' class='btn btn-success'>Update</button>
+            <button name='upload_user_img' type='submit' class='btn btn-primary'>Update</button>
         </div>
 
         </form>
