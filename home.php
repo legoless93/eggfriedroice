@@ -7,7 +7,7 @@ include("includes/connection.php");
 
 $logged_email = $_SESSION['user_email'];
 
-$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
+$get_userID = "SELECT user_id FROM user WHERE user_email = '$logged_email'";
 $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
@@ -425,8 +425,8 @@ include ("functions/addNewInterest.php");
         $user_id = $row['user_id'];
         $user_firstName = $row['user_firstName'];
         $user_lastName = $row['user_lastName'];
-        $user_pass = $row['user_password'];
-        $user_email = $row['user_email'];
+        // $user_pass = $row['user_password'];
+        // $user_email = $row['user_email'];
         $user_image = $row['user_pic'];
         $user_birthday = $row['user_DoB'];
         $formatDoB = strtotime($user_birthday);

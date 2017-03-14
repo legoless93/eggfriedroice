@@ -1,14 +1,14 @@
 <?php
 
-// $con = mysqli_connect("localhost","root","root","social_network","3306") or die("Connection not established");
+$con = mysqli_connect("localhost","root","root","compgc06_team21","3306") or die("Connection not established");
 
-$con = mysqli_connect("localhost","root","","team21","3306") or die("Connection not established");
+// $con = mysqli_connect("localhost","root","","team21","3306") or die("Connection not established");
 
 
 function getMut($sesID, $curID){
 
 include("../includes/connection.php");
-  
+
 $checkMutualFriends = "SELECT * FROM (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic  FROM friendshipBridge
                           JOIN user ON friendshipBridge.user_id = user.user_id
                           WHERE friendshipBridge.friend_id = $curID

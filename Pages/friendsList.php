@@ -85,14 +85,14 @@ $sessionUserID = $row['user_id'];
  $(document).ready(function(){
 
     $(document).on('click', '#getUser', function(e){
-  
+
      e.preventDefault();
-  
+
      var uid = $(this).data('id'); // get id of clicked row
-  
+
      $('#dynamic-content').html(''); // leave this div blank
      // $('#modal-loader').show();      // load ajax loader on button click
- 
+
      $.ajax({
           url: '../functions/Mutual_Friends.php',
           type: 'POST',
@@ -100,10 +100,10 @@ $sessionUserID = $row['user_id'];
           dataType: 'html'
      })
      .done(function(data){
-          console.log(data); 
+          console.log(data);
           // $('#dynamic-content').html(''); // blank before load.
           $('#dynamic-content').html(data); // load here
-          // $('#modal-loader').hide(); // hide loader  
+          // $('#modal-loader').hide(); // hide loader
      })
      .fail(function(){
           $('#dynamic-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
@@ -119,14 +119,14 @@ $sessionUserID = $row['user_id'];
 
 <script>
  $(document).ready(function(){
-  
+
   $('.cancel_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Cancel ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Cancel Request",
@@ -142,17 +142,17 @@ $sessionUserID = $row['user_id'];
       label: "Yes",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/cancel_request.php',
         data: 'cancel='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert(response);
         parent.fadeOut('slow');
 
@@ -162,25 +162,25 @@ $sessionUserID = $row['user_id'];
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
-        // $('#f_sent').html(response);  
-        
+        // $('#f_sent').html(response);
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -190,14 +190,14 @@ $sessionUserID = $row['user_id'];
 <!-- BOOTBOX FOR accepting friend request -->
 <script>
  $(document).ready(function(){
-  
+
   $('.delete_friend_request_row').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Accept ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Accept !",
@@ -213,23 +213,23 @@ $sessionUserID = $row['user_id'];
       label: "Yes",
       className: "btn-primary",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/accept_requestTEST.php',
         data: 'accept='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert('You are now friends');
         parent.fadeOut('slow');
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
-        $('#f_list').html(response);  
+        $('#f_list').html(response);
 
 
         // this updates the dropdown for notifications
@@ -244,31 +244,31 @@ $sessionUserID = $row['user_id'];
 
 
 
-        
+
         // USE THIS FOR RELOCATION *****
         // window.location='../home.php?userid=<?php echo $sessionUserID;?>';
 
-        
-        
+
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
 
-       
+
 
         // window.location ='../home.php?userid=$sessionUserID';
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -279,7 +279,7 @@ $sessionUserID = $row['user_id'];
 <!-- script for fetching the notifications -->
 <script>
 $(document).ready(function(){
- 
+
  function load_unseen_notification(view = '')
  {
   $.ajax({
@@ -291,13 +291,13 @@ $(document).ready(function(){
     })
 
    .done(function(data){
-   
+
 
     // <?php
     // echo "<script>alert('in success!!!')</script>";
     // ?>
 
-    
+
     // if(data.unseen_notification > 0)
     // {
     //  $('.count').html(data.unseen_notification);
@@ -314,10 +314,10 @@ $(document).ready(function(){
           $('#d_list').html('get NOTIFICATIONS failed WHYYYYYYy');
           // $('#modal-loader').hide();
      });
-   }    
- 
+   }
+
   load_unseen_notification();
- 
+
  // $('#comment_form').on('submit', function(event){
  //  event.preventDefault();
  //  if($('#subject').val() != '' && $('#comment').val() != '')
@@ -339,35 +339,35 @@ $(document).ready(function(){
  //   alert("Both Fields are Required");
  //  }
  // });
- 
+
  $(document).on('click', '#getTest', function(){
   $('.count').html('');
 
   // uncomment below to read the notification
-  // load_unseen_notification('yes');
+  load_unseen_notification('yes');
 
-  // uncomment below to not remove the notification 
-  load_unseen_notification();
+  // uncomment below to not remove the notification
+  // load_unseen_notification();
 
 
  });
 
 
 
- 
- // setInterval(function(){ 
- //  load_unseen_notification();; 
+
+ // setInterval(function(){
+ //  load_unseen_notification();;
  // }, 5000);
 
 
  // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
- 
+
 });
 </script>
 
 
 <!-- <script>
- $(document).ready(function(){   
+ $(document).ready(function(){
 $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 });
 </script> -->
@@ -377,14 +377,14 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 
 <script>
  $(document).ready(function(){
-  
+
   $('.delete_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Delete ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
@@ -400,19 +400,19 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
       label: "Delete!",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/deleteFriendTest.php',
         data: 'delete='+pid
-        
+
        })
        .done(function(response){
-        
 
-        // load_friends(); 
+
+        // load_friends();
         // init();
         bootbox.alert(response);
         parent.fadeOut('slow');
@@ -422,37 +422,37 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
         // $('#f_sent').html(response);
-         // load_friends();  
+         // load_friends();
 
 
 
-        
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
 
        // init();
-        // load_friends();  
+        // load_friends();
 
 
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
 
 // init();
 
-  
+
  });
 
 </script>
@@ -463,14 +463,14 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 
 <script>
  $(document).ready(function(){
-  
+
   $('.reject_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
    var parent = $(this).parent("li");
-   
+
    bootbox.dialog({
      message: "Are you sure you want to Reject?",
      title: "<i class='glyphicon glyphicon-trash'></i> Reject Friend Quest",
@@ -486,17 +486,17 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
       label: "Yes",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/reject_request.php',
         data: 'reject='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert(response);
         parent.fadeOut('slow');
 
@@ -506,25 +506,25 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
-        // $('#f_sent').html(response);  
-        
+        // $('#f_sent').html(response);
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -533,7 +533,7 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 <!-- script for fetching friend number  -->
 <script type="text/javascript">
 $(document).ready(function(){
- 
+
  function load_friends(id = '')
  {
   $.ajax({
@@ -545,13 +545,13 @@ $(document).ready(function(){
     })
 
    .done(function(data){
-   
+
 
     // <?php
     // echo "<script>alert('in success!!!')</script>";
     // ?>
 
-    
+
     // if(data.unseen_notification > 0)
     // {
     //  $('.count').html(data.unseen_notification);
@@ -568,10 +568,10 @@ $(document).ready(function(){
           $('#f_no').html('failed friends no');
           // $('#modal-loader').hide();
      });
-   }    
- 
+   }
+
   load_friends();
- 
+
  // $('#comment_form').on('submit', function(event){
  //  event.preventDefault();
  //  if($('#subject').val() != '' && $('#comment').val() != '')
@@ -593,13 +593,13 @@ $(document).ready(function(){
  //   alert("Both Fields are Required");
  //  }
  // });
- 
+
  // $(document).on('click', '#getTest', function(){
  //  $('.count').html('');
  //  // uncomment below to read the notification
  //  // load_unseen_notification('yes');
 
- //  // uncomment below to not remove the notification 
+ //  // uncomment below to not remove the notification
  //  load_unseen_notification();
 
 
@@ -607,14 +607,14 @@ $(document).ready(function(){
 
 
 
- 
- setInterval(function(){ 
-  load_friends(); 
+
+ setInterval(function(){
+  load_friends();
  }, 5000);
 
 
  // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
- 
+
 });
 </script>
 
@@ -638,31 +638,31 @@ $(document).ready(function(){
 
 <!-- modal for viewing mutual friends  -->
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog"> 
-     <div class="modal-content">  
-   
-        <div class="modal-header"> 
-           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button> 
+  <div class="modal-dialog">
+     <div class="modal-content">
+
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
            <h4 class="modal-title">
-           <i class="glyphicon glyphicon-user"></i> Mutual Friends 
-           </h4> 
-        </div> 
-            
-        <div class="modal-body">                     
+           <i class="glyphicon glyphicon-user"></i> Mutual Friends
+           </h4>
+        </div>
+
+        <div class="modal-body">
            <!-- <div id="modal-loader" style="display: none; text-align: center;">
            <!-- ajax loader -->
 <!--            <img src="ajax-loader.gif"> -->
            <!-- </div> -->
-                            
-           <!-- mysql data will be load here -->                          
+
+           <!-- mysql data will be load here -->
            <div id="dynamic-content"></div>
-        </div> 
-                        
-        <div class="modal-footer"> 
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>  
-        </div> 
-                        
-    </div> 
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
   </div>
 </div>
 
@@ -822,7 +822,7 @@ $(document).ready(function(){
                     </a> -->
                     <span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="fa fa-bell fa-fw" style="font-size:18px;"></span></a>
                     <ul class="dropdown-menu dropdown-alerts" id='d_list'>
-                        
+
 
                     </ul>
                     <!-- <ul class="dropdown-menu dropdown-alerts">
@@ -989,12 +989,12 @@ $(document).ready(function(){
                             <i class="fa fa-edit fa-fw"></i> Friend Requests Received
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body"> 
+                        <div class="panel-body">
                         <!-- where we might put the div id -->
 
                         <ul class="list-group" id="f_sent">
 
-                        
+
 
                         <?php
 
@@ -1043,7 +1043,7 @@ $(document).ready(function(){
 
 
 
-                                    
+
 
 
                                 //  <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='Reject Friend Request'>
@@ -1063,7 +1063,7 @@ $(document).ready(function(){
 
                                 echo "
 
-                                
+
 
 
                                   <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
@@ -1156,7 +1156,7 @@ $(document).ready(function(){
                                 </a>
                                 ";
 
-                                
+
 
                                     // <a href=\"../functions/cancel_request.php?thisFriend=$thisFriendID\" title='Cancel Friend Request'>
 
@@ -1248,7 +1248,7 @@ $(document).ready(function(){
                                 <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                 <i class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right'></i>
                                 </a>
-                                
+
 
 
                                 <a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
@@ -1257,8 +1257,8 @@ $(document).ready(function(){
 
                                 </a>
 
-                                
-                                
+
+
                                 ";
 
                                 echo "
@@ -1267,7 +1267,7 @@ $(document).ready(function(){
 
                                 </li>
                                 ";
-                              
+
                               };
 
                                 ?>
@@ -1279,7 +1279,7 @@ $(document).ready(function(){
 
                                 </a> -->
 
-             
+
 
                              <!--    echo "
                                 <a href='home.php?userid=$thisFriendID' class='list-group-item '>
