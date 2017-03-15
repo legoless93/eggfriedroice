@@ -1,3 +1,46 @@
+// reject request
+<li class='list-group-item clearfix'>
+<a href='../Pages/profile.php?userid=$thisFriendID'>
+
+
+<div class='d-flex w-100 justify-content-between'>
+ <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+    <h5 class='mb-1'>$thisFN $thisLN</h5>
+</div>
+<p class='mb-1'>Display timestamp here or number of friends?</p>
+</a>
+";
+
+
+
+
+
+
+//  <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='Reject Friend Request'>
+
+//         <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
+
+// </a>"
+
+echo "
+
+<a class='reject_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+<span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
+</a>"
+
+;
+
+echo "
+
+
+
+
+<a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
+<i class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right'></i>
+</a>
+</li>
+";
+
 // timeline example
 <article class="timeline-entry">
 

@@ -103,7 +103,8 @@ function fade(id=""){
             <div class="row">
                 <div class="col-lg-12">
                     <br>
-                    <h1>Blog:
+
+                    <h1 class="pull-left">
                       <?php
                       $currentBlog = $_GET['userid'];
 
@@ -111,9 +112,10 @@ function fade(id=""){
                       $runQueryName = mysqli_query($con, $queryName);
                       $rowQueryName = mysqli_fetch_array($runQueryName);
                       echo
-                      "$rowQueryName[0] $rowQueryName[1]";
+                      "<a class='blogTitle' href='../Pages/profile.php?userid=$currentBlog'>$rowQueryName[0] $rowQueryName[1]</a>";
                       ?>
-                      </h1>
+
+                    </h1>
                         <br>
                 </div>
                 <!-- /.col-lg-12 -->

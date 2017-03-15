@@ -326,16 +326,24 @@ include("../template/theme/head.php");
 
         <?php
 
-        $get_myFriends5 = "SELECT * FROM (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM friendshipBridge
-                            JOIN user ON friendshipBridge.friend_id = user.user_id
-                            JOIN posts ON posts.user_id = user.user_id
-                            WHERE friendshipBridge.user_id = '$userID'
-                            UNION
-                            SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, 		posts.post_time, posts.post_id FROM friendshipBridge
-                            JOIN user ON friendshipBridge.friend_id = user.user_id
-                            JOIN posts ON posts.user_id = user.user_id
-                            WHERE friendshipBridge.user_id = '$userID')friendPost
-                            UNION SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM posts JOIN user ON posts.user_id = user.user_id WHERE posts.user_id = '$userID' ORDER BY post_id DESC";
+        // $get_myFriends5 = "SELECT * FROM (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM friendshipBridge
+        //                     JOIN user ON friendshipBridge.friend_id = user.user_id
+        //                     JOIN posts ON posts.user_id = user.user_id
+        //                     WHERE friendshipBridge.user_id = '$userID'
+        //                     UNION
+        //                     SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, 		posts.post_time, posts.post_id FROM friendshipBridge
+        //                     JOIN user ON friendshipBridge.friend_id = user.user_id
+        //                     JOIN posts ON posts.user_id = user.user_id
+        //                     WHERE friendshipBridge.user_id = '$userID')friendPost
+        //                     UNION SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM posts JOIN user ON posts.user_id = user.user_id WHERE posts.user_id = '$userID' ORDER BY post_id DESC";
+
+        $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM user
+                                                  JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$userID'
+                           UNION ALL
+                           SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM user
+                                                  JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$userID' ORDER BY post_id DESC";
 
         $run_myFriends5 = mysqli_query($con, $get_myFriends5);
         $check_myFriends5 = mysqli_num_rows($run_myFriends5);
@@ -369,7 +377,9 @@ include("../template/theme/head.php");
                               </div>
 
                               <div class=\"timeline-label\">
-                                  <h2><a href=\"#\">$thisFirstName $thisLastName</a> <span>posted a <a>blog</a> on <small class='pull-right'>$thisPostTime</small></span></h2>
+                                  <h2><a href='../Pages/profile.php?userid=$thisFriendID'>$thisFirstName $thisLastName</a> <span>shared a <a href=\"../Pages/blog.php?userid=$thisFriendID\">blog</a> post.
+
+                                  <small class='pull-right'>$thisPostTime</small></span></h2>
                                   <p>$thisPostTitle</p>
                                   <p>$thisPostBody</p>
                               </div>
@@ -386,13 +396,17 @@ include("../template/theme/head.php");
 
                         <div class=\"timeline-entry-inner\">
 
-                            <div class=\"timeline-icon bg-grey\">
+                          <div class=\"timeline-icon bg-grey\">
+                            <i class=\"entypo-feather\"></i>
 
                             <img src='../user/user_images/$thisPhoto' class='img-circle' style='width:50px;height:50px;'/>
+
                             </div>
 
                             <div class=\"timeline-label\">
-                                <h2><a href=\"#\">$thisFirstName $thisLastName</a> <span>posted a <a>blog</a> on <a>$thisPostTime</a></span></h2>
+                                <h2><a href='../Pages/profile.php?userid=$thisFriendID'>$thisFirstName $thisLastName</a> <span>shared a <a href=\"../Pages/blog.php?userid=$thisFriendID\">blog</a> post.
+
+                                <small class='pull-right'>$thisPostTime</small></span></h2>
                                 <p>$thisPostTitle</p>
                                 <p>$thisPostBody</p>
                             </div>
@@ -431,6 +445,8 @@ include("../template/theme/head.php");
       <div class="panel-body">
           <ul class="chat">
               <?php
+              $recommendedFriendsList = array();
+              include ("../functions/similarInterestsFiltering.php");
               include ("../functions/recommendedFriends.php");
                ?>
           </ul>

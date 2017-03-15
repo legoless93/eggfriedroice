@@ -67,7 +67,7 @@ if($_POST["view"] != '')
   $update_query = "UPDATE notifications SET status=1 WHERE status= '0' AND receiver_id = '$sessionUserID'";
   mysqli_query($con, $update_query);
 
- } 
+ }
 
 $get_notifications = "SELECT * FROM notifications WHERE receiver_id = '$sessionUserID' ORDER BY notification_id DESC LIMIT 5";
 $run_get_notifications = mysqli_query($con, $get_notifications);
@@ -85,15 +85,14 @@ if(($checknotifications) > 0 ){
  while ($rowPosts = mysqli_fetch_array($run_get_notifications)) {
 
   // $thisText = $rowPosts['text'];
-   $output .= '
-                    <li>
-                              <a href="#">
+   $output .= '<li>
+                              <a href="../Pages/friendsList.php?userid='.$sessionUserID.'">
                                  <div>
-                                    <i class="fa fa-comment fa-fw"></i> '.$rowPosts["notification_text"].'
+                                    <i class="fa fa-exclamation fa-fw"></i> '.$rowPosts["notification_text"].'
                                 </div>
                             </a>
                         </li>
-                        <li class="divider"></li>  ';
+                         ';
                       }
 
 
@@ -105,12 +104,11 @@ if(($checknotifications) > 0 ){
                     <li>
                               <a href="#">
                                  <div>
-                                    <i class="fa fa-comment fa-fw"></i> No Notifications
-
+                                    No Notifications
                                 </div>
                             </a>
                         </li>
-                        <li class="divider"></li>  ';
+                        ';
 
                     }
                      // <span class="pull-right text-muted small">69 69 69 minutes ago</span>

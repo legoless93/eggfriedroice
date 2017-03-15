@@ -15,7 +15,7 @@ include("../includes/connection.php");
 
     $sessionUserID = $row['user_id'];
 
- 
+
   }
 ?>
 
@@ -24,18 +24,18 @@ include("../includes/connection.php");
 </div> -->
 
 
-<div class="panel panel-default">
+<!-- <div class="panel panel-default"> -->
                <!--  <div class="panel-heading">
 
-               
-								
-								<i class='fa fa-user fa-fw'></i>Members 
+
+
+								<i class='fa fa-user fa-fw'></i>Members
 
                     <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
                 <!-- </div> -->
                 <!-- /.panel-heading -->
-                <div class="panel-body">
-                    <ul class="list-group">
+                <!-- <div class="panel-body"> -->
+                    <ul class="chat">
 
 
                     <?php
@@ -48,7 +48,7 @@ include("../includes/connection.php");
                             	$request_sent_user_id_array = array();
 
                             	while ($rowPosts = mysqli_fetch_array($run_requests)){
-                            	
+
                             		 $request_sent_user_id_array[] = $rowPosts['user_id'];
                             	}
 
@@ -63,7 +63,7 @@ include("../includes/connection.php");
                             	$request_received_user_id_array = array();
 
                             	while ($rowPosts = mysqli_fetch_array($run_requests_as_receiver)){
-                            	
+
                             		 $request_received_user_id_array[] = $rowPosts['user_id'];
                             	}
 
@@ -105,14 +105,14 @@ include("../includes/connection.php");
                                               JOIN user ON friendshipBridge.friend_id = user.user_id
                                               WHERE friendshipBridge.user_id = '$sessionUserID') myFriends
                                               ON clickeeFriends.user_id = myFriends.user_id";
-                                              
+
       					$run_checkMutualFriends = mysqli_query($con, $checkMutualFriends);
       					$checkMutualFriendsCount = mysqli_num_rows($run_checkMutualFriends);
 
 
       					 while ($rowPosts = mysqli_fetch_array($run_checkMutualFriends)) {
 
-      					 		
+
 
                                 $thisFriendID = $rowPosts['user_id'];
                                 $thisFirstName = $rowPosts['user_firstName'];
@@ -134,7 +134,6 @@ include("../includes/connection.php");
                                    	 		<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         	<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     		</div>
-                                    		<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 			</a>
                                 			";
 
@@ -145,38 +144,30 @@ include("../includes/connection.php");
                                 			// if the results are already in your friends list
 
                                 			echo "
-                                			<li class='list-group-item clearfix'>
-                                				<a href='../home.php?userid=$thisFriendID'>
+                                      <li class='left clearfix'>
+                                            <span class='chat-img pull-left'>
+                                            <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                            </span>
+                                            <div class='chat-body clearfix'>
+                                            <div class='header'>
+                                            <a href='../Pages/profle.php?userid=$thisFriendID'><strong class='primary-font'>$thisFirstName $thisLastName</strong></a>
+                                            </div>
+                                    				<a title='You are friends'>
+                                            		<span class='btn btn-success  btn-xs pull-right'><i class='fa fa-check'></i></span>
+                                    				</a>
+                                            <a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
+                                            		<span  class='btn btn-primary btn-xs pull-right'><i class='fa fa-rss fa-fw'></i></span>
+                                    				</a>
+                                            </div>
+                                            </li>
 
 
-                                   				<div class='d-flex w-100 justify-content-between'>
-                                   	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                        		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
-                                    			</div>
-                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
-                                				</a>
-                                			";
-                                			echo " 
-                                				<a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
-
-                                        		<span  class='btn btn-primary  btn-xs glyphicon glyphicon-edit pull-right' ></span>
-
-                                				</a>
-
-
-                                				<a href=\"../functions/nothing.php?thisFriend=$thisFriendID\" title='You are friends'>
-
-                                        		<span  class='btn btn-success  btn-xs glyphicon glyphicon-ok pull-right' ></span>
-
-                                				</a>
-
-                                			</li>
                                  			";
 
 
-                                 			// *** need to add another else here to check if you have send a friend request to them OR if you have received one from them - 
+                                 			// *** need to add another else here to check if you have send a friend request to them OR if you have received one from them -
 
-                                		} 
+                                		}
                                 		else if((in_array($thisFriendID, $request_sent_user_id_array))) {
 
                                 			// if you have  pending friend request ( sent )
@@ -189,7 +180,6 @@ include("../includes/connection.php");
                                    	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     			</div>
-                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 				</a>
                                 			";
 
@@ -204,7 +194,7 @@ include("../includes/connection.php");
                                  			";
 
 
-                                		} 
+                                		}
                                 		else if((in_array($thisFriendID, $request_received_user_id_array))) {
 
                                 			// if you have  pending friend request ( sent )
@@ -217,7 +207,6 @@ include("../includes/connection.php");
                                    	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     			</div>
-                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 				</a>
                                 			";
 
@@ -232,12 +221,13 @@ include("../includes/connection.php");
                                  			";
 
 
-                                		} 
+                                		}
                                 			else {
 
                                 			// they are not your friend
 
                                 			echo "
+
                                 			<li class='list-group-item clearfix'>
                                 				<a href='../home.php?userid=$thisFriendID'>
 
@@ -246,7 +236,6 @@ include("../includes/connection.php");
                                    	 			<img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                         		<h5 class='mb-1'>$thisFirstName $thisLastName</h5>
                                     			</div>
-                                    			<p class='mb-1'>Display timestamp here or number of friends?</p>
                                 				</a>
                                 			";
                                 				echo "
@@ -264,9 +253,9 @@ include("../includes/connection.php");
 
        							 	}
 
-       							 
 
-      					 
+
+
 
 
 
@@ -276,5 +265,5 @@ include("../includes/connection.php");
 
                     </ul>
 
-                </div>
-</div>
+                <!-- </div> -->
+<!-- </div> -->

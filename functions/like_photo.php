@@ -13,6 +13,7 @@ $sessionUserID = $row['user_id'];
   if(isset($_POST['likes'])) {
 
     $likePhotoID = $_POST['likes'];
+    $userIDofPhoto = $_GET['userid'];
 
     $insertLike = "INSERT INTO likes (photo_id,liker_id)
     VALUES ('$likePhotoID','$sessionUserID')";
@@ -20,7 +21,7 @@ $sessionUserID = $row['user_id'];
     $run_insertLike = mysqli_query($con, $insertLike);
 
     if($run_insertLike) {
-      echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
+      echo "<script>window.open('../Pages/photocollection.php?userid=$userIDofPhoto', '_self')</script>";
     } else {
       echo "<script>alert('can not like this photo')</script>";
     }

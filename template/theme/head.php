@@ -15,7 +15,7 @@
     <!-- Bootstrap Core CSS -->
     <!-- NEEDED IN SOME SHAPE OR FORM -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.css?version=1" rel="stylesheet">
 
     <!-- Custom TEST CSS -->
     <link href="../mybebostyle.css" rel="stylesheet">

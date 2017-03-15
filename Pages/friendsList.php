@@ -94,7 +94,7 @@ include("../template/theme/head.php");
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li");
+   var parent = $(this).parent("li div");
 
    bootbox.dialog({
      message: "Are you sure you want to Cancel ?",
@@ -165,7 +165,7 @@ include("../template/theme/head.php");
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li");
+   var parent = $(this).parent("div");
 
    bootbox.dialog({
      message: "Are you sure you want to Accept ?",
@@ -352,7 +352,7 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li");
+   var parent = $(this).parent("li div");
 
    bootbox.dialog({
      message: "Are you sure you want to Delete ?",
@@ -438,7 +438,7 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li");
+   var parent = $(this).parent("div");
 
    bootbox.dialog({
      message: "Are you sure you want to Reject?",
@@ -616,10 +616,6 @@ $(document).ready(function(){
         </div>
 
         <div class="modal-body">
-           <!-- <div id="modal-loader" style="display: none; text-align: center;">
-           <!-- ajax loader -->
-<!--            <img src="ajax-loader.gif"> -->
-           <!-- </div> -->
 
            <!-- mysql data will be load here -->
            <div id="dynamic-content"></div>
@@ -650,28 +646,103 @@ $(document).ready(function(){
       ?>
 
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
+            <!-- <div class="row">
+                <div class="col-lg-6">
                     <h1 class="page-header">Friends List</h1>
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
+
+            </div> -->
             <!-- /.row -->
-            <div class="row">
-            </div>
 
             <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
+              <br>
+              <div class="col-lg-6">
+              <!-- friends list CHANGES here -->
+              <div class="chat-panel panel panel-primary">
+                  <div class="panel-heading" id="f_no">
+
+                 <!-- get friends here  -->
+                      <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
+                  </div>
+                  <!-- /.panel-heading -->
+                  <div class="panel-body"  id="div1" style="height:550px">
+                  <!--  *********** -->
+                      <ul class="chat" id='f_list'>
+
+                                <?php
+
+                                $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
+                                                    JOIN user ON friendshipBridge.user_id = user.user_id
+                                                    WHERE friendshipBridge.friend_id = '$sessionUserID'
+                                                    UNION ALL
+                                                    SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+                                                    JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                    WHERE friendshipBridge.user_id = '$sessionUserID'";
+                                $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                                $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
+
+                                // add another query here ??
+                                //
+
+                                while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
+
+                                  $thisFriendID = $rowPosts['user_id'];
+                                  $thisFirstName = $rowPosts['user_firstName'];
+                                  $thisLastName = $rowPosts['user_lastName'];
+                                  $thisPhoto = $rowPosts['user_pic'];
+                                  // $thisRelID = $rowPosts['']
+   								echo "
+
+                    <li>
+                      <div class='chat-body clearfix'>
+                        <div class='header'>
+                        <span class='chat-img pull-left'>
+                        <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                        &nbsp;
+                        </span>
+                        <a href='../Pages/profile.php?userid=$thisFriendID'>
+                        <strong class='primary-font'>$thisFirstName $thisLastName</strong>
+                        </a>
+                        <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                        <div class='pull-right'>
+                        <i class='fa fa-trash fa-fw' style='color:#d9534f'></i>
+                        </div>
+                        </a>
+                        <a href='../Pages/blog.php?userid=$thisFriendID'>
+                        <div class='pull-right'>
+                        <i class='fa fa-rss fa-fw'></i>
+                        </div>
+                        </a>
+                        <br>
+                        <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
+                        </div>
+                        </div>
+                        </li>
+
+                                  ";
+
+                                };
+
+                                  ?>
+
+                      </ul>
+                  </div>
+                  <!-- /.panel-body -->
+                  <!-- /.panel-footer -->
+              </div>
+            </div>
+              <!-- HERE 1 -->
+                <div class="col-lg-6">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <i class="fa fa-edit fa-fw"></i> Friend Requests Received
+                          Requests Received
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body" style="height:250px">
                         <!-- where we might put the div id -->
 
-                        <ul class="list-group" id="f_sent">
+                        <ul class="chat" id="f_sent">
 
 
 
@@ -708,48 +779,31 @@ $(document).ready(function(){
 
                                     if ($theRequestStatus == '1'){
                                     echo "
-                                    <li class='list-group-item clearfix'>
-                                    <a href='../Pages/profile.php?userid=$thisFriendID'>
+
+                                    <li>
+                                    <div class='chat-body clearfix'>
+                                    <div class='header'>
+                                          <span class='chat-img pull-left'>
+                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                          &nbsp;
+                                          </span>
+                                          <a href='../Pages/profile.php?userid=$thisFriendID'>
+                                          <strong class='primary-font'>$thisFN $thisLN</strong>
+                                          </a>
+                                          <a class='reject_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                                          <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
+                                          </a>
+                                          <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
+                                          <i class='btn btn-primary  btn-xs glyphicon glyphicon-check pull-right'></i>
+                                          </a>
+                                          <br>
+                                          <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
+                                          </div>
+                                          </div>
+                                          </li>
+                                          ";
 
 
-                                    <div class='d-flex w-100 justify-content-between'>
-                                     <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                        <h5 class='mb-1'>$thisFN $thisLN</h5>
-                                    </div>
-                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
-                                </a>
-                                ";
-
-
-
-
-
-
-                                //  <a href=\"../functions/reject_request.php?thisFriend=$thisFriendID\" title='Reject Friend Request'>
-
-                                //         <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
-
-                                // </a>"
-
-                                echo "
-
-                                <a class='reject_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
-                                <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
-
-                                </a>"
-
-                                ;
-
-                                echo "
-
-
-
-
-                                  <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
-                                <i class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right'></i>
-                                </a>
-                                </li>
-                                ";
 
 
                                  }
@@ -772,205 +826,100 @@ $(document).ready(function(){
                     </div>
                 </div>
 
-            </div>
+                <div class="col-lg-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Requests Sent
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body" style="height:250px">
 
-
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <i class="fa fa-edit fa-fw"></i> Friend Requests Sent
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-
-                        <ul class="list-group">
+                    <ul class="chat">
 
 
 <!--
-                            // // get requests that have been received
-                            // $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID";
- -->
+                        // // get requests that have been received
+                        // $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID";
+-->
 
-                        <?php
+                    <?php
 
-                            // get requests that have been SENT
-                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
+                        // get requests that have been SENT
+                        $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
 
-                            $run_requests = mysqli_query($con, $get_requests);
+                        $run_requests = mysqli_query($con, $get_requests);
 
-                            while ($rowPosts = mysqli_fetch_array($run_requests)){
+                        while ($rowPosts = mysqli_fetch_array($run_requests)){
 
-                                    $thisFN = $rowPosts['user_firstName'];
-                                    $thisLN = $rowPosts['user_lastName'];
-                                    $thisFriendID = $rowPosts['user_id'];
-                                    $thisPhoto = $rowPosts['user_pic'];
-
-
-                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
-
-                                    $run_request_status = mysqli_query($con, $get_request_status);
-
-                                    $check = mysqli_num_rows($run_request_status);
-
-                                    if($check == 1) {
-
-                                    $rowUsers = mysqli_fetch_array($run_request_status);
-                                    $theRequestStatus = $rowUsers['request_status'];
-
-                                    // echo "<script>alert('the request status is: $theRequestStatus')</script>";
-                                    };
-
-
-
-                                    if ($theRequestStatus == '1'){
-                                    echo "
-                                    <li class='list-group-item clearfix'>
-                                    <a href='../Pages/profile.php?userid=$thisFriendID'>
-
-
-                                    <div class='d-flex w-100 justify-content-between'>
-                                     <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                        <h5 class='mb-1'>$thisFN $thisLN</h5>
-                                    </div>
-                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
-                                </a>
-                                ";
-
-
-
-                                    // <a href=\"../functions/cancel_request.php?thisFriend=$thisFriendID\" title='Cancel Friend Request'>
-
-                                    //     <span  class='label label-danger pull-right' style='padding:5px'>Cancel</span>
-
-                                    // </a>
-                                    echo "
-                                    <a class='cancel_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
-                                    <span class='label label-danger pull-right' style='padding:5px'>Cancel</span>
-                                    </a>
-
-
-                                <a href='#' title='Pending Friend Request'>
-
-                                        <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
-
-                                </a>
-
-                                </li>
-                                 ";
-                            }
-
-                            };
-
-
-
-
-
-                        ?>
-
-
-                        </ul>
-                        </div>
-
-                    </div>
-
-
-
-            <!-- /.row -->
-            <!-- friends list CHANGES here -->
-            <div class="chat-panel panel panel-default">
-                <div class="panel-heading" id="f_no">
-
-               <!-- get friends here  -->
-                    <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
-                </div>
-                <!-- /.panel-heading -->
-                <div class="panel-body"  id="div1">
-                <!--  *********** -->
-                    <ul class="list-group" id='f_list'>
-
-                              <?php
-
-                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
-                                                  JOIN user ON friendshipBridge.user_id = user.user_id
-                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
-                                                  UNION ALL
-                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
-                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
-                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
-                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
-                              $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
-
-                              // add another query here ??
-                              //
-
-                              while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
-
+                                $thisFN = $rowPosts['user_firstName'];
+                                $thisLN = $rowPosts['user_lastName'];
                                 $thisFriendID = $rowPosts['user_id'];
-                                $thisFirstName = $rowPosts['user_firstName'];
-                                $thisLastName = $rowPosts['user_lastName'];
                                 $thisPhoto = $rowPosts['user_pic'];
-                                // $thisRelID = $rowPosts['']
- 								echo "
-                                <li class='list-group-item clearfix'>
-                                <a href='../Pages/profile.php?userid=$thisFriendID'>
 
 
-                                   	<div class='d-flex w-100 justify-content-between'>
-                                   	 <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                        <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
-                                    </div>
-                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
+                                $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
 
+                                $run_request_status = mysqli_query($con, $get_request_status);
 
-                                </a>
+                                $check = mysqli_num_rows($run_request_status);
 
+                                if($check == 1) {
 
-                                <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
-                                <i class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right'></i>
-                                </a>
+                                $rowUsers = mysqli_fetch_array($run_request_status);
+                                $theRequestStatus = $rowUsers['request_status'];
+
+                                // echo "<script>alert('the request status is: $theRequestStatus')</script>";
+                                };
 
 
 
-                                <a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
-
-                                                <span  class='btn btn-primary  btn-xs glyphicon glyphicon-edit pull-right' ></span>
-
-                                </a>
-
-
-
-                                ";
-
+                                if ($theRequestStatus == '1'){
                                 echo "
 
-                                  <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> View "; getMut($sessionUserID, $thisFriendID); echo "</button>
+                                <li>
+                                <div class='chat-body clearfix'>
+                                <div class='header'>
+                                      <span class='chat-img pull-left'>
+                                      <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                      &nbsp;
+                                      </span>
+                                      <a href='../Pages/profile.php?userid=$thisFriendID'>
+                                      <strong class='primary-font'>$thisFN $thisLN</strong>
+                                      </a>
+                                      <a class='cancel_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                                      <span class='label label-danger pull-right' style='padding:5px'>Cancel</span>
+                                      </a>
+                                      <a href='#' title='Pending Friend Request'>
+                                      <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
+                                      </a>
+                                      <br>
+                                      <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
+                                      </div>
+                                      </div>
+                                      </li>
 
-                                </li>
-                                ";
 
-                              };
+                             ";
+                        }
 
-                                ?>
-
-                                <!-- STUFF BEFORE delete edit goes after their name  -->
-                                <!-- <a href=\"../functions/delete_friends.php?thisFriend=$thisFriendID\" title='Delete'>
-
-                                        <span  class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right' ></span>
-
-                                </a> -->
+                        };
 
 
 
-                             <!--    echo "
-                                <a href='home.php?userid=$thisFriendID' class='list-group-item '>
-                                    <i class='fa fa-user fa-fw'></i> $thisFirstName $thisLastName
-                                    </span>
-                                </a>
-                                "; -->
+
+
+                    ?>
+
+
                     </ul>
+                    </div>
+
                 </div>
-                <!-- /.panel-body -->
-                <!-- /.panel-footer -->
+              </div>
+
             </div>
+            <!-- END OF ROW ABOVE -->
+
 
         </div>
         <!-- /#page-wrapper -->

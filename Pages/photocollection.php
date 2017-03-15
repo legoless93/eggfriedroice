@@ -44,7 +44,7 @@ include("../template/theme/head.php");
       include("../template/theme/sidebar.php");
 
       ?>
-      
+
 <!-- Page Content -->
 
 <div id="page-wrapper">
@@ -199,7 +199,7 @@ include("../template/theme/head.php");
                                                    <div class='caption'>
                                                       <h5>$thisPhotoDescription</h5>
                                                       <p>
-                                                      <form method='post' action='../functions/like_photo.php' >
+                                                      <form method='post' action='../functions/like_photo.php?userid=$userID' >
                                                       <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default btn-sm pull-left'>LIKE ";
                                                       // like button starts from echo above
 

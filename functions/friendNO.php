@@ -46,7 +46,7 @@ if(isset($_POST["id"]))
 
   // END OF THIS WORKS
 
-// EDIT 
+// EDIT
 
 
   // if($_POST["view"] != '')
@@ -62,11 +62,11 @@ if(isset($_POST["id"]))
 
 
 
-$output =''; 
+$output ='';
 
-// error here 
+// error here
 
-                   
+
                      // <span class="pull-right text-muted small">69 69 69 minutes ago</span>
 
                       // echo json_encode($output);
@@ -81,7 +81,7 @@ $output ='';
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
                               $check_myFriends5 = mysqli_num_rows($run_myFriends5);
 
-                 $output .= "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)";
+                 $output .= "<i class='fa fa-users fa-fw'></i>Friends ($check_myFriends5)";
 
  // $data = array(
  //  'notification'   => $output,
@@ -89,13 +89,13 @@ $output ='';
 
 
                        echo json_encode($output);
-                     
+
  }
 
 
 
 
-// END of EDIT 
+// END of EDIT
 
  // if($_POST["view"] != '')
  // {
@@ -110,7 +110,7 @@ $output ='';
  // $query = "SELECT * FROM notifications ORDER BY notification_id DESC LIMIT 5";
  // $result = mysqli_query($con, $query);
  // $output = '';
- 
+
  // if(mysqli_num_rows($result) > 0)
  // {
 
@@ -134,7 +134,7 @@ $output ='';
  // {
  //  $output .= '<li><a href="#" class="text-bold text-italic">No Notification Found</a></li>';
  // }
- 
+
  // $query_1 = "SELECT * FROM notifications WHERE status=0";
  // $result_1 = mysqli_query($con, $query_1);
  // $count = mysqli_num_rows($result_1);

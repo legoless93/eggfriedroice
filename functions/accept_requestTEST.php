@@ -5,7 +5,7 @@ include("../includes/connection.php");
 if(isset($_REQUEST['accept'])) {
 
     $thisFriend = $_REQUEST['accept'];
-    
+
 
     $logged_email = $_SESSION['user_email'];
 
@@ -18,12 +18,12 @@ if(isset($_REQUEST['accept'])) {
     $LastName = $row['user_lastName'];
 
 
-    $update_accept_friend = "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID') "; 
+    $update_accept_friend = "DELETE FROM friendrequests WHERE (sender_id='$thisFriend' AND receiver_id='$sessionUserID') ";
     $accept_friend = "INSERT INTO friendshipbridge (user_id, friend_id) VALUES ('$sessionUserID','$thisFriend')";
 
     $accepted_friend_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('Friend Request accepted from $FirstName $LastName','0', '$thisFriend' )";
 
-    
+
 
 
     $run_accept_friend = mysqli_query($con, $accept_friend);
@@ -38,7 +38,7 @@ if(isset($_REQUEST['accept'])) {
 
 
 
- 		/// friend list query 
+ 		/// friend list query
 
  		$get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
@@ -48,7 +48,7 @@ if(isset($_REQUEST['accept'])) {
                                                   JOIN user ON friendshipBridge.friend_id = user.user_id
                                                   WHERE friendshipBridge.user_id = '$sessionUserID'";
                               $run_myFriends5 = mysqli_query($con, $get_myFriends5);
-                              $check_myFriends5 = mysqli_num_rows($run_myFriends5); 
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
 
 
                               $output='';
@@ -63,38 +63,30 @@ if(isset($_REQUEST['accept'])) {
 
 
 
- 								$output .= 
- 								"<li class='list-group-item clearfix'>
-                                <a href='../home.php?userid=$thisFriendID'>
-
-
-                                   	<div class='d-flex w-100 justify-content-between'>
-                                   	 <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                        <h5 class='mb-1'>$thisFirstName $thisLastName</h5>
-                                    </div>
-                                    <p class='mb-1'>Display timestamp here or number of friends?</p>
-
-
-                                </a>
-
-
-                                <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
-                                <i class='btn btn-danger  btn-xs glyphicon glyphicon-trash pull-right'></i>
-                                </a>
-                                
-
-
-                                <a href='../Pages/blog.php?userid=$thisFriendID' title='Go to your friends blog'>
-
-                                                <span  class='btn btn-primary  btn-xs glyphicon glyphicon-edit pull-right' ></span>
-
-                                </a>
-
-                                 <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-eye-open'></i> Mutual Friends</button>
-
-                                </li>";
-
-                                // echo $output;
+ 								$output .= "<li class='left clearfix'>
+                <div class='chat-body clearfix'>
+                <div class='header'>
+                      <span class='chat-img pull-left'>
+                      <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                      </span>
+                      <a href='../Pages/profile.php?userid=$thisFriendID'>
+                      <strong class='primary-font'>$thisFirstName $thisLastName</strong>
+                      </a>
+                      <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                      <div class='pull-right'>
+                      <i class='fa fa-trash fa-fw' style='color:#d9534f'></i>
+                      </div>
+                      </a>
+                      <a href='../Pages/blog.php?userid=$thisFriendID'>
+                      <div class='pull-right'>
+                      <i class='fa fa-rss fa-fw'></i>
+                      </div>
+                      </a>
+                      <br>
+                      <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
+                      </div>
+                      </div>
+                      </li>";
 
 
 
@@ -122,14 +114,14 @@ if(isset($_REQUEST['accept'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
  $(document).ready(function(){
-  
+
   $('.delete_product').click(function(e){
-   
+
    e.preventDefault();
-   
+
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li");
-   
+   var parent = $(this).parent("div");
+
    bootbox.dialog({
      message: "Are you sure you want to Delete ?",
      title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
@@ -145,39 +137,39 @@ if(isset($_REQUEST['accept'])) {
       label: "Delete!",
       className: "btn-danger",
       callback: function() {
-       
-       
+
+
        $.ajax({
-        
+
         type: 'POST',
         url: '../functions/deleteFriendTest.php',
         data: 'delete='+pid
-        
+
        })
        .done(function(response){
-        
+
         bootbox.alert(response);
         parent.fadeOut('slow');
 
-        // keep this ***************************************** 
+        // keep this *****************************************
         // but copy this
-        // $('#f_sent').html(response);  
-        
+        // $('#f_sent').html(response);
+
        })
        .fail(function(){
-        
+
         bootbox.alert('Something Went Wrong ....');
-                
+
        })
-              
+
       }
     }
      }
    });
-   
-   
+
+
   });
-  
+
  });
 
 </script>
@@ -186,7 +178,7 @@ if(isset($_REQUEST['accept'])) {
 <!-- script for fetching the notifications -->
 <script>
 $(document).ready(function(){
- 
+
  function load_unseen_notification(view = '')
  {
   $.ajax({
@@ -198,13 +190,13 @@ $(document).ready(function(){
     })
 
    .done(function(data){
-   
+
 
     // <?php
     // echo "<script>alert('in success!!!')</script>";
     // ?>
 
-    
+
     // if(data.unseen_notification > 0)
     // {
     //  $('.count').html(data.unseen_notification);
@@ -221,10 +213,10 @@ $(document).ready(function(){
           $('#d_list').html('get NOTIFICATIONS failed WHYYYYYYy');
           // $('#modal-loader').hide();
      });
-   }    
- 
+   }
+
   load_unseen_notification();
- 
+
  // $('#comment_form').on('submit', function(event){
  //  event.preventDefault();
  //  if($('#subject').val() != '' && $('#comment').val() != '')
@@ -246,13 +238,13 @@ $(document).ready(function(){
  //   alert("Both Fields are Required");
  //  }
  // });
- 
+
  $(document).on('click', '#getTest', function(){
   $('.count').html('');
   // uncomment below to read the notification
   // load_unseen_notification('yes');
 
-  // uncomment below to not remove the notification 
+  // uncomment below to not remove the notification
   load_unseen_notification();
 
 
@@ -260,14 +252,14 @@ $(document).ready(function(){
 
 
 
- 
- // setInterval(function(){ 
- //  load_unseen_notification();; 
+
+ // setInterval(function(){
+ //  load_unseen_notification();;
  // }, 5000);
 
 
  // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
- 
+
 });
 </script>
 </head>
@@ -275,6 +267,6 @@ $(document).ready(function(){
 
 <body>
 
-  
+
 </body>
 </html>

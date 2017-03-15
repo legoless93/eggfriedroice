@@ -108,9 +108,9 @@ include("../template/theme/head.php");
         <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
 
 
-        <a style=\"font-size:50px\" href = '../Pages/blog.php?userid=$userID'><strong><i class='fa fa-rss fa-fw'></i>Blog</strong></a>
+        <a style=\"font-size:45px\" href = '../Pages/blog.php?userid=$userID'><strong><i class='fa fa-rss fa-fw'></i>Blog</strong></a>
         &emsp;
-        <a style='font-size:50px' href='../Pages/photocollection.php?userid=$userID'><strong><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Photos</strong></a>
+        <a style='font-size:45px' href='../Pages/photocollection.php?userid=$userID'><strong><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Photos</strong></a>
 
         </center>
         ";

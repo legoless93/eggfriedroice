@@ -87,7 +87,7 @@ include("../template/theme/head.php");
                               </div>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
                                 <span class='chat-img pull-left'>
-                                <img src='../circle_assets/circlelogo.png' alt='User Avatar' class='img-circle' style='width:100px;height:100px;' hspace='10'/>
+                                <img src='../circle_assets/circle_group.png' alt='User Avatar' class='img-circle' style='width:100px;height:100px;' hspace='10'/>
                                 </span>
 
                                 <div class='chat-body clearfix'>
