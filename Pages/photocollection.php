@@ -454,11 +454,6 @@ include("../functions/checkPrivacy.php");
                                           $(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );
                                         </script>
                                         ";
-                                      }else{
-                                          echo "
-                                          <div class='alert alert-danger' role='alert' style='margin-top:5px;'>
-                                          <a href='#' class='alert-link'>Access Denied! Please login your own account!</a>
-                                          </div>";
                                         };
                                     ?>
                                         <hr>
