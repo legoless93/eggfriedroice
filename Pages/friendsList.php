@@ -678,7 +678,8 @@ $(document).ready(function(){
                         <?php
 
                             // get requests that have been received
-                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
+                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests
+                                                          JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
 
                             $run_requests_as_receiver = mysqli_query($con, $get_requests_as_receiver);
 
@@ -793,7 +794,8 @@ $(document).ready(function(){
                         <?php
 
                             // get requests that have been SENT
-                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
+                            $get_requests = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests
+                                              JOIN user ON friendrequests.receiver_id = user.user_id WHERE friendrequests.sender_id = '$sessionUserID'";
 
                             $run_requests = mysqli_query($con, $get_requests);
 
@@ -805,7 +807,8 @@ $(document).ready(function(){
                                     $thisPhoto = $rowPosts['user_pic'];
 
 
-                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
+                                    $get_request_status = "SELECT friendrequests.request_status FROM friendrequests
+                                                            WHERE (friendrequests.sender_id = '$sessionUserID' AND friendrequests.receiver_id = '$thisFriendID'  )";
 
                                     $run_request_status = mysqli_query($con, $get_request_status);
 

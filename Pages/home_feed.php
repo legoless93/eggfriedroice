@@ -426,6 +426,8 @@ include("../template/theme/head.php");
       <div class="panel-body">
           <ul class="chat">
               <?php
+              $recommendedFriendsList = array();
+              include ("../functions/similarInterestsFiltering.php");
               include ("../functions/recommendedFriends.php");
                ?>
           </ul>
