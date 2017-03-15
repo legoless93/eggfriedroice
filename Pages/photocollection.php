@@ -526,21 +526,75 @@ include("../functions/checkPrivacy.php");
                                                       <h5>$thisPhotoDescription</h5>
                                                       <p>
                                                       <form method='post' action='../functions/like_photo.php' >
-                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default btn-sm pull-left'>LIKE ";
+                                                      <button name='likes' value='$thisPhotoID' type='submit' class='btn btn-default btn-sm pull-left'><span class='glyphicon glyphicon-heart'></span> ";
                                                       // like button starts from echo above
 
-                                                      // $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
-                                                      $get_likes_count = "SELECT COUNT(*) FROM likes WHERE photo_id = $thisPhotoID";
-                                                      $show_likes = mysqli_query($con, $get_likes_count);
-                                                      $checkLikes = mysqli_num_rows($show_likes);
-
-                                                      while ($rowLikes = mysqli_fetch_array($show_likes)) {
-
-                                                      $thisLikePhotoID = $rowLikes['photo_id'];
-                                                      $thisCount = $rowLikes['COUNT(*)'];
 
 
-                                                      echo "$thisCount";};
+                                                            $get_likes_count = "SELECT COUNT(*) FROM likes WHERE (photo_id = $thisPhotoID AND liker_id = $sessionUserID)";
+                                                            $show_likes = mysqli_query($con, $get_likes_count);
+                                                            $checkLikes = mysqli_num_rows($show_likes);
+
+
+                                                            while ($rowLikes = mysqli_fetch_array($show_likes)) {
+
+                                                                      $thisCount = $rowLikes['COUNT(*)'];// count like click
+
+                                                                      if ($thisCount == 1){// like the photo
+
+                                                                          echo "you ";
+
+                                                                      }else if ($thisCount==2){// unlike the photo
+
+                                                                        $delete_photo_like = "DELETE  FROM likes WHERE (photo_id = '$thisPhotoID' AND liker_id = '$sessionUserID') ";
+                                                                        $run_delete_photo_like = mysqli_query($con, $delete_photo_like);
+
+                                                                        if($run_delete_photo_like){echo "";}
+                                                                      }else if($thisCount == 0){// like refresh record
+
+                                                                        $thisCount = 0;
+                                                                        echo "";
+                                                                      }
+                                                            };
+
+
+                                                            // $get_likes =  "SELECT * FROM likes WHERE photo_id='$thisPhotoID' ORDER BY like_id DESC";
+                                                            $get_likes_count_total = "SELECT COUNT(*) FROM likes WHERE photo_id = $thisPhotoID";
+                                                            $show_likes_total = mysqli_query($con, $get_likes_count_total);
+                                                            $checkLikes_total = mysqli_num_rows($show_likes_total);
+
+                                                            while ($rowLikesTotal = mysqli_fetch_array($show_likes_total)) {
+                                                            $thisCountTotal = $rowLikesTotal['COUNT(*)'];
+
+                                                            switch ($thisCount) {
+                                                              case '0': // did not like any photo
+                                                                    if ($thisCountTotal >=0){
+                                                                    echo"$thisCountTotal"; // total likes greater than 0
+                                                                    }else{
+                                                                    echo""; // not likes in total
+                                                                    }
+                                                                break;
+                                                              case '1':
+                                                                    $thisCountTotal -= 1; // sefl minus for other
+                                                                    if ($thisCountTotal >= 2){ // other likers number greater than 1
+                                                                    echo"and $thisCountTotal others";
+                                                                    }else if($thisCountTotal == 1){ // one other liker
+                                                                      echo"and $thisCountTotal other";
+                                                                    }
+                                                                break;
+                                                              case '2':
+                                                                    if ($thisCountTotal >=0){
+                                                                    echo"$thisCountTotal"; // total likes greater than 0
+                                                                    }else{
+                                                                    echo""; // not likes in total
+                                                                    }
+                                                                break;
+
+                                                              default:
+                                                                # code...
+                                                                break;
+                                                            }
+                                                          };
 
                                                       // like button ends at echo below
                                                       echo "
