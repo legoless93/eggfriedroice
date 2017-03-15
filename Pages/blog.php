@@ -150,7 +150,7 @@ function fade(id=""){
 
                         echo "<li id='hi' class=\"left clearfix\">
                                 <div class=\"header\">
-                                    <strong class=\"primary-font\"> $thisTitle</strong>
+                                  <strong class=\"primary-font\"> $thisTitle</strong>
                                     <small class=\"text-muted\">
 
                                         <i class=\"fa fa-clock-o fa-fw\"></i> Posted: $thisTime

@@ -65,12 +65,13 @@ include("../template/theme/head.php");
                                         <i class='fa fa-gear'></i> <span class='caret'></span>
                                     </button>
                                       <ul class='dropdown-menu pull-right' role='menu'>
-                                          <li><a href='../Pages/editProfile.php'>Edit profile info</a>
+                                          <li><a href='../Pages/editProfile.php'>Edit profile</a>
                                           </li>
 
                                       </ul>
                                   </div>
                               </div>
+                              <br>
                             ";
 
                           };
@@ -81,7 +82,7 @@ include("../template/theme/head.php");
 
 
                         <!-- /.panel-heading -->
-                        <div class="panel-body">
+                        <div class="panel-body" style="height:580px">
                           <?php
 
         $user = $_SESSION['user_email'];
@@ -101,12 +102,16 @@ include("../template/theme/head.php");
 
         echo "
         <center>
-        <p align='center'><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
-        <p style=\"font-size:50px\"><strong>$user_firstName  $user_lastName</strong></p>
-        <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
-        <a style=\"font-size:20px\" href = '../Pages/blog.php?userid=$userID'><strong><i class='fa fa-rss fa-fw'></i>Blog</strong></a>
 
-        <a style='font-size:20px' href='../Pages/photocollection.php?userid=$userID'><strong><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Photos</strong></a>
+        <p align='center'><img id='userImg' src='../user/user_images/$user_image' width='250' height='250'/></p>
+        <p style=\"font-size:60px\"><strong>$user_firstName  $user_lastName</strong></p>
+        <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
+
+
+        <a style=\"font-size:50px\" href = '../Pages/blog.php?userid=$userID'><strong><i class='fa fa-rss fa-fw'></i>Blog</strong></a>
+        &emsp;
+        <a style='font-size:50px' href='../Pages/photocollection.php?userid=$userID'><strong><i class=\"fa fa-picture-o\" aria-hidden=\"true\"></i> Photos</strong></a>
+
         </center>
         ";
          ?>
@@ -205,19 +210,6 @@ include("../template/theme/head.php");
 
                                               if($userID == $sessionUserID) {
 
-                                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
-                                                  $thisInterest = $interestArray['interest'];
-
-                                                echo "
-                                                  <li class='list-unstyled'>
-                                                  <h4>
-                                                  <input type='checkbox' name='interest_group[]' value=$thisInterest>
-                                                    $thisInterest</h4>
-                                                      </span>
-                                                    </li>
-                                                  ";
-                                                };
-
                                                 echo "
                                                 <li class='list-unstyled'>
                                                   Add new:
@@ -230,13 +222,29 @@ include("../template/theme/head.php");
                                                   <button name='addInterests' type='submit' class='btn btn-primary btn-sm'>Add</button>
                                                 </div>
                                                 ";
-                                              } else {
+
                                                 while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
                                                   $thisInterest = $interestArray['interest'];
 
                                                 echo "
                                                   <li class='list-unstyled'>
-                                                    <h4>$thisInterest</h4>
+                                                  <h3>
+                                                  <input type='checkbox' name='interest_group[]' value=$thisInterest>
+                                                    $thisInterest
+                                                    </h3>
+                                                      </span>
+                                                    </li>
+                                                  ";
+                                                };
+
+
+                                              } else {
+                                                while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
+                                                  $thisInterest = $interestArray['interest'];
+
+                                                echo "
+                                                  <li class='list-unstyled' style='text-align: center;'>
+                                                    <h3>$thisInterest</h3>
                                                       </span>
                                                     </li>
                                                   ";
@@ -255,11 +263,8 @@ include("../template/theme/head.php");
 
             </div>
             <!-- /.row -->
-
-
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

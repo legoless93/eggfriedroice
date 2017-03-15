@@ -213,9 +213,9 @@ include("../template/theme/head.php");
                 -moz-border-radius: 20px;
                 border-radius: 20px;
                 text-align: center;
-                -moz-box-shadow: 0 0 0 5px #f5f5f6;
-                -webkit-box-shadow: 0 0 0 5px #f5f5f6;
-                box-shadow: 0 0 0 5px #f5f5f6;
+                -moz-box-shadow: 0 0 0 5px #FFF;
+                -webkit-box-shadow: 0 0 0 5px #FFF;
+                box-shadow: 0 0 0 5px #FFF;
                 line-height: 40px;
                 font-size: 15px;
                 float: left;
@@ -242,7 +242,8 @@ include("../template/theme/head.php");
                 }
 
                 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-grey {
-                    background-color: #f5f5f6;
+                    /*background-color: #f5f5f6;*/
+                    background-color: #FFF;
                     color: #fff;
                 }
 
@@ -258,7 +259,7 @@ include("../template/theme/head.php");
 
             .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {
                 position: relative;
-                background: #f5f5f6;
+                background: #f8f8f8;
                 padding: 1em;
                 margin-left: 60px;
                 -webkit-background-clip: padding-box;
@@ -286,7 +287,7 @@ include("../template/theme/head.php");
                 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2, .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label p {
                     color: #737881;
                     font-family: "Noto Sans",sans-serif;
-                    font-size: 12px;
+                    font-size: 14px;
                     margin: 0;
                     line-height: 1.428571429;
                 }
@@ -362,10 +363,13 @@ include("../template/theme/head.php");
 
                               <div class=\"timeline-icon bg-grey\">
                                   <i class=\"entypo-feather\"></i>
+
+                                  <img src='../user/user_images/$thisPhoto' class='img-circle' style='width:50px;height:50px;'/>
+
                               </div>
 
                               <div class=\"timeline-label\">
-                                  <h2><a href=\"#\">$thisFirstName $thisLastName</a> <span>posted a <a>blog</a> on <a>$thisPostTime</a></span></h2>
+                                  <h2><a href=\"#\">$thisFirstName $thisLastName</a> <span>posted a <a>blog</a> on <small class='pull-right'>$thisPostTime</small></span></h2>
                                   <p>$thisPostTitle</p>
                                   <p>$thisPostBody</p>
                               </div>
@@ -382,8 +386,9 @@ include("../template/theme/head.php");
 
                         <div class=\"timeline-entry-inner\">
 
-                            <div class=\"timeline-icon bg-primary\">
-                            <i class=\"entypo-feather\"></i>$initialF$initialL
+                            <div class=\"timeline-icon bg-grey\">
+
+                            <img src='../user/user_images/$thisPhoto' class='img-circle' style='width:50px;height:50px;'/>
                             </div>
 
                             <div class=\"timeline-label\">
@@ -417,7 +422,7 @@ include("../template/theme/head.php");
   </div>
 
   <div class="col-xs-4">
-  <div class="chat-panel panel panel-default">
+  <div class="chat-panel panel panel-primary">
       <div class="panel-heading">
           <i class="fa fa-user-plus fa-fw"></i> Recommended Friends
 

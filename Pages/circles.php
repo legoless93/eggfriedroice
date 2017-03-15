@@ -50,7 +50,7 @@ include("../template/theme/head.php");
                     <h1 class="page-header">My Circles</h1>
                 </div> -->
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-7">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
@@ -58,7 +58,7 @@ include("../template/theme/head.php");
                             <h5>My Circles</h5>
                           </div> -->
                           <!--  -->
-                          <div class="panel-body">
+                          <div class="panel-body" style="height:600px">
 
                             <div class="list-group">
                               <ul class="chat">
@@ -77,41 +77,30 @@ include("../template/theme/head.php");
                               $thisCreatorID = $rowCircles['creator_id'];
 
                               $get_user = "SELECT user_firstName, user_lastName FROM user WHERE user_id = '$thisCreatorID'";
+                              // $get_user = "SELECT user.user_firstName FROM circles JOIN circleBridge ON circles.circle_id = circleBridge.circle_id JOIN user ON user.user_id = circleBridge.member_id WHERE circles.circle_id = $thisCircleID";
                               $run_user = mysqli_query($con, $get_user);
                               $row = mysqli_fetch_array($run_user);
 
                               echo "<li class='left clearfix'>
                               <div class='pull-right'>
-                              <a class='btn btn-primary' href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>Open
-                              </a>
+
                               </div>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
                                 <span class='chat-img pull-left'>
                                 <img src='../circle_assets/circlelogo.png' alt='User Avatar' class='img-circle' style='width:100px;height:100px;' hspace='10'/>
                                 </span>
-                                </a>
+
                                 <div class='chat-body clearfix'>
                                  <div class='header'>
                                   <h2 class='primary-font'>$thisTitle</h2>
                                 </div>
+                                </a>
                                   <small class='primary-font'> Group creator: $row[0] $row[1]</small>
                                 </div>
 
                                 <br>
 
                               ";
-
-                              // <li class='left clearfix'>
-                              //       <span class='chat-img pull-left'>
-                              //       <img src='../user/user_images/$member_pic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                              //       </span>
-                              //       <div class='chat-body clearfix'>
-                              //       <div class='header'>
-                              //       <strong class='primary-font'>$member_first $member_last</strong>
-                              //       <p>(You)</p>
-                              //       </div>
-                              //       </div>
-                              //       </li>
                             }
                             ?>
                             <!-- insert from database ENDS -->
@@ -124,7 +113,7 @@ include("../template/theme/head.php");
                     </div>
 
                     <!--  -->
-                    <br>
+
                     <style>
                     ul#friends li {
                       display: inline-flex;
@@ -137,7 +126,7 @@ include("../template/theme/head.php");
                             <h5>New Circle</h5>
                           </div>
                           <!--  -->
-                          <div class="panel-body">
+                          <div class="panel-body" style="height:545px">
                             <div>
                             <form method="post">
                             <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />

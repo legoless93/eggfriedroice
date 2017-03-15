@@ -709,7 +709,7 @@ $(document).ready(function(){
                                     if ($theRequestStatus == '1'){
                                     echo "
                                     <li class='list-group-item clearfix'>
-                                    <a href='../profile.php?userid=$thisFriendID'>
+                                    <a href='../Pages/profile.php?userid=$thisFriendID'>
 
 
                                     <div class='d-flex w-100 justify-content-between'>
@@ -824,7 +824,7 @@ $(document).ready(function(){
                                     if ($theRequestStatus == '1'){
                                     echo "
                                     <li class='list-group-item clearfix'>
-                                    <a href='../profile.php?userid=$thisFriendID'>
+                                    <a href='../Pages/profile.php?userid=$thisFriendID'>
 
 
                                     <div class='d-flex w-100 justify-content-between'>
@@ -911,7 +911,7 @@ $(document).ready(function(){
                                 // $thisRelID = $rowPosts['']
  								echo "
                                 <li class='list-group-item clearfix'>
-                                <a href='../profile.php?userid=$thisFriendID'>
+                                <a href='../Pages/profile.php?userid=$thisFriendID'>
 
 
                                    	<div class='d-flex w-100 justify-content-between'>

@@ -1,23 +1,17 @@
-/*.navbar-default {
-
-background-color: #428bca;
-
-}*/
-
 /*!
  * Start Bootstrap - SB Admin 2 v3.3.7+1 (http://startbootstrap.com/template-overviews/sb-admin-2)
  * Copyright 2013-2016 Start Bootstrap
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
  */
 body {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 #wrapper {
   width: 100%;
 }
 #page-wrapper {
   padding: 0 15px;
-  min-height: 568px;
+  min-height: 768px;
   background-color: white;
 }
 @media (min-width: 768px) {
@@ -25,17 +19,8 @@ body {
     position: inherit;
     margin: 0 0 0 250px;
     padding: 0 30px;
-    /*border-left: 1px solid #f0f0f0;*/
+    /*border-left: 1px solid #e7e7e7;*/
   }
-}
-
-.navbar{
-  background-color: #337ab7;
-  border-bottom: #0084b4;
-}
-.navbar-default .sidebar{
-  background-color: #F8F8F8;
-  border-color: #F8F8F8;
 }
 .navbar-top-links {
   margin-right: 0;
@@ -52,7 +37,6 @@ body {
 }
 .navbar-top-links .dropdown-menu li {
   display: block;
-  color: white;
 }
 .navbar-top-links .dropdown-menu li:last-child {
   margin-right: 0;

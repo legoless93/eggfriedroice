@@ -58,12 +58,13 @@ include("../template/theme/head.php");
                                   <i class='fa fa-gear'></i> <span class='caret'></span>
                               </button>
                                 <ul class='dropdown-menu pull-right' role='menu'>
-                                    <li><a href='../Pages/editProfile.php'>Edit profile info</a>
+                                    <li><a href='../Pages/editProfile.php'>Edit profile</a>
                                     </li>
 
                                 </ul>
                             </div>
                         </div>
+                        <br>
                       ";
 
                     };

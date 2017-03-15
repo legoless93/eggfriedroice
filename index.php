@@ -20,6 +20,7 @@ include("user_insert.php");
 
     <!-- Bootstrap Core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -55,7 +56,7 @@ include("user_insert.php");
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">mybebofacespacebook</a>
+                <a class="navbar-brand" href="index.php" style="color:white;">mybebofacespacebook</a>
 
             </div>
             <!-- /.navbar-header -->
@@ -67,7 +68,7 @@ include("user_insert.php");
 
               <input type="password" name="logPass" placeholder="Password" required="required"/>
               <!-- <br> -->
-              <button class="btn btn-primary btn-sm" name="login">Log in</button>
+              <button class="btn btn-default btn-sm" name="login">Log in</button>
               <?php
               // include("login.php");
               ?>

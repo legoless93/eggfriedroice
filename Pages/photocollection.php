@@ -44,8 +44,7 @@ include("../template/theme/head.php");
       include("../template/theme/sidebar.php");
 
       ?>
-
-
+      
 <!-- Page Content -->
 
 <div id="page-wrapper">
@@ -260,7 +259,7 @@ include("../template/theme/head.php");
                                 <div class="col-lg-12 col-md-12 col-sm-12 col">
                                     <div class="row" style="margin-top:10px;">
                                         <div class="container-fluid" style="margin-top:10px;">
-                                          </br>
+                                        </br>
                                             <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addphoto" aria-expanded="false" aria-controls="collapseExample1">
                                             Add photo</a>
                                             <?php
@@ -380,18 +379,17 @@ include("../template/theme/head.php");
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
+    <!-- jQuery -->    <script src="../vendor/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
     <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
+    <script src="../data/morris-data.js"></script>
     <!-- Custom Theme JavaScript -->
-    <!-- <script src="../dist/js/sb-admin-2.js"></script> -->
+    <script src="../dist/js/sb-admin-2.js"></script>
 
     <!-- gallery js -->
     <script src='../styles/gallery/js/blueimp-gallery.js'></script>
