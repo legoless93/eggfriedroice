@@ -393,11 +393,12 @@ include("../functions/checkPrivacy.php");
                   <!-- main-comment  show photo-->
                   <?php
                       $get_photo =  "SELECT * FROM photos WHERE photo_id =$get_photo_id  ";
+                      // get photo information from the database
                       $show_photo = mysqli_query($con, $get_photo);
                       $checkPhoto = mysqli_num_rows($show_photo);
 
                       while ($rowPhoto = mysqli_fetch_array($show_photo)) {
-
+                      // get the photo information one by one accroding to the photo_id in the while loop
                       $thisPhotoDescription = $rowPhoto['photo_description'];
                       $thisPhotoLink = $rowPhoto['photo_link'];
                       $thisPhotoID = $rowPhoto['photo_id'];
