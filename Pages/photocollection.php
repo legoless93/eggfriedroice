@@ -589,11 +589,13 @@ include("../functions/checkPrivacy.php");
                                                                     echo""; // not likes in total
                                                                     }
                                                                 break;
+
                                                               default:
                                                                 # code...
                                                                 break;
                                                             }
                                                           };
+
                                                       // like button ends at echo below
                                                       echo "
                                                       </button></form>
@@ -683,7 +685,7 @@ include("../functions/checkPrivacy.php");
                                                         };
 
                                               if($userID == $sessionUserID) {
-                                            echo "
+                                          echo "
                                                         <div class='form-group' style ='margin-top:35px;'>
                                                             <button name='uploadsPhoto' type='submit' class='btn btn-primary'>upload</button>
                                                         </div>
@@ -691,6 +693,7 @@ include("../functions/checkPrivacy.php");
                                                 </div>
                                             </div>";
                                           };};
+
                                         ?>
 
                                           </div>
