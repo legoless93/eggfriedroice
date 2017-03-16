@@ -12,19 +12,14 @@ $sessionUserID = $row['user_id'];
 
 if(isset($_POST['deletePhoto'])) {
 
-    $photo_id = $_POST['deletePhoto'];// get the photo id via user click the delete button
+    $photo_id = $_POST['deletePhoto'];
 
     $delete_photo = "DELETE  FROM photos WHERE photo_id = '$photo_id' ";
-    // delete qusery clear the record in the TokyoTyrantTable
-    // WHERE statement identify the photo that user desires to operate with
     $run_delete_photo = mysqli_query($con, $delete_photo);
 
-
     $delete_photo_like = "DELETE  FROM likes WHERE photo_id = '$photo_id' ";
-    // the corresponding "like" record with be delete as well in order to
-    // reduce the database load
-    // WHERE statement identify the photo id in need
     $run_delete_photo_like = mysqli_query($con, $delete_photo_like);
+
 
     if($run_delete_photo) {
         echo "<script>alert('Photo deleted!!!')</script>";

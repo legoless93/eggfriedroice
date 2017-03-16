@@ -37,9 +37,9 @@ include("../includes/connection.php");
 
 
     if($run_insertPost) {
-      echo "<script>alert('the photo is uploaded')</script>";
+    	echo "<script>alert('the photo is uploaded')</script>";
     } else {
-      echo "<script>alert('fail to upload')</script>";
+    	echo "<script>alert('fail to upload')</script>";
     }
 }
 
