@@ -25,7 +25,7 @@ if(isset($_GET['collection_id'])) {
         echo "<script>alert('collection deleted!!!')</script>";
         echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
     }else{
-      echo "<script>alert('not successfu!')</script>";
+      echo "<script>alert('fail to delete!')</script>";
       echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
     }
 

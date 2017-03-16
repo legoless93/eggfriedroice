@@ -35,4 +35,13 @@
     <!-- jquery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 
+    <!-- gallery style -->
+  <link rel="stylesheet" href="../styles/gallery/css/blueimp-gallery.min.css">
+  <link rel="stylesheet" href="css/blueimp-gallery.css">
+  <link rel="stylesheet" href="css/blueimp-gallery-indicator.css">
+  <link rel="stylesheet" href="css/demo/demo.css">
+
+  <!-- button style -->
+  <link rel="stylesheet" href="../styles/button/buttons.css">
+
 </head>

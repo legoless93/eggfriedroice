@@ -15,6 +15,7 @@ if(isset($_GET['userid'])) {
 }
 
 include("../functions/addNewInterest.php");
+include("../functions/deleteInterest.php");
 
 ?>
 
@@ -213,13 +214,14 @@ include("../template/theme/head.php");
                                                 echo "
                                                 <li class='list-unstyled'>
                                                   Add new:
-                                                  <input name='newInterest' style='width: 20em;' type='text' placeholder='Please enter another interest'>
+                                                  <input name='newInterest' style='width: 19em;' type='text' placeholder='Please enter another interest'>
                                                 </li>
                                                 <!-- end of interest box -->
 
+                                                <div style='margin-top: 10px;'>
+                                                  <button name='deleteInterests' type='delete' class='btn btn-warning btn-sm pull-left'>Delete</button>
 
-                                                <div class ='pull-right'>
-                                                  <button name='addInterests' type='submit' class='btn btn-primary btn-sm'>Add</button>
+                                                  <button name='addInterests' type='submit' class='btn btn-primary btn-sm pull-right'>Add</button>
                                                 </div>
                                                 ";
 

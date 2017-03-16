@@ -632,7 +632,8 @@ $(document).ready(function(){
                         <?php
 
                             // get requests that have been received
-                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
+                            $get_requests_as_receiver = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendrequests
+                                                          JOIN user ON friendrequests.sender_id = user.user_id WHERE friendrequests.receiver_id = '$sessionUserID'";
 
                             $run_requests_as_receiver = mysqli_query($con, $get_requests_as_receiver);
 

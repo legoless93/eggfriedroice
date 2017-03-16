@@ -26,9 +26,9 @@ if(isset($_POST['addPhotoComment'])){
   $run_insertComment = mysqli_query($con, $insertComment);
 
   if($run_insertComment) {
-    echo "<script>alert('new message')</script>";
+
   } else {
-    echo "<script>alert('crap')</script>";
+    echo "<script>alert('fail to comment it')</script>";
   }
 }
 
