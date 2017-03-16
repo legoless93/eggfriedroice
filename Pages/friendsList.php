@@ -94,11 +94,11 @@ include("../template/theme/head.php");
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li div");
+   var parent = $(this).parent("li");
 
    bootbox.dialog({
-     message: "Are you sure you want to Cancel ?",
-     title: "<i class='glyphicon glyphicon-trash'></i> Cancel Request",
+     message: "Are you sure you want to cancel?",
+     title: "<i class='glyphicon glyphicon-trash'></i>Cancel Request",
      buttons: {
     success: {
       label: "No",
@@ -138,7 +138,7 @@ include("../template/theme/head.php");
        })
        .fail(function(){
 
-        bootbox.alert('Something Went Wrong ....');
+        bootbox.alert('Something went wrong...');
 
        })
 
@@ -165,11 +165,11 @@ include("../template/theme/head.php");
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("div");
+   var parent = $(this).parent("li");
 
    bootbox.dialog({
-     message: "Are you sure you want to Accept ?",
-     title: "<i class='glyphicon glyphicon-trash'></i> Accept !",
+     message: "Are you sure you want to accept?",
+     title: "<i class='glyphicon glyphicon-ok'></i> Accept friend request!",
      buttons: {
     success: {
       label: "Cancel",
@@ -206,27 +206,11 @@ include("../template/theme/head.php");
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-
-
-         // load_friends();
-
-
-
-
-
-        // USE THIS FOR RELOCATION *****
-        // window.location='../home.php?userid=<?php echo $sessionUserID;?>';
-
-
-
        })
        .fail(function(){
 
-        bootbox.alert('Something Went Wrong ....');
+        bootbox.alert('Something Went Wrong2 ....');
 
-
-
-        // window.location ='../home.php?userid=$sessionUserID';
 
        })
 
@@ -261,16 +245,6 @@ $(document).ready(function(){
 
    .done(function(data){
 
-
-    // <?php
-    // echo "<script>alert('in success!!!')</script>";
-    // ?>
-
-
-    // if(data.unseen_notification > 0)
-    // {
-    //  $('.count').html(data.unseen_notification);
-    // }
     $('#d_list').html(data.notification);
     if(data.unseen_notification > 0)
     {
@@ -287,27 +261,6 @@ $(document).ready(function(){
 
   load_unseen_notification();
 
- // $('#comment_form').on('submit', function(event){
- //  event.preventDefault();
- //  if($('#subject').val() != '' && $('#comment').val() != '')
- //  {
- //   var form_data = $(this).serialize();
- //   $.ajax({
- //    url:"insert.php",
- //    method:"POST",
- //    data:form_data,
- //    success:function(data)
- //    {
- //     $('#comment_form')[0].reset();
- //     load_unseen_notification();
- //    }
- //   });
- //  }
- //  else
- //  {
- //   alert("Both Fields are Required");
- //  }
- // });
 
  $(document).on('click', '#getTest', function(){
   $('.count').html('');
@@ -322,24 +275,8 @@ $(document).ready(function(){
  });
 
 
-
-
- // setInterval(function(){
- //  load_unseen_notification();;
- // }, 5000);
-
-
- // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
-
 });
 </script>
-
-
-<!-- <script>
- $(document).ready(function(){
-$("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
-});
-</script> -->
 
 
 <!-- jquery and ajax for Delete FRIEND REQUEST confirmation  w/ boot box-->
@@ -352,11 +289,11 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("li div");
+   var parent = $(this).parent("li");
 
    bootbox.dialog({
-     message: "Are you sure you want to Delete ?",
-     title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
+     message: "Are you sure you want to delete?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Deleting friend!",
      buttons: {
     success: {
       label: "No",
@@ -392,12 +329,6 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
          $('#logOutD').dropdown();
 
         // keep this *****************************************
-        // but copy this
-        // $('#f_sent').html(response);
-         // load_friends();
-
-
-
 
        })
        .fail(function(){
@@ -405,10 +336,6 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
         bootbox.alert('Something Went Wrong ....');
 
        })
-
-       // init();
-        // load_friends();
-
 
 
       }
@@ -438,11 +365,11 @@ $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("div");
+   var parent = $(this).parent("li");
 
    bootbox.dialog({
-     message: "Are you sure you want to Reject?",
-     title: "<i class='glyphicon glyphicon-trash'></i> Reject Friend Quest",
+     message: "Are you sure you want to reject?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Rejecting friend request",
      buttons: {
     success: {
       label: "No",
@@ -541,40 +468,6 @@ $(document).ready(function(){
 
   load_friends();
 
- // $('#comment_form').on('submit', function(event){
- //  event.preventDefault();
- //  if($('#subject').val() != '' && $('#comment').val() != '')
- //  {
- //   var form_data = $(this).serialize();
- //   $.ajax({
- //    url:"insert.php",
- //    method:"POST",
- //    data:form_data,
- //    success:function(data)
- //    {
- //     $('#comment_form')[0].reset();
- //     load_unseen_notification();
- //    }
- //   });
- //  }
- //  else
- //  {
- //   alert("Both Fields are Required");
- //  }
- // });
-
- // $(document).on('click', '#getTest', function(){
- //  $('.count').html('');
- //  // uncomment below to read the notification
- //  // load_unseen_notification('yes');
-
- //  // uncomment below to not remove the notification
- //  load_unseen_notification();
-
-
- // });
-
-
 
 
  setInterval(function(){
@@ -586,21 +479,6 @@ $(document).ready(function(){
 
 });
 </script>
-
-
-<!-- <script type="text/javascript">
-    function init(id='') {
-
-
-
-        alert(id);
-    }
-
-
-    init("testttt");
-</script>
-
- -->
 
 
 <!-- modal for viewing mutual friends  -->
@@ -666,9 +544,9 @@ $(document).ready(function(){
                       <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
                   </div>
                   <!-- /.panel-heading -->
-                  <div class="panel-body"  id="div1" style="height:550px">
+                  <div class="panel-body" style="height:550px">
                   <!--  *********** -->
-                      <ul class="chat" id='f_list'>
+                  <ul class="chat" id='f_list'>
 
                                 <?php
 
@@ -692,11 +570,11 @@ $(document).ready(function(){
                                   $thisLastName = $rowPosts['user_lastName'];
                                   $thisPhoto = $rowPosts['user_pic'];
                                   // $thisRelID = $rowPosts['']
+                                  $mutuals = getMut($sessionUserID, $thisFriendID);
    								echo "
 
-                    <li>
-                      <div class='chat-body clearfix'>
-                        <div class='header'>
+                  <li class='list-group-item clearfix'>
+
                         <span class='chat-img pull-left'>
                         <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                         &nbsp;
@@ -704,7 +582,8 @@ $(document).ready(function(){
                         <a href='../Pages/profile.php?userid=$thisFriendID'>
                         <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                         </a>
-                        <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                        <br>
+                        <a class='delete_product' data-id='$thisFriendID' href='javascript:void(0)'>
                         <div class='pull-right'>
                         <i class='fa fa-trash fa-fw' style='color:#d9534f'></i>
                         </div>
@@ -714,10 +593,14 @@ $(document).ready(function(){
                         <i class='fa fa-rss fa-fw'></i>
                         </div>
                         </a>
+
+                        <div class='pull-left'>
+                        <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                        </div>
+
                         <br>
-                        <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                        </div>
-                        </div>
+
+
                         </li>
 
                                   ";
@@ -776,13 +659,13 @@ $(document).ready(function(){
                                     // echo "<script>alert('the request status is: $theRequestStatus')</script>";
                                     };
 
+                                    $mutuals = getMut($sessionUserID, $thisFriendID);
 
                                     if ($theRequestStatus == '1'){
                                     echo "
 
-                                    <li>
-                                    <div class='chat-body clearfix'>
-                                    <div class='header'>
+                                    <li class='list-group-item clearfix'>
+
                                           <span class='chat-img pull-left'>
                                           <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                           &nbsp;
@@ -790,16 +673,19 @@ $(document).ready(function(){
                                           <a href='../Pages/profile.php?userid=$thisFriendID'>
                                           <strong class='primary-font'>$thisFN $thisLN</strong>
                                           </a>
+                                          <br>
                                           <a class='reject_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                           <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
                                           </a>
-                                          <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
+                                          <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request'>
                                           <i class='btn btn-primary  btn-xs glyphicon glyphicon-check pull-right'></i>
                                           </a>
+
+                                          <div class='pull-left'>
+                                          <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                          </div>
                                           <br>
-                                          <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                                          </div>
-                                          </div>
+
                                           </li>
                                           ";
 
@@ -872,13 +758,13 @@ $(document).ready(function(){
                                 };
 
 
+                                $mutuals = getMut($sessionUserID, $thisFriendID);
 
                                 if ($theRequestStatus == '1'){
                                 echo "
 
-                                <li>
-                                <div class='chat-body clearfix'>
-                                <div class='header'>
+                                <li class='list-group-item clearfix'>
+
                                       <span class='chat-img pull-left'>
                                       <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                       &nbsp;
@@ -886,16 +772,17 @@ $(document).ready(function(){
                                       <a href='../Pages/profile.php?userid=$thisFriendID'>
                                       <strong class='primary-font'>$thisFN $thisLN</strong>
                                       </a>
+                                      <br>
                                       <a class='cancel_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                       <span class='label label-danger pull-right' style='padding:5px'>Cancel</span>
                                       </a>
                                       <a href='#' title='Pending Friend Request'>
                                       <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
                                       </a>
+
+                                      <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
                                       <br>
-                                      <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                                      </div>
-                                      </div>
+
                                       </li>
 
 

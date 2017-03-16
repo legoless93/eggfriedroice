@@ -24,10 +24,8 @@ $checkMutualFriends = "SELECT * FROM (SELECT user.user_firstName, user.user_last
                         $checkMutualFriendsCount = mysqli_num_rows($run_checkMutualFriends);
 
 
-
-  // echo "<script>alert($checkMutualFriendsCount)</script>";
-
-  echo "($checkMutualFriendsCount)";
+  // echo "($checkMutualFriendsCount)";
+  return $checkMutualFriendsCount;
 
 }
 

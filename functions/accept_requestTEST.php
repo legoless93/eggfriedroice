@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("../includes/connection.php");
+include("../functions/functions.php");
 
 if(isset($_REQUEST['accept'])) {
 
@@ -61,18 +62,21 @@ if(isset($_REQUEST['accept'])) {
                                 $thisLastName = $rowPosts['user_lastName'];
                                 $thisPhoto = $rowPosts['user_pic'];
 
+                                $mutuals = getMut($sessionUserID, $thisFriendID);
 
 
- 								$output .= "<li class='left clearfix'>
-                <div class='chat-body clearfix'>
-                <div class='header'>
+ 								$output .= "
+                <li class='list-group-item clearfix'>
+
                       <span class='chat-img pull-left'>
                       <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                      &nbsp;
                       </span>
                       <a href='../Pages/profile.php?userid=$thisFriendID'>
                       <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                       </a>
-                      <a class='delete_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
+                      <br>
+                      <a class='delete_product' data-id='$thisFriendID' href='javascript:void(0)'>
                       <div class='pull-right'>
                       <i class='fa fa-trash fa-fw' style='color:#d9534f'></i>
                       </div>
@@ -82,12 +86,16 @@ if(isset($_REQUEST['accept'])) {
                       <i class='fa fa-rss fa-fw'></i>
                       </div>
                       </a>
-                      <br>
-                      <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                      </div>
-                      </div>
-                      </li>";
 
+                      <div class='pull-left'>
+                      <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                      </div>
+
+                      <br>
+
+
+                      </li>
+                                ";
 
 
     }
@@ -97,11 +105,6 @@ if(isset($_REQUEST['accept'])) {
   }
 }
 ?>
-
-<!-- // <div>
-// 	<h3>hey you wanna accept <?php echo "$id"?></h3>
-// </div> -->
-
 
 <!DOCTYPE html>
 <html>
@@ -120,11 +123,11 @@ if(isset($_REQUEST['accept'])) {
    e.preventDefault();
 
    var pid = $(this).attr('data-id');
-   var parent = $(this).parent("div");
+   var parent = $(this).parent("li");
 
    bootbox.dialog({
-     message: "Are you sure you want to Delete ?",
-     title: "<i class='glyphicon glyphicon-trash'></i> Delete !",
+     message: "Are you sure?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Deleting friend!",
      buttons: {
     success: {
       label: "No",
@@ -154,6 +157,11 @@ if(isset($_REQUEST['accept'])) {
         // keep this *****************************************
         // but copy this
         // $('#f_sent').html(response);
+
+        // this updates the dropdown for notifications
+        $('#getTest').dropdown();
+        //updates the dropdown for logout
+        $('#logOutD').dropdown();
 
        })
        .fail(function(){

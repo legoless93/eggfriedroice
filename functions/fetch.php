@@ -86,7 +86,7 @@ if(($checknotifications) > 0 ){
 
   // $thisText = $rowPosts['text'];
    $output .= '<li>
-                              <a href="../Pages/friendsList.php?userid='.$sessionUserID.'">
+                <a href="../Pages/friendsList.php?userid='.$sessionUserID.'">
                                  <div>
                                     <i class="fa fa-exclamation fa-fw"></i> '.$rowPosts["notification_text"].'
                                 </div>

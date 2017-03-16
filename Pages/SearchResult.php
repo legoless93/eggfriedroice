@@ -155,6 +155,74 @@ include("../template/theme/head.php");
 });
 </script>
 
+<script>
+ $(document).ready(function(){
+
+  $('.cancel_product').click(function(e){
+
+   e.preventDefault();
+
+   var pid = $(this).attr('data-id');
+   var parent = $(this).parent("li");
+
+   bootbox.dialog({
+     message: "Are you sure you want to Cancel ?",
+     title: "<i class='glyphicon glyphicon-trash'></i> Cancel Request",
+     buttons: {
+    success: {
+      label: "No",
+      className: "btn-success",
+      callback: function() {
+      $('.bootbox').modal('hide');
+      }
+    },
+    danger: {
+      label: "Yes",
+      className: "btn-danger",
+      callback: function() {
+
+
+       $.ajax({
+
+        type: 'POST',
+        url: '../functions/cancel_request.php',
+        data: 'cancel='+pid
+
+       })
+       .done(function(response){
+
+        bootbox.alert(response);
+        parent.fadeOut('slow');
+
+
+         // this updates the dropdown for notifications
+         $('#getTest').dropdown();
+         //updates the dropdown for logout
+         $('#logOutD').dropdown();
+
+        // keep this *****************************************
+        // but copy this
+        // $('#f_sent').html(response);
+
+       })
+       .fail(function(){
+
+        bootbox.alert('Something Went Wrong ....');
+
+       })
+
+      }
+    }
+     }
+   });
+
+
+  });
+
+ });
+
+</script>
+
 
 </head>
 
@@ -329,6 +397,7 @@ include("../template/theme/head.php");
                                 		$thisLastName = $rowPosts['user_lastName'];
                                     $thisPhoto = $rowPosts['user_pic'];
 
+                                    $mutuals = getMut($sessionUserID, $thisFriendID);
 
                                 		if ($thisFriendID == $sessionUserID){
 
@@ -360,9 +429,8 @@ include("../template/theme/head.php");
                                 			// if the results are already in your friends list
 
                                 			echo "
-                                      <li>
-                                        <div class='chat-body clearfix'>
-                                          <div class='header'>
+                                      <li class='list-group-item clearfix'>
+
                                           <span class='chat-img pull-left'>
                                           <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                           &nbsp;
@@ -370,15 +438,18 @@ include("../template/theme/head.php");
                                           <a href='../Pages/profile.php?userid=$thisFriendID'>
                                           <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                                           </a>
+                                          <br>
                                           <a href='../Pages/blog.php?userid=$thisFriendID'>
                                           <div class='pull-right'>
                                           <i class='fa fa-rss fa-fw'></i>
                                           </div>
                                           </a>
+
+                                          <div class='pull-left'>
+                                          <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                          </div>
                                           <br>
-                                          <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                                          </div>
-                                          </div>
+
                                           </li>
                                 		";
 
@@ -390,9 +461,8 @@ include("../template/theme/head.php");
 
                                 			// if you have  pending friend request ( sent )
                                 			echo "
-                                      <li>
-                                      <div class='chat-body clearfix'>
-                                      <div class='header'>
+                                      <li class='list-group-item clearfix'>
+
                                             <span class='chat-img pull-left'>
                                             <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                             &nbsp;
@@ -400,16 +470,19 @@ include("../template/theme/head.php");
                                             <a href='../Pages/profile.php?userid=$thisFriendID'>
                                             <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                                             </a>
+                                            <br>
                                             <a class='cancel_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                             <span class='label label-danger pull-right' style='padding:5px'>Cancel</span>
                                             </a>
                                             <a href='#' title='Pending Friend Request'>
                                             <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
                                             </a>
+
+                                            <div class='pull-left'>
+                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                            </div>
                                             <br>
-                                            <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                                            </div>
-                                            </div>
+
                                             </li>
                                 		";
 
@@ -419,26 +492,27 @@ include("../template/theme/head.php");
 
                                 			// if you have  pending friend request ( sent )
                                 			echo "
-                                      <li>
-                                      <div class='chat-body clearfix'>
-                                      <div class='header'>
+                                      <li class='list-group-item clearfix'>
+
                                             <span class='chat-img pull-left'>
                                             <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
                                             &nbsp;
                                             </span>
                                             <a href='../Pages/profile.php?userid=$thisFriendID'>
-                                            <strong class='primary-font'>$thisFN $thisLN</strong>
+                                            <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                                             </a>
+                                            <br>
                                             <a class='reject_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                             <span  class='btn btn-danger  btn-xs glyphicon glyphicon-remove pull-right'></span>
                                             </a>
                                             <a class='delete_friend_request_row' data-id=\"$thisFriendID\" href='javascript:void(0)' title='Accept Friend Request' >
                                             <i class='btn btn-primary  btn-xs glyphicon glyphicon-check pull-right'></i>
                                             </a>
+                                            <div class='pull-left'>
+                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                            </div>
+
                                             <br>
-                                            <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
-                                            </div>
-                                            </div>
                                             </li>
                                 		";
 
@@ -450,15 +524,19 @@ include("../template/theme/head.php");
 
                                 			echo "
 
-                                      <li class='left clearfix'>
+                                      <li class='list-group-item clearfix'>
                                             <span class='chat-img pull-left'>
                                             <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                            &nbsp;
                                             </span>
-                                            <div class='chat-body clearfix'>
-                                            <div class='header'>
+
+                                            <a href='../Pages/profile.php?userid=$thisFriendID'>
                                             <strong class='primary-font'>$thisFirstName $thisLastName</strong>
+                                            </a>
+                                            <br>
+                                            <div class='pull-left'>
+                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
                                             </div>
-                                            <button data-toggle='modal' data-target='#view-modal' data-id=\"$thisFriendID\" id='getUser' class='btn btn-xs btn-primary'> mutual friends "; getMut($sessionUserID, $thisFriendID); echo "</button>
                                             <a class='send_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                             <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right'></span>
                                             </a>

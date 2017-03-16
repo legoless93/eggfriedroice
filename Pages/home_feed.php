@@ -337,13 +337,13 @@ include("../template/theme/head.php");
         //                     WHERE friendshipBridge.user_id = '$userID')friendPost
         //                     UNION SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM posts JOIN user ON posts.user_id = user.user_id WHERE posts.user_id = '$userID' ORDER BY post_id DESC";
 
-        $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM user
-                                                  JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.user_id = user.user_id
-                                                  WHERE friendshipBridge.friend_id = '$userID'
+        $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id
+                            FROM user JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.user_id = user.user_id
+                            WHERE friendshipBridge.friend_id = '$userID'
                            UNION ALL
-                           SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM user
-                                                  JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.friend_id = user.user_id
-                                                  WHERE friendshipBridge.user_id = '$userID' ORDER BY post_id DESC";
+                            SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id
+                            FROM user JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.friend_id = user.user_id
+                            WHERE friendshipBridge.user_id = '$userID' ORDER BY post_id DESC";
 
         $run_myFriends5 = mysqli_query($con, $get_myFriends5);
         $check_myFriends5 = mysqli_num_rows($run_myFriends5);
