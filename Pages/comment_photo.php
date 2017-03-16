@@ -80,6 +80,9 @@ include("../template/theme/head.php");
                                         <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
                                             <img src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image' >
                                         </a>
+                                        <center>
+                                        <h5>$thisPhotoDescription</h5>
+                                        </center>
                                      </div>
 
                                     <script>
