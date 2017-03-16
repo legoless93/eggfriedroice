@@ -23,7 +23,6 @@ if(isset($_POST['deletePhoto'])) {
 
     if($run_delete_photo) {
         echo "<script>alert('Photo deleted!!!')</script>";
-        echo "<script>alert('$sessionUserID,$photo_id')</script>";
         echo "<script>window.open('../Pages/photocollection.php?userid=$sessionUserID', '_self')</script>";
     }else {
         echo "<script>alert('Photo not deleted!!!')</script>";

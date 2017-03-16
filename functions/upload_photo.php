@@ -65,7 +65,6 @@ if(isset($_POST['upload_user_img'])) {
 
   if($run_update_user_img) {
     echo "<script>alert('Yay!!! New profile image!!!')</script>";
-    echo "<script>alert('$new_image,$src')</script>";
   } else {
     echo "<script>alert('$dest2,$sessionUserID')</script>";
     echo "<script>alert('profile image is not uploaded...')</script>";
