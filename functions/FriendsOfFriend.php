@@ -70,47 +70,38 @@ include("../includes/connection.php");
 
                               /////
 
-                               $get_myFriends5 = "SELECT user.user_id from friendshipBridge
+                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$id'
+                                                  UNION ALL
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$id'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
+
+
+
+                              $get_myFriends6 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
                                                   JOIN user ON friendshipBridge.user_id = user.user_id
                                                   WHERE friendshipBridge.friend_id = '$sessionUserID'
                                                   UNION ALL
-                                                  SELECT user.user_id FROM friendshipBridge
+                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
                                                   JOIN user ON friendshipBridge.friend_id = user.user_id
                                                   WHERE friendshipBridge.user_id = '$sessionUserID'";
-                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $run_myFriends6 = mysqli_query($con, $get_myFriends5);
+                              $check_myFriends6 = mysqli_num_rows($run_myFriends5); // this is the number of friends
 
                               $friends_user_id_array = array();
 
-                                while($row = mysqli_fetch_array($run_myFriends5)) {
+                                while($row = mysqli_fetch_array($run_myFriends6)) {
 
                                       // $friends_user_id_array[] = implode(" ", $row['user_id']);
 
                                       $friends_user_id_array[] = $row['user_id'];
                                 }
 
-                    	///
-
-                    	$checkMutualFriends = "SELECT * FROM (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic  FROM friendshipBridge
-                          JOIN user ON friendshipBridge.user_id = user.user_id
-                          WHERE friendshipBridge.friend_id = '$id'
-                          UNION ALL
-                          SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
-                          JOIN user ON friendshipBridge.friend_id = user.user_id
-                          WHERE friendshipBridge.user_id = '$id') clickeeFriends
-                          JOIN (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
-                                              JOIN user ON friendshipBridge.user_id = user.user_id
-                                              WHERE friendshipBridge.friend_id = '$sessionUserID'
-                                              UNION ALL
-                                              SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
-                                              JOIN user ON friendshipBridge.friend_id = user.user_id
-                                              WHERE friendshipBridge.user_id = '$sessionUserID') myFriends
-                                              ON clickeeFriends.user_id = myFriends.user_id";
-                                              
-      					$run_checkMutualFriends = mysqli_query($con, $checkMutualFriends);
-      					$checkMutualFriendsCount = mysqli_num_rows($run_checkMutualFriends);
-
-
-      					 while ($rowPosts = mysqli_fetch_array($run_checkMutualFriends)) {
+                              while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
 
       					 		
 
@@ -121,7 +112,10 @@ include("../includes/connection.php");
 
 
 
-                                if ($thisFriendID == $sessionUserID){
+                                
+
+
+                                			 if ($thisFriendID == $sessionUserID){
 
                                 			// if the result is you
 
@@ -260,9 +254,9 @@ include("../includes/connection.php");
 
 
                                 		}
+                                	}
 
-
-       							 	}
+       							 	
 
        							 
 
