@@ -24,7 +24,6 @@ include("../functions/checkPrivacy.php");
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
