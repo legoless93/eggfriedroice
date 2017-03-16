@@ -12,8 +12,10 @@ include("../includes/connection.php");
     $sessionUserID = $row['user_id'];
 
     $collectionName = $_POST['collection_name'];
+    // get user collection name via user's input
 
     $collectionPrivacy = $_POST['collectionPrivacy'];
+    // get collection privacy via user's selection in form table
 
     if($collectionPrivacy == 'public') {
         $collectionPublic = '1';
@@ -29,7 +31,7 @@ include("../includes/connection.php");
 
     $insertCollection = "INSERT INTO photoCollections (collection_name,public,friends,friendsOfFriends,private,circle, user_id)
     VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle', $sessionUserID)";
-
+    // insert query for adding the collection information to the table
     $run_insertCollection = mysqli_query($con, $insertCollection);
 
     if($run_insertCollection) {
