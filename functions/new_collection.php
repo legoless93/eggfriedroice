@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../includes/connection.php");
 
   if(isset($_POST['createCollection'])) {
@@ -35,9 +36,9 @@ include("../includes/connection.php");
     $run_insertCollection = mysqli_query($con, $insertCollection);
 
     if($run_insertCollection) {
-      echo "<script>alert('collection created')</script>";
+      echo "<script>alert('Yay!!! New post!!!')</script>";
     } else {
-      echo "<script>alert('fail to create')</script>";
+      echo "<script>alert('Ahhh crap...')</script>";
     }
 
   }

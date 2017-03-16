@@ -23,7 +23,8 @@ if(isset($_POST['sendCircleMessage'])){
 
   if($run_insertCircle) {
     // echo "<script>alert('new message')</script>";
-    echo "<script type='text/javascript'> document.location = '../Pages/circle_group.php?circle_id=$passed_circleID&userid=$userID'; </script>";
+    header("Location:../Pages/circle_group.php?circle_id=$passed_circleID&userid=$userID");
+    exit;
   } else {
     echo "<script>alert('$circle_message')</script>";
   }

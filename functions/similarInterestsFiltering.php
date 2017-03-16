@@ -1,5 +1,6 @@
 <?php
 include ("../includes/connection.php");
+include ("../home.php");
 
 $topInterestsFriendsQuery = "SELECT interests.user_id, COUNT(*) rank
 FROM interests JOIN (SELECT * FROM interests WHERE user_id = '$sessionUserID') myInterests

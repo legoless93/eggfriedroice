@@ -1,22 +1,6 @@
 <?php
 include ("../includes/connection.php");
-
-// $con = mysqli_connect("localhost","root","","team21","3306") or die("Connection not established");
-
-// include ("../home.php");
-$logged_email = $_SESSION['user_email'];
-
-$get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
-$run_userID = mysqli_query($con, $get_userID);
-$row = mysqli_fetch_array($run_userID);
-
-$sessionUserID = $row['user_id'];
-
-if(isset($_GET['userid'])) {
-  $userID = $_GET['userid'];
-}
-
-
+include ("../home.php");
 $topFriendsQuery = "SELECT user_id, COUNT(*) rank
 FROM friendshipBridge
 WHERE friendshipBridge.user_id <> '$sessionUserID' AND friendshipBridge.friend_id <> '$sessionUserID'
@@ -80,7 +64,7 @@ while ($rowRecFriends = mysqli_fetch_array($run_recFriends)) {
               <strong class='primary-font'>$thisRecFriendName</strong>
           </div>
           <p>
-              We have a mutual friend!
+              Hello...Please be my friend. One of my friends is your friend.
           </p>
       </div>
   </li>

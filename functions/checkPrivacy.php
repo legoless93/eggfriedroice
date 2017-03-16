@@ -15,8 +15,6 @@ if($sessionUserID != $userID) {
   $run_getPriv = mysqli_query($con, $getPriv);
   $allPriv = mysqli_fetch_array($run_getPriv);
 
-  $curSet = '';
-
   if($allPriv['public'] == 1) {
     $curSet = "public";
   } else if($allPriv['friendsOfFriends'] == 1) {
