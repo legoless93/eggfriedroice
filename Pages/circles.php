@@ -24,44 +24,373 @@ if(isset($_GET['userid'])) {
 <!DOCTYPE html>
 <html lang="en">
 
-<?php
+<head>
 
-include("../template/theme/head.php");
+<style>
+ul#friends li {
+  display: inline-flex;
+  padding: 10px;
+}
+</style>
 
-?>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>mybebofacespacebook</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+
+</head>
 
 <body>
 
     <div id="wrapper">
 
-        <!-- NAVIGATION TEMPLATE HERE -->
-        <?php
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">mybebofacespacebook</a>
+            </div>
+            <!-- /.navbar-header -->
 
-        include("../template/theme/header.php");
-        include("../template/theme/sidebar.php");
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <strong>John Smith</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>Yesterday</em>
+                                    </span>
+                                </div>
+                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>Read All Messages</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
 
-        ?>
+                    <!-- /.dropdown-messages -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 1</strong>
+                                        <span class="pull-right text-muted">40% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            <span class="sr-only">40% Complete (success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 2</strong>
+                                        <span class="pull-right text-muted">20% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
+                                            <span class="sr-only">20% Complete</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 3</strong>
+                                        <span class="pull-right text-muted">60% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                                            <span class="sr-only">60% Complete (warning)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <p>
+                                        <strong>Task 4</strong>
+                                        <span class="pull-right text-muted">80% Complete</span>
+                                    </p>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+                                            <span class="sr-only">80% Complete (danger)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Tasks</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-tasks -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-comment fa-fw"></i> New Comment
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                    <span class="pull-right text-muted small">12 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-tasks fa-fw"></i> New Task
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a class="text-center" href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
 
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <form class="input-group custom-search-form" action ="Pages/SearchResult.php" method="GET">
+                                <input type="text" name="query" class="form-control" placeholder="Search For Friends" >
+                                <span class="input-group-btn">
+
+
+
+                              <!-- <a href='Pages/SearchResult.php' name='searchIT' type='submit' class='btn btn-default' ><span class='glyphicon glyphicon-search'></span></a>
+                                 -->
+                            <input type="submit" value="Search" class='btn btn-default'/>
+                            </span>
+
+
+                            </form>
+
+                           <!--  <form class="navbar-search pull-left" action="search.php" method="GET">
+                                <input class="search-query" placeholder="Search" type="text" />
+                            </form> -->
+
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                          <?php
+                          echo "
+                            <a href='../home.php?userid=$sessionUserID'><i class='fa fa-dashboard fa-fw'></i> Profile</a>
+                            ";
+                            ?>
+                        </li>
+                        <li>
+                          <?php
+                          echo "
+                            <a href='../Pages/blog.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i> Blog</a>
+                            ";
+                            ?>
+                        </li>
+                        <li>
+                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Photos</a>
+                        </li>
+                        <li>
+                        <!-- CHANGES HERE ** -->
+                        <?php
+                          echo "
+                            <a href='../Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
+                            ";
+                            ?>
+                            <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
+                        </li>
+                        <li>
+                          <li>
+                          <!--  -->
+                          <?php
+                            echo "
+                              <a href='../Pages/circles.php?userid=$sessionUserID'><i class='fa fa-bar-chart-o fa-fw'></i>Circles</a>
+                              ";
+                              ?>
+                              <!-- <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Friends</a> -->
+                          </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Settings</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
 
         <div id="page-wrapper">
             <div class="row">
-              <br>
-                <!-- <div class="col-lg-12">
+                <div class="col-lg-8">
                     <h1 class="page-header">My Circles</h1>
-                </div> -->
+                </div>
+                <!-- /.col-lg-12 -->
+                <div class="col-lg-4">
+                    <h1 class="page-header">New Circle</h1>
+                </div>
 
-                    <div class="col-lg-12">
+                  <div class="row">
+
+
+                    <div class="col-lg-8">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
-                          <!-- <div class="panel-heading">
+                          <div class="panel-heading">
                             <h5>My Circles</h5>
-                          </div> -->
+                          </div>
                           <!--  -->
                           <div class="panel-body">
 
                             <div class="list-group">
-                              <ul class="chat">
+                              <ul id="friends">
                             <!-- insert from database -->
                             <?php
                             $get_myCircles = "SELECT circles.circle_name, circles.circle_id, circles.creator_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
@@ -76,42 +405,12 @@ include("../template/theme/head.php");
                               $thisTitle = $rowCircles['circle_name'];
                               $thisCreatorID = $rowCircles['creator_id'];
 
-                              $get_user = "SELECT user_firstName, user_lastName FROM user WHERE user_id = '$thisCreatorID'";
-                              $run_user = mysqli_query($con, $get_user);
-                              $row = mysqli_fetch_array($run_user);
-
-                              echo "<li class='left clearfix'>
-                              <div class='pull-right'>
-                              <a class='btn btn-primary' href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>Open
-                              </a>
-                              </div>
+                              echo "<li>
                                 <a href='circle_group.php?circle_id=$thisCircleID&userid=$sessionUserID'>
-                                <span class='chat-img pull-left'>
-                                <img src='../circle_assets/circlelogo.png' alt='User Avatar' class='img-circle' style='width:100px;height:100px;' hspace='10'/>
-                                </span>
+                                  <img src='../circle_assets/circle_default.png' alt='error' class='img-circle' style='width:150px;height:150px;' align='middle'/>
+                                  <p align='center'><strong class='primary-font'>$thisTitle</strong></p>
                                 </a>
-                                <div class='chat-body clearfix'>
-                                 <div class='header'>
-                                  <h2 class='primary-font'>$thisTitle</h2>
-                                </div>
-                                  <small class='primary-font'> Group creator: $row[0] $row[1]</small>
-                                </div>
-
-                                <br>
-
                               ";
-
-                              // <li class='left clearfix'>
-                              //       <span class='chat-img pull-left'>
-                              //       <img src='../user/user_images/$member_pic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                              //       </span>
-                              //       <div class='chat-body clearfix'>
-                              //       <div class='header'>
-                              //       <strong class='primary-font'>$member_first $member_last</strong>
-                              //       <p>(You)</p>
-                              //       </div>
-                              //       </div>
-                              //       </li>
                             }
                             ?>
                             <!-- insert from database ENDS -->
@@ -123,28 +422,21 @@ include("../template/theme/head.php");
                       </div>
                     </div>
 
+                    <div class="col-lg-4">
+                  <!-- <h2>Create new circle:</h2> -->
+                  <form method="post">
+                  <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
+
+                    </div>
                     <!--  -->
                     <br>
-                    <style>
-                    ul#friends li {
-                      display: inline-flex;
-                      padding: 10px;
-                    }
-                    </style>
-                    <div class="col-lg-5">
-                      <div class="chat-panel panel panel-primary">
+                    <div class="col-lg-4">
+                      <div class="chat-panel panel panel-default">
                           <div class="panel-heading">
-                            <h5>New Circle</h5>
+                            <h5>Invite Friends</h5>
                           </div>
                           <!--  -->
                           <div class="panel-body">
-                            <div>
-                            <form method="post">
-                            <input method="post" name="circle_name" type="text" class="form-control input-sm" placeholder="Type your circle name here..." />
-
-                            <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h5>Create</h5></button>
-
-                          </div>
                             <!-- paste here -->
                             <div class="list-group">
                               <!-- <form method="post"> -->
@@ -169,10 +461,9 @@ include("../template/theme/head.php");
 
                               echo "
                                 <li class='list-unstyled'>
-                                <h4>
                                 <input type='checkbox' name='chk_group[]' value=$thisFriendID>
                                   <img src='../user/user_images/$thisPhoto' alt='error' style='width:50px;height:50px;'/>
-                                  $thisFirstName $thisLastName</h4>
+                                  $thisFirstName $thisLastName
                                     </span>
                                   </li>
                                 ";
@@ -182,31 +473,30 @@ include("../template/theme/head.php");
 
                           <!-- end of friend box -->
                   </div>
-                  <!-- <div class ="pull-right"> -->
-                    <!-- <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h4>Create circle</h4></button> -->
-                  <!-- </div> -->
                 </div>
+                  <div class ="pull-right">
+                    <button name="createCircle" type="submit" class="btn btn-danger"><h4>Create circle</h4></button>
+                  </div>
                 </form>
               </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
-    <!-- mute above -->
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script> -->
-    <!-- <script src="../vendor/morrisjs/morris.min.js"></script> -->
-    <!-- <script src="../data/morris-data.js"></script> -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

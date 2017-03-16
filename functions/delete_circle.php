@@ -1,6 +1,9 @@
 <?php
 include ("../includes/connection.php");
 
+// $test1 = $_SESSION['test'];
+// echo "<script>alert('$test1')</script>";
+
 if(isset($_GET['circle_id'])){
 
     $circleID = $_GET['circle_id'];
