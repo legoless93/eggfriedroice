@@ -37,9 +37,9 @@ include("../includes/connection.php");
 
 
     if($run_insertPost) {
-    	echo "<script>alert('Yay!!! New post!!!')</script>";
+    	echo "<script>alert('the photo is uploaded')</script>";
     } else {
-    	echo "<script>alert('Ahhh crap...')</script>";
+    	echo "<script>alert('fail to upload')</script>";
     }
 }
 
@@ -64,11 +64,11 @@ if(isset($_POST['upload_user_img'])) {
   $run_update_user_img = mysqli_query($con, $update_user_img);
 
   if($run_update_user_img) {
-    echo "<script>alert('Yay!!! New profile img!!!')</script>";
+    echo "<script>alert('Yay!!! New profile image!!!')</script>";
     echo "<script>alert('$new_image,$src')</script>";
   } else {
     echo "<script>alert('$dest2,$sessionUserID')</script>";
-    echo "<script>alert('profile img not uploaded...')</script>";
+    echo "<script>alert('profile image is not uploaded...')</script>";
   }
 }
 

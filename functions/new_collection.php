@@ -33,9 +33,9 @@ include("../includes/connection.php");
     $run_insertCollection = mysqli_query($con, $insertCollection);
 
     if($run_insertCollection) {
-      echo "<script>alert('Yay!!! New post!!!')</script>";
+      echo "<script>alert('collection created')</script>";
     } else {
-      echo "<script>alert('Ahhh crap...')</script>";
+      echo "<script>alert('fail to create')</script>";
     }
 
   }
