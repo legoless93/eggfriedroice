@@ -11,9 +11,9 @@ body {
     height: 50px;
     position: relative;
     border: 2px solid white;
-    -webkit-border-radius: 50px;
+    /*-webkit-border-radius: 50px;
     -moz-border-radius: 50px;
-    border-radius: 50px;
+    border-radius: 50px;*/
     overflow:hidden;
 }
 .my-picture {
