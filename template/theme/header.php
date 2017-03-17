@@ -15,6 +15,7 @@ if(isset($_GET['userid'])) {
 
 ?>
 
+
 <script>
 $(document).ready(function(){
 
@@ -116,7 +117,7 @@ $(document).ready(function(){
       </li>
         <!-- /.dropdown -->
         <li class="dropdown">
-            <a class="dropdown-toggle test" data-toggle="dropdown" href="#" id='getTest'>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" id='getTest'>
               <!--   <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a> -->
             <span class="label label-pill label-danger count" style="border-radius:10px;"></span> <span class="fa fa-bell fa-fw" style="font-size:13px; color:white;"></span></a>
