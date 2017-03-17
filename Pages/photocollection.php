@@ -7,6 +7,7 @@ include("../functions/new_collection.php");
 include("../functions/delete_photo.php");
 include("../functions/like_photo.php");
 include("../functions/collection_privacy_adjust.php");
+// include("../functions/delete_collection.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -298,10 +299,15 @@ include("../template/theme/head.php");
                                                         <button  name='change2cirlce' type='submit' value='$this_collection_id' class='btn btn btn-link btn-block'>circle</button>
                                                       </form>
                                                       </li>
-
                                                   </ul>
-                                                  </div>
-                                                  <button type='button' class='btn btn-danger pull-right'>DELETE</button>
+                                                </div>
+
+
+                                                <div class='btn-group pull-right'>
+                                                    <form  method='post' action='../functions/delete_collection.php' >
+                                                      <button  name='delete_collection' type='submit' value='$this_collection_id' class='btn btn-danger '>DELETE</button>
+                                                    </form>
+                                                </div>
                                         </div>
 
 
