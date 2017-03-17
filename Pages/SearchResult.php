@@ -223,6 +223,56 @@ include("../template/theme/head.php");
 
 </script>
 
+<style>
+
+.object-fit_fill {
+  object-fit: fill
+}
+
+.object-fit_contain {
+  object-fit: contain
+}
+
+.object-fit_cover {
+  object-fit: cover
+}
+
+.object-fit_none {
+  object-fit: none
+}
+
+.object-fit_scale-down {
+  object-fit: scale-down
+}
+
+img {
+  height: 50px;
+  background-color: #FFF;
+}
+
+img[class] {
+  width: 50%;
+}
+
+.original-image {
+  margin-bottom: 50px;
+}
+
+.image {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 0 30px 20px 0;
+  &:nth-child(2n) {
+    clear: left;
+  }
+  &:nth-child(2n+1) {
+    margin-right: 0;
+  }
+}
+
+</style>
+
 
 </head>
 
@@ -412,6 +462,15 @@ include("../template/theme/head.php");
 
                                           <div class=\"image\">
                                           <img class=\"object-fit_cover\" src=\"../user/user_images/$thisPhoto\">
+                                          </div>
+                                          <div class=\"image\">
+                                          <img class=\"object-fit_fill\" src=\"../user/user_images/$thisPhoto\">
+                                          </div>
+                                          <div class=\"image\">
+                                          <img class=\"object-fit_contain\" src=\"../user/user_images/$thisPhoto\">
+                                          </div>
+                                          <div class=\"image\">
+                                          <img class=\"object-fit_scale-down\" src=\"../user/user_images/$thisPhoto\">
                                           </div>
 
                                           </span>
