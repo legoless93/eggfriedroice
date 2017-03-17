@@ -219,10 +219,11 @@ include("../template/theme/head.php");
                                                 <!-- end of interest box -->
 
                                                 <div style='margin-top: 10px;'>
-                                                  <button name='deleteInterests' type='delete' class='btn btn-warning btn-sm pull-left'>Delete</button>
+                                                  <button name='deleteInterests' type='delete' class='btn btn-danger btn-sm pull-left'>Delete</button>
 
                                                   <button name='addInterests' type='submit' class='btn btn-primary btn-sm pull-right'>Add</button>
                                                 </div>
+                                                <br>
                                                 ";
 
                                                 while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
@@ -245,7 +246,7 @@ include("../template/theme/head.php");
                                                   $thisInterest = $interestArray['interest'];
 
                                                 echo "
-                                                  <li class='list-unstyled' style='text-align: center;'>
+                                                  <li class='list-unstyled'>
                                                     <h3>$thisInterest</h3>
                                                       </span>
                                                     </li>
