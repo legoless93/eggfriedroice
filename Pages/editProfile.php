@@ -93,10 +93,9 @@ include("../template/theme/head.php");
         <center>
         <form action='' method='post' id='a'  class='aa' enctype='multipart/form-data'>
         <p><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
-        <label>change profile image</label>
-        <br>
         <small>Please upload a square photo.</small>
         <br>
+
         <input type='file' name='myFile2' required = 'required' /><br>
 
         <div class='form-group' style ='margin-top:5px;'>
