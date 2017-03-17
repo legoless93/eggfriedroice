@@ -42,19 +42,11 @@ include("../template/theme/head.php");
 
         <div id="page-wrapper">
           <br>
-            <!-- <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Profile</h1>
-                </div>
-            </div> -->
-            <!-- /.row -->
 
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-8">
                     <div class="panel panel-default">
-                        <!-- <div class="panel-heading"> -->
-                            <!-- <i class="fa fa-bar-chart-o fa-fw"></i> All About Me -->
 
                             <?php
 
@@ -78,9 +70,6 @@ include("../template/theme/head.php");
                           };
 
                              ?>
-
-                        <!-- </div> -->
-
 
                         <!-- /.panel-heading -->
                         <div class="panel-body" style="height:580px">
@@ -120,13 +109,10 @@ include("../template/theme/head.php");
                         <!-- /.panel-body -->
                     </div>
                 </div>
-                <!-- /.col-lg-8 -->
+
                 <div class="col-lg-4">
                     <div class="panel panel-default">
-                        <!-- <div class="panel-heading">
-                            <i class="fa fa-user fa-fw"></i> Friends
-                        </div> -->
-                        <!-- /.panel-heading -->
+
                         <div class="panel-body">
                             <ul class="chat">
 
@@ -191,7 +177,7 @@ include("../template/theme/head.php");
                     </div>
 
                 </div>
-                <!-- /.col-lg-4 -->
+
                 <div class="col-lg-4">
                                       <div class="chat-panel panel panel-primary">
                                           <div class="panel-heading">
@@ -254,14 +240,14 @@ include("../template/theme/head.php");
                                                 };
                                                 echo "</div>";
                                               }
-                                              // include("../functions/addNewInterest.php");
+
                                                 ?>
                                 </form>
                                 </div>
 
                                 </form>
                               </div>
-                                    <!-- </div> -->
+
             </div>
 
             </div>
@@ -271,19 +257,9 @@ include("../template/theme/head.php");
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="vendor/raphael/raphael.min.js"></script>
-    <script src="vendor/morrisjs/morris.min.js"></script>
-    <script src="data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="dist/js/sb-admin-2.js"></script>

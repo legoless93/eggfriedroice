@@ -15,6 +15,12 @@ include("../includes/connection.php");
 
     $collectionPrivacy = $_POST['collectionPrivacy'];
 
+    $collectionPublic = '0';
+    $collectionPrivate = '0';
+    $collectionFriends = '0';
+    $collectionFOF = '0';
+    $collectionCircle = '0';
+
     if($collectionPrivacy == 'public') {
         $collectionPublic = '1';
     }else if ($collectionPrivacy == 'private'){
@@ -23,12 +29,14 @@ include("../includes/connection.php");
         $collectionFriends = '1';
     }else if($collectionPrivacy == 'FoF'){
         $collectionFOF = '1';
-    }else{
+    }else if($collectionPrivacy == 'circle'){
         $collectionCircle = '1';
     }
 
+    // echo "<script>alert('$collectionName,$collectionPublic,$collectionFriends,$collectionCircle,$collectionFOF,$collectionPrivate,$sessionUserID')</script>";
+
     $insertCollection = "INSERT INTO photocollections (collection_name,public,friends,friendsOfFriends,private,photocollections.circle, user_id)
-    VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle', $sessionUserID)";
+    VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle', '$sessionUserID')";
 
     $run_insertCollection = mysqli_query($con, $insertCollection);
 

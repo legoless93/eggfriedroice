@@ -2,9 +2,6 @@
 include ("../includes/connection.php");
 include("../functions/functions.php");
 
-// $con = mysqli_connect("localhost","root","","team21","3306") or die("Connection not established");
-
-// include ("../home.php");
 $logged_email = $_SESSION['user_email'];
 
 $get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
@@ -186,19 +183,12 @@ while ($rowRecFriends = mysqli_fetch_array($run_recFriends)) {
         window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
         bootbox.alert(response);
 
-
-        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
-        // ../Pages/friendsList.php'
-
-         // <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
        })
        .fail(function(){
 
         bootbox.alert('Something Went Wrong ....');
 
        })
-
-        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
 
 
       }

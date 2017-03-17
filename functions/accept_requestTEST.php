@@ -33,8 +33,6 @@ if(isset($_REQUEST['accept'])) {
 
 
  	if ($run_accept_friend && $run_update_accept_friend && $run_accepted_friend_notification ){
-    	// echo "<script>alert('Friend request accepted!!!')</script>";
-     //    echo "<script>window.open('../Pages/friendsList.php', '_self')</script>";
 
 
 
@@ -156,10 +154,6 @@ if(isset($_REQUEST['accept'])) {
         bootbox.alert(response);
         parent.fadeOut('slow');
 
-        // keep this *****************************************
-        // but copy this
-        // $('#f_sent').html(response);
-
         // this updates the dropdown for notifications
         $('#getTest').dropdown();
         //updates the dropdown for logout
@@ -203,16 +197,6 @@ $(document).ready(function(){
 
    .done(function(data){
 
-
-    // <?php
-    // echo "<script>alert('in success!!!')</script>";
-    // ?>
-
-
-    // if(data.unseen_notification > 0)
-    // {
-    //  $('.count').html(data.unseen_notification);
-    // }
     $('#d_list').html(data.notification);
     if(data.unseen_notification > 0)
     {
@@ -229,48 +213,15 @@ $(document).ready(function(){
 
   load_unseen_notification();
 
- // $('#comment_form').on('submit', function(event){
- //  event.preventDefault();
- //  if($('#subject').val() != '' && $('#comment').val() != '')
- //  {
- //   var form_data = $(this).serialize();
- //   $.ajax({
- //    url:"insert.php",
- //    method:"POST",
- //    data:form_data,
- //    success:function(data)
- //    {
- //     $('#comment_form')[0].reset();
- //     load_unseen_notification();
- //    }
- //   });
- //  }
- //  else
- //  {
- //   alert("Both Fields are Required");
- //  }
- // });
-
  $(document).on('click', '#getTest', function(){
   $('.count').html('');
   // uncomment below to read the notification
-  // load_unseen_notification('yes');
 
   // uncomment below to not remove the notification
   load_unseen_notification();
 
 
  });
-
-
-
-
- // setInterval(function(){
- //  load_unseen_notification();;
- // }, 5000);
-
-
- // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 
 });
 </script>

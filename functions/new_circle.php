@@ -28,8 +28,6 @@ if(isset($_POST['createCircle'])){
     if (isset($_POST['chk_group'])) {
         $optionArray = $_POST['chk_group'];
 
-        // NOTE: may have to add timeAdded to the database for extra query as if
-        // the creator creates anotoher circle with the same name it'll be kinda peak.
         $get_CircleID = "SELECT * FROM circles WHERE circle_name = '$circleName'
                         AND creator_id = '$userID'";
         $run_CircleID = mysqli_query($con, $get_CircleID);
@@ -41,8 +39,6 @@ if(isset($_POST['createCircle'])){
 
           $addFriend2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($optionArray[$i],$circleID)";
           $run_insertAddFriend = mysqli_query($con, $addFriend2Circle);
-          // $addFriend2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($optionArray[$i],99)";
-          // echo "<script>alert($optionArray[$i])</script>";
 
           $circle_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$firstName $lastName added you to a circle','0', '$optionArray[$i]' )";
           $notification = mysqli_query($con, $circle_notification);
@@ -55,7 +51,6 @@ if(isset($_POST['createCircle'])){
 
     }
     echo "<script>alert('created new circle')</script>";
-    // header("refresh:0.1; url=../Pages/circles.php?userid=$userID");
     echo "<script type='text/javascript'> document.location = '../Pages/circles.php?userid=$userID'; </script>";
     exit;
   } else {

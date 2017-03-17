@@ -13,14 +13,12 @@ $sessionUserID = $row['user_id'];
 if(isset($_POST['delete_collection'])){
 
     $this_collection_id = $_POST['delete_collection'];
-    // echo "<script>alert('$this_collection_id')</script>";
     $get_photo_id = "SELECT * FROM photos WHERE collection_id = $this_collection_id";
     $show_photo_id = mysqli_query($con, $get_photo_id);
 
     while ($rowPhotoID = mysqli_fetch_array($show_photo_id)) {
 
-      $this_photo_id = $rowPhotoID['photo_id'];
-      // echo "<script>alert('$this_photo_id')</script>";
+    $this_photo_id = $rowPhotoID['photo_id'];
 
     $delete_photo = "DELETE  FROM photos WHERE photo_id = '$this_photo_id' ";
     $run_delete_photo = mysqli_query($con, $delete_photo);

@@ -24,7 +24,6 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
-// include("../functions/getMessages.php");
 ?>
 
 <!DOCTYPE html>
@@ -39,8 +38,6 @@ include("../template/theme/head.php");
 <script>
  $(document).ready(function(){
 
-// var d = $('#div1');
-// d.scrollTop(d.prop("scrollHeight"));
 
 setInterval(function(){
     $('#hibrian').load("../functions/getMessages.php?circle_id=<?php echo $get_circleID?>&userid=<?php echo $sessionUserID?>");
@@ -49,15 +46,6 @@ setInterval(function(){
 
 });
 </script>
-
-<!-- <script>
-$('#hibrian').load("../functions/getMessages.php?circle_id=<?php echo $get_circleID?>&userid=<?php echo $sessionUserID?>");
-
-setInterval(function(){
-    $('#hibrian').load("../functions/getMessages.php?circle_id=<?php echo $get_circleID?>&userid=<?php echo $sessionUserID?>");
-    console.log('hey');
-}, 5000);
-</script> -->
 
 <body>
 
@@ -74,7 +62,6 @@ setInterval(function(){
         <div id="page-wrapper">
             <div class="row">
               <br>
-                <!-- <div class="col-lg-12"> -->
                   <?php
 
                   $get_circleName = "SELECT * FROM circles WHERE circle_id = '$get_circleID'";
@@ -84,10 +71,8 @@ setInterval(function(){
                   $circleName = $row['circle_name'];
                   $thisCircleID = $row['circle_id'];
 
-                  // echo "<h1 class='page-header'>$circleName</h1>";
 
                   ?>
-                <!-- </div> -->
 
                 <style>
                 .fixed-panel {
@@ -125,30 +110,12 @@ setInterval(function(){
 
                             <?php include("../functions/getMessages.php"); ?>
 
-                        <!--  -->
+
 
                     </ul>
                 </div>
 
-              <!-- /.panel-body -->
-              <!-- <div class="panel-footer">
 
-                <form action="" method="post">
-                  <div class="input-group">
-
-                      <input method="post" name="circle_message" type="text" class="form-control input-sm" placeholder="Type your message here..." />
-                      <span class="input-group-btn">
-
-                          <button name="sendCircleMessage" type="submit" class="btn btn-warning btn-sm">
-                              Send
-                          </button>
-
-                      </span>
-
-                  </div>
-                  </form>
-
-              </div> -->
             </div>
           </div>
             <!-- /.panel-footer -->

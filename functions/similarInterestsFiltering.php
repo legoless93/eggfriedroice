@@ -189,18 +189,12 @@ while($possibleRecommendation = mysqli_fetch_array($run_recIntFriends)) {
         bootbox.alert(response);
 
 
-        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
-        // ../Pages/friendsList.php'
-
-         // <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
        })
        .fail(function(){
 
         bootbox.alert('Something Went Wrong ....');
 
        })
-
-        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
 
 
       }

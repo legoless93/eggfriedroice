@@ -81,8 +81,6 @@ include("../includes/connection.php");
 
                                 while($row = mysqli_fetch_array($run_myFriends6)) {
 
-                                      // $friends_user_id_array[] = implode(" ", $row['user_id']);
-
                                       $friends_user_id_array[] = $row['user_id'];
                                 }
 

@@ -19,8 +19,6 @@ include("../includes/connection.php");
     $insertPost = "INSERT INTO posts (user_id, post_time, post_title, post_body)
     VALUES ('$sessionUserID', now(), '$title', '$body')";
 
-    // $insertPost = "INSERT INTO blogPosts (user_id, post_time, post_title, post_body)
-    // VALUES ('$sessionUserID', now(), '$postTitle', '$postBody')";
     $run_insertPost = mysqli_query($con, $insertPost);
 
     if($run_insertPost) {

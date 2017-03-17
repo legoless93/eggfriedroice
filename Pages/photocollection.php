@@ -8,7 +8,6 @@ include("../functions/delete_photo.php");
 
 include("../functions/like_photo.php");
 include("../functions/collection_privacy_adjust.php");
-// include("../functions/delete_collection.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -18,7 +17,7 @@ $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
-// *** changes 
+// *** changes
 $FirstName = $row['user_firstName'];
 $LastName = $row['user_lastName'];
 
@@ -374,36 +373,6 @@ include("../template/theme/head.php");
 
                                                                                 echo "you ";
 
-
-                                                                              // changes here 
-                                                                              //so that it only increments the notifications when you have liked it 
-
-                                                                              //  $select_like = "SELECT FROM likes WHERE ( photo_id = $thisPhotoID AND liker_id = $sessionUserID) ";
-                                                                              //   $run_select_like = mysqli_query($con, $select_like);
-                                                                              //   $check_select_like = mysqli_num_rows($run_select_like);
-
-                                                                              //   // if ($check_select_like){
-
-                                                                              // if($sessionUserID == $userID){
-
-                                                                              //   // this inserts a notification into the nortification table of who has liked your photo
-                                                                              // $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo M8!','0', '$userID' )";
-                                                                              // $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
-
-                                                                              //   } else {
-
-                                                                              //   // this inserts a notification into the nortification table of who has liked your photo
-                                                                              //   $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName liked your photo!','0', '$userID' )";
-                                                                              //     $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
-
-                                                                              //         }
-
-                                                                                    // }
-                                                                                     
-
-
-
-
                                                                             }else if ($thisCount==2){// unlike the photo
 
                                                                               $delete_photo_like = "DELETE  FROM likes WHERE (photo_id = '$thisPhotoID' AND liker_id = '$sessionUserID') ";
@@ -629,18 +598,9 @@ include("../template/theme/head.php");
               <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
+
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
-    <!-- Custom Theme JavaScript -->
-    <!-- <script src="../dist/js/sb-admin-2.js"></script> -->
 
     <!-- gallery js -->
     <script src='../styles/gallery/js/blueimp-gallery.js'></script>
@@ -662,16 +622,6 @@ include("../template/theme/head.php");
           <a class="play-pause"></a>
           <ol class="indicator"></ol>
       </div>
-
-      <!-- validation script -->
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-
-      <!-- <script src="../dist/js/jqBootstrapValidation.js"></script> -->
-
-      <!-- confirmation -->
-      <!-- <script src="../vendor/jquery/jquery.js"></script>
-      <script src="../vendor/bootstrap/js/bootstrap.js"></script>
-      <script src="../styles/confirm/bootstrap-confirmation.js"></script> -->
 
 
 </body>
