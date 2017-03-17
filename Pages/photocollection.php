@@ -18,7 +18,7 @@ $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
-// *** changes 
+// *** changes
 $FirstName = $row['user_firstName'];
 $LastName = $row['user_lastName'];
 
@@ -375,8 +375,8 @@ include("../template/theme/head.php");
                                                                                 echo "you ";
 
 
-                                                                              // changes here 
-                                                                              //so that it only increments the notifications when you have liked it 
+                                                                              // changes here
+                                                                              //so that it only increments the notifications when you have liked it
 
                                                                               //  $select_like = "SELECT FROM likes WHERE ( photo_id = $thisPhotoID AND liker_id = $sessionUserID) ";
                                                                               //   $run_select_like = mysqli_query($con, $select_like);
@@ -399,7 +399,7 @@ include("../template/theme/head.php");
                                                                               //         }
 
                                                                                     // }
-                                                                                     
+
 
 
 
