@@ -82,9 +82,14 @@ $output ='';
 if(($checknotifications) > 0 ){
 
 
+
  while ($rowPosts = mysqli_fetch_array($run_get_notifications)) {
 
   // $thisText = $rowPosts['text'];
+  $text=$rowPosts["notification_text"]; 
+
+  if (strpos($text, 'Friend Request') !== false){
+
    $output .= '<li>
                 <a href="../Pages/friendsList.php?userid='.$sessionUserID.'">
                                  <div>
@@ -93,6 +98,33 @@ if(($checknotifications) > 0 ){
                             </a>
                         </li>
                          ';
+
+
+                         }else if (strpos($text, 'liked') !== false) {
+
+                          $output .= '<li>
+                        <a href="../Pages/photocollection.php?userid='.$sessionUserID.'">
+                                 <div>
+                                    <i class="fa fa-exclamation fa-fw"></i> '.$rowPosts["notification_text"].'
+                                </div>
+                            </a>
+                          </li>
+                         ';
+
+                         } else if (strpos($text, 'to a circle') !== false){
+
+
+                          $output .= '<li>
+                        <a href="../Pages/circles.php?userid='.$sessionUserID.'">
+                                 <div>
+                                    <i class="fa fa-exclamation fa-fw"></i> '.$rowPosts["notification_text"].'
+                                </div>
+                            </a>
+                          </li>
+                         ';
+
+
+                         }
                       }
 
 

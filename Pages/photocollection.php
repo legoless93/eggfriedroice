@@ -5,7 +5,7 @@ include("../includes/connection.php");
 include("../functions/upload_photo.php");
 include("../functions/new_collection.php");
 include("../functions/delete_photo.php");
-include("../functions/like_photo.php");
+// include("../functions/like_photo.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -330,19 +330,28 @@ include("../template/theme/head.php");
 
                                                                               // changes here 
                                                                               //so that it only increments the notifications when you have liked it 
-                                                                              if($userID ==$sessionUserID){
 
-                                                                                // this inserts a notification into the nortification table of who has liked your photo
-                                                                              $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo!','0', '$userID' )";
-                                                                              $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+                                                                              //  $select_like = "SELECT FROM likes WHERE ( photo_id = $thisPhotoID AND liker_id = $sessionUserID) ";
+                                                                              //   $run_select_like = mysqli_query($con, $select_like);
+                                                                              //   $check_select_like = mysqli_num_rows($run_select_like);
 
-                                                                                } else {
+                                                                              //   // if ($check_select_like){
 
-                                                                                // this inserts a notification into the nortification table of who has liked your photo
-                                                                                $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName liked your photo!','0', '$userID' )";
-                                                                                  $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+                                                                              // if($sessionUserID == $userID){
 
-                                                                                      }
+                                                                              //   // this inserts a notification into the nortification table of who has liked your photo
+                                                                              // $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo M8!','0', '$userID' )";
+                                                                              // $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+
+                                                                              //   } else {
+
+                                                                              //   // this inserts a notification into the nortification table of who has liked your photo
+                                                                              //   $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName liked your photo!','0', '$userID' )";
+                                                                              //     $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+
+                                                                              //         }
+
+                                                                                    // }
                                                                                      
 
 
