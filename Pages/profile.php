@@ -104,7 +104,7 @@ include("../template/theme/head.php");
         echo "
         <center>
 
-        <p align='center'><img id='userImg' src='../user/user_images/$user_image' height='250'/></p>
+        <p align='center'><img id='userImg' src='../user/user_images/$user_image' height='250' width='250'/></p>
         <p style=\"font-size:60px\"><strong>$user_firstName  $user_lastName</strong></p>
         <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
 
