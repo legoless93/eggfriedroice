@@ -625,7 +625,7 @@ include("../template/theme/head.php");
       </div>
 
       <!-- validation script -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
       <script src="../dist/js/jqBootstrapValidation.js"></script>
 
 </body>

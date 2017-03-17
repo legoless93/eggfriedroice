@@ -36,12 +36,6 @@ include("../template/theme/head.php");
 
         <div id="page-wrapper">
           <br>
-            <!-- <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Profile</h1>
-                </div>
-            </div> -->
-            <!-- /.row -->
 
             <!-- /.row -->
             <div class="row">
@@ -95,10 +89,10 @@ include("../template/theme/head.php");
         <p><img id='userImg' src='../user/user_images/$user_image' width='200' height='200'/></p>
         <small>Please upload a square photo.</small>
         <br>
-
+        <div style='margin-top: 20px;'>
         <input type='file' name='myFile2' required = 'required' /><br>
-
-        <div class='form-group' style ='margin-top:5px;'>
+        </div>
+        <div class='form-group' style ='margin-top:0px;'>
             <button name='upload_user_img' type='submit' class='btn btn-primary'>Update</button>
         </div>
 

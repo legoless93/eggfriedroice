@@ -46,18 +46,11 @@ include("../template/theme/head.php");
         <div id="page-wrapper">
             <div class="row">
               <br>
-                <!-- <div class="col-lg-12">
-                    <h1 class="page-header">My Circles</h1>
-                </div> -->
 
                     <div class="col-lg-7">
                       <div class="chat-panel panel panel-default">
                         <!-- HEADING -->
 
-                          <!-- <div class="panel-heading">
-                            <h5>My Circles</h5>
-                          </div> -->
-                          <!--  -->
                           <div class="panel-body" style="height:600px">
 
                             <div class="list-group">
@@ -183,19 +176,8 @@ include("../template/theme/head.php");
     <!-- mute above -->
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
-
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script> -->
-    <!-- <script src="../vendor/morrisjs/morris.min.js"></script> -->
-    <!-- <script src="../data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
