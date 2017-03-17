@@ -178,7 +178,6 @@ if($allPriv['public'] == 1) {
   $curSet = "private";
 }
 
- // echo "<script>alert('cur set : $curSet !!!')</script>";
 
  ?>
 
@@ -280,13 +279,11 @@ if(isset($_POST['editIt'])) {
 // if confirm is pressed with no changes
   if ($editFields[0] == "" && $editFields[1] == "" && $editFields[2] == "" && $editFields[3] == "" && $editFields[4] == ""){
 
-    // echo "<script>alert('blank fields')</script>";
-    // echo "<script>window.open('editProfile.php?', '_self')</script>";
 
   } else {
 
   $verifyPW = password_verify($editFields[3], $curPass);
-  // if($editFields[3] != "" && $editFields[4] != "" && $editFields[3] == $curPass) {
+
   if($editFields[3] != "" && $editFields[4] != "" && $verifyPW) {
 
     $newPW_count = strlen($editFields[4]);
@@ -308,7 +305,6 @@ if(isset($_POST['editIt'])) {
   }
 
   echo "<script>alert('changes made')</script>";
-  // echo "<script>window.open('profile.php?userid=$sessionUserID', '_self')</script>";
 
   }
 
@@ -359,19 +355,10 @@ foreach ($privacyOptions as $theOption) {
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

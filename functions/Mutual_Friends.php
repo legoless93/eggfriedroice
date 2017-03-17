@@ -19,22 +19,6 @@ include("../includes/connection.php");
   }
 ?>
 
-<!-- <div>
-	<h3>hey <?php echo "$id"?></h3>
-</div> -->
-
-
-<!-- <div class="panel panel-default"> -->
-               <!--  <div class="panel-heading">
-
-
-
-								<i class='fa fa-user fa-fw'></i>Members
-
-                    <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
-                <!-- </div> -->
-                <!-- /.panel-heading -->
-                <!-- <div class="panel-body"> -->
                     <ul class="chat">
 
 
@@ -92,8 +76,6 @@ include("../includes/connection.php");
                               $friends_user_id_array = array();
 
                                 while($row = mysqli_fetch_array($run_myFriends6)) {
-
-                                      // $friends_user_id_array[] = implode(" ", $row['user_id']);
 
                                       $friends_user_id_array[] = $row['user_id'];
                                 }
@@ -274,6 +256,3 @@ include("../includes/connection.php");
 
 
                     </ul>
-
-                <!-- </div> -->
-<!-- </div> -->

@@ -8,7 +8,6 @@ include("../functions/delete_photo.php");
 
 include("../functions/like_photo.php");
 include("../functions/collection_privacy_adjust.php");
-// include("../functions/delete_collection.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -599,18 +598,9 @@ include("../template/theme/head.php");
               <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
+
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
-    <!-- Custom Theme JavaScript -->
-    <!-- <script src="../dist/js/sb-admin-2.js"></script> -->
 
     <!-- gallery js -->
     <script src='../styles/gallery/js/blueimp-gallery.js'></script>
@@ -632,16 +622,6 @@ include("../template/theme/head.php");
           <a class="play-pause"></a>
           <ol class="indicator"></ol>
       </div>
-
-      <!-- validation script -->
-      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-
-      <!-- <script src="../dist/js/jqBootstrapValidation.js"></script> -->
-
-      <!-- confirmation -->
-      <!-- <script src="../vendor/jquery/jquery.js"></script>
-      <script src="../vendor/bootstrap/js/bootstrap.js"></script>
-      <script src="../styles/confirm/bootstrap-confirmation.js"></script> -->
 
 
 </body>

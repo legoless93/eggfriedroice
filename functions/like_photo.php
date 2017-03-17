@@ -7,9 +7,6 @@ include("../includes/connection.php");
     $userIDofPhoto = $_GET['userid'];
 
 
-
-
-
     $logged_email = $_SESSION['user_email'];
 
     $get_userID = "SELECT * FROM user WHERE user_email = '$logged_email'";
@@ -17,7 +14,6 @@ include("../includes/connection.php");
     $row = mysqli_fetch_array($run_userID);
 
     $sessionUserID = $row['user_id'];
-    // $sessionUserID = $row['user_id'];
     $FirstName = $row['user_firstName'];
     $LastName = $row['user_lastName'];
 

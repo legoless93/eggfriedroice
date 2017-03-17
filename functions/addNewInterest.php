@@ -4,8 +4,6 @@ include ("../includes/connection.php");
 
 if(isset($_POST['addInterests'])) {
 
-
-//mysqli_real_escape_string( connection, the input) will stop the input field from accepting weird names such as code etc.
   $newInterest = $_POST['newInterest'];
   $interest = mysqli_real_escape_string($con,$newInterest);
 

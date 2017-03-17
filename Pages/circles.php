@@ -17,7 +17,6 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
-// include("../functions/delete_circle.php");
 
 ?>
 
@@ -58,7 +57,6 @@ include("../template/theme/head.php");
                             <!-- insert from database -->
                             <?php
                             $get_myCircles = "SELECT circles.circle_name, circles.circle_id, circles.creator_id FROM circleBridge JOIN circles ON circleBridge.circle_id = circles.circle_id WHERE circleBridge.member_id = '$userID'";
-                            // $get_myCircles = "SELECT * FROM circles WHERE creator_id = '$userID' ORDER BY circle_id DESC";
                             $run_myCircles = mysqli_query($con, $get_myCircles);
                             $checkCircles = mysqli_num_rows($run_myCircles);
 
@@ -70,7 +68,6 @@ include("../template/theme/head.php");
                               $thisCreatorID = $rowCircles['creator_id'];
 
                               $get_user = "SELECT user_firstName, user_lastName FROM user WHERE user_id = '$thisCreatorID'";
-                              // $get_user = "SELECT user.user_firstName FROM circles JOIN circleBridge ON circles.circle_id = circleBridge.circle_id JOIN user ON user.user_id = circleBridge.member_id WHERE circles.circle_id = $thisCircleID";
                               $run_user = mysqli_query($con, $get_user);
                               $row = mysqli_fetch_array($run_user);
 
@@ -96,7 +93,6 @@ include("../template/theme/head.php");
                               ";
                             }
                             ?>
-                            <!-- insert from database ENDS -->
                             <!--  -->
 
                           </ul>
@@ -129,7 +125,7 @@ include("../template/theme/head.php");
                           </div>
                             <!-- paste here -->
                             <div class="list-group">
-                              <!-- <form method="post"> -->
+
                               <?php
 
                               $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
@@ -164,9 +160,7 @@ include("../template/theme/head.php");
 
                           <!-- end of friend box -->
                   </div>
-                  <!-- <div class ="pull-right"> -->
-                    <!-- <button name="createCircle" type="submit" class="btn btn-primary" style = 'float: right'><h4>Create circle</h4></button> -->
-                  <!-- </div> -->
+
                 </div>
                 </form>
               </div>

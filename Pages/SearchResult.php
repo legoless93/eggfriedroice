@@ -3,15 +3,6 @@
 session_start();
 include("../includes/connection.php");
 include("../functions/functions.php");
-// if(isset($_GET['thisFriend'])){
-
-
-// $query = $_GET['query'];
-
-	// echo "<script>alert('$query')</script>";
-
-
-
 
 $logged_email = $_SESSION['user_email'];
 
@@ -22,21 +13,7 @@ $row = mysqli_fetch_array($run_userID);
 $sessionUserID = $row['user_id'];
 
 
-
-
 ?>
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-	<title>Search Result</title>
-</head>
-<body>
-
-<h1>search results mate</h1>
-
-</body>
-</html> -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -82,23 +59,16 @@ include("../template/theme/head.php");
        })
        .done(function(response){
 
-        // parent.fadeOut('slow');
         window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
         bootbox.alert(response);
 
 
-        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
-        // ../Pages/friendsList.php'
-
-         // <a href='Pages/friendsList.php?userid=$sessionUserID'><i class='fa fa-edit fa-fw'></i>Friends</a>
        })
        .fail(function(){
 
         bootbox.alert('Something Went Wrong ....');
 
        })
-
-        // window.location='../Pages/friendsList.php?userid=<?php echo $sessionUserID;?>';
 
 
       }
@@ -193,9 +163,6 @@ include("../template/theme/head.php");
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this *****************************************
-        // but copy this
-        // $('#f_sent').html(response);
 
        })
        .fail(function(){
@@ -316,10 +283,6 @@ img[class] {
         </div>
 
         <div class="modal-body">
-           <!-- <div id="modal-loader" style="display: none; text-align: center;">
-           <!-- ajax loader -->
-<!--            <img src="ajax-loader.gif"> -->
-           <!-- </div> -->
 
            <!-- mysql data will be load here -->
            <div id="allfriends-content"></div>
@@ -376,12 +339,7 @@ img[class] {
 
         <div id="page-wrapper">
           <br>
-            <!-- <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Search Results</h1>
-                </div>
-            </div> -->
-            <!-- /.row -->
+
             <div class="row">
             </div>
 
@@ -393,22 +351,6 @@ img[class] {
             <!-- friends list CHANGES here -->
             <div class="chat-panel panel panel-primary">
                 <div class="panel-heading">
-
-<!--                 <?php
-
-                              $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic from friendshipBridge
-                                                  JOIN user ON friendshipBridge.user_id = user.user_id
-                                                  WHERE friendshipBridge.friend_id = '$sessionUserID'
-                                                  UNION ALL
-                                                  SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic FROM friendshipBridge
-                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
-                                                  WHERE friendshipBridge.user_id = '$sessionUserID'";
-                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
-                              $check_myFriends5 = mysqli_num_rows($run_myFriends5);
-
-								echo "<i class='fa fa-user fa-fw'></i>Your Friends ($check_myFriends5)"
-
-                              ?> -->
 
                      <i class="fa fa-search fa-fw"></i>Search Results
                 </div>
@@ -697,19 +639,8 @@ img[class] {
     </div>
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
-
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
