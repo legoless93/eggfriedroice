@@ -2,8 +2,6 @@
 session_start();
 include("../includes/connection.php");
 
-
-
   if(isset($_POST['likes'])) {
     $likePhotoID = $_POST['likes'];
     $userIDofPhoto = $_GET['userid'];

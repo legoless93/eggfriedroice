@@ -7,6 +7,7 @@ include("../functions/new_collection.php");
 include("../functions/delete_photo.php");
 include("../functions/like_photo.php");
 include("../functions/collection_privacy_adjust.php");
+// include("../functions/delete_collection.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -45,9 +46,6 @@ include("../template/theme/head.php");
       include("../template/theme/sidebar.php");
 
       ?>
-
-
-
       <!-- Page Content -->
 
       <div id="page-wrapper">
@@ -116,9 +114,8 @@ include("../template/theme/head.php");
                                                             </label>
                                                             </div>
                                                           </div>
-
                                                           <div class='form-group' style ='margin-top:5px;'>
-                                                              <button name='createCollection' type='submit' class='btn btn-primary'>Create</button>
+                                                              <button name='createCollection' type='submit' class='btn btn-primary' data-toggle='confirmation'>Create</button>
                                                           </div>
                                                       </form>
                                                   </div>
@@ -126,12 +123,12 @@ include("../template/theme/head.php");
                                               <script>
                                                 $(function () { $('input,select,textarea').not('[type=submit]').jqBootstrapValidation(); } );
                                               </script>
-
                                               <hr>
                                         </div>
                                     </div>
                                 </div>
                                   ";
+
                                   };
                               ?>
 
@@ -267,12 +264,10 @@ include("../template/theme/head.php");
                                       echo "
                                         <div class='well well-sm'>
 
-                                                <div class='btn-group'>
-                                                  <button type='button' class='btn button-primary'>$curSet</button>
-                                                  <button type='button' class='btn button-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                  <span class='caret'></span>
-                                                  <span class='sr-only'>Toggle Dropdown</span>
-                                                  </button>
+                                        <div class='btn-group'>
+                                            <button type='button' class='btn btn-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                            $curSet <span class='caret'></span>
+                                            </button>
                                                   <ul class='dropdown-menu'>
                                                       <li><form method='post' action='../functions/collection_privacy_adjust.php' style='margin-top:10px;' >
                                                         <button  name='change2public' type='submit' value='$this_collection_id' class='btn btn-primary btn-link btn-block'>public</button>
@@ -298,10 +293,15 @@ include("../template/theme/head.php");
                                                         <button  name='change2cirlce' type='submit' value='$this_collection_id' class='btn btn btn-link btn-block'>circle</button>
                                                       </form>
                                                       </li>
-
                                                   </ul>
-                                                  </div>
-                                                  <button type='button' class='btn btn-danger pull-right'>DELETE</button>
+                                                </div>
+
+
+                                                <div class='btn-group pull-right'>
+                                                    <form  method='post' action='../functions/delete_collection.php' >
+                                                      <button  name='delete_collection' type='submit' value='$this_collection_id' class='btn btn-danger' data-toggle='confirmation'>DELETE</button>
+                                                    </form>
+                                                </div>
                                         </div>
 
 
@@ -626,7 +626,14 @@ include("../template/theme/head.php");
 
       <!-- validation script -->
       <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-      <script src="../dist/js/jqBootstrapValidation.js"></script>
+
+      <!-- <script src="../dist/js/jqBootstrapValidation.js"></script> -->
+
+      <!-- confirmation -->
+      <!-- <script src="../vendor/jquery/jquery.js"></script>
+      <script src="../vendor/bootstrap/js/bootstrap.js"></script>
+      <script src="../styles/confirm/bootstrap-confirmation.js"></script> -->
+
 
 </body>
 </html>
