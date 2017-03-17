@@ -169,7 +169,7 @@ function fade(id=""){
                                       };
                                       echo "
                                 </div>
-                                <p> $thisBody</p>
+                                <p>".nl2br($thisBody)."</p>
                         </li>";
 
                       };

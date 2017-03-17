@@ -41,10 +41,14 @@ if(isset($_POST['addPhotoComment'])){
   // this inserts a notification into the nortification table of who has liked your photo
     $comment_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You commented on your own photo!','0', '$this_photo_owner_id' )";
     $run_comment_notification =mysqli_query($con, $comment_notification);
+    echo "<script type='text/javascript'> document.location = '../Pages/comment_photo.php?photo_id=$pre_photoID&userid=$userID'; </script>";
+
   } else {
 
     $comment_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName commented on your photo!','0', '$this_photo_owner_id' )";
     $run_comment_notification =mysqli_query($con, $comment_notification);
+    echo "<script type='text/javascript'> document.location = '../Pages/comment_photo.php?photo_id=$pre_photoID&userid=$userID'; </script>";
+
   }
 
 
