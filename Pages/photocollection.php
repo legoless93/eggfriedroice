@@ -15,6 +15,9 @@ $run_userID = mysqli_query($con, $get_userID);
 $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
+// *** changes 
+$FirstName = $row['user_firstName'];
+$LastName = $row['user_lastName'];
 
 if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
@@ -306,6 +309,11 @@ include("../template/theme/head.php");
 
 
 
+
+
+
+
+
                                                                   $get_likes_count = "SELECT COUNT(*) FROM likes WHERE (photo_id = $thisPhotoID AND liker_id = $sessionUserID)";
                                                                   $show_likes = mysqli_query($con, $get_likes_count);
                                                                   $checkLikes = mysqli_num_rows($show_likes);
@@ -318,6 +326,27 @@ include("../template/theme/head.php");
                                                                             if ($thisCount == 1){// like the photo
 
                                                                                 echo "you ";
+
+
+                                                                              // changes here 
+                                                                              //so that it only increments the notifications when you have liked it 
+                                                                              if($userID ==$sessionUserID){
+
+                                                                                // this inserts a notification into the nortification table of who has liked your photo
+                                                                              $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo!','0', '$userID' )";
+                                                                              $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+
+                                                                                } else {
+
+                                                                                // this inserts a notification into the nortification table of who has liked your photo
+                                                                                $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName liked your photo!','0', '$userID' )";
+                                                                                  $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+
+                                                                                      }
+                                                                                     
+
+
+
 
                                                                             }else if ($thisCount==2){// unlike the photo
 

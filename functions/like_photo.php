@@ -27,8 +27,12 @@ include("../includes/connection.php");
     $this_photo_owner_id = $row1['user_id'];
 
 
-    // get the corresponding photo id via user's click the like icon
+    // $select_like = "SELECT FROM likes WHERE ( photo_id = $likePhotoID AND liker_id = $sessionUserID) ";
+    // $run_select_like = mysqli_query($con, $select_like);
+    // $check_select_like = mysqli_num_rows($run_select_like);
 
+
+    // get the corresponding photo id via user's click the like icon
     $insertLike = "INSERT INTO likes (photo_id,liker_id)
     VALUES ('$likePhotoID','$sessionUserID')";
     // isnert the like information into the table
@@ -37,21 +41,22 @@ include("../includes/connection.php");
     $run_insertLike = mysqli_query($con, $insertLike);
 
 
-    if($this_photo_owner_id==$sessionUserID){
+    // if($this_photo_owner_id==$sessionUserID){
 
-    // this inserts a notification into the nortification table of who has liked your photo
-    $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo!','0', '$this_photo_owner_id' )";
-    $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
-    } else {
+    // // this inserts a notification into the nortification table of who has liked your photo
+    // $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo!','0', '$this_photo_owner_id' )";
+    // $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+    // } else {
 
-        // this inserts a notification into the nortification table of who has liked your photo
-        $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName liked your photo!','0', '$this_photo_owner_id' )";
-        $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
+    //     // this inserts a notification into the nortification table of who has liked your photo
+    //     $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$FirstName $LastName liked your photo!','0', '$this_photo_owner_id' )";
+    //     $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
 
-    }
+    //     }
+    // } 
 
 
-    if($run_insertLike && $run_like_photo_notification) {
+    if($run_insertLike ) {
 
       echo "<script>window.open('../Pages/photocollection.php?userid=$this_photo_owner_id', '_self')</script>";
 
