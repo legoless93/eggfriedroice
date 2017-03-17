@@ -29,12 +29,11 @@ include("../includes/connection.php");
 
 
 
-    
+
     $select_like = "SELECT * FROM likes WHERE ( photo_id = '$likePhotoID' AND liker_id = '$sessionUserID') ";
     $run_select_like = mysqli_query($con, $select_like);
     $check_select_like = mysqli_num_rows($run_select_like);
 
-   echo "<script>alert(' should be 2: $likePhotoID  . should be 7 :  $sessionUserID. this is the row no: $check_select_like  ')</script>";
 
     if ($check_select_like == 0 ){
 
@@ -43,7 +42,7 @@ include("../includes/connection.php");
     // this inserts a notification into the nortification table of who has liked your photo
     $like_photo_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('You liked your own photo!','0', '$this_photo_owner_id' )";
     $run_like_photo_notification =mysqli_query($con, $like_photo_notification);
-    
+
     } else {
 
         //this inserts a notification into the nortification table of who has liked your photo

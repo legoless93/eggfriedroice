@@ -25,7 +25,7 @@ include("../includes/connection.php");
         $collectionArray = $_POST['select_collection'];
     }
 
-     echo "<script>alert('$sessionUserID,$collectionArray[0],$photoDescription,$dest')</script>";
+    //  echo "<script>alert('$sessionUserID,$collectionArray[0],$photoDescription,$dest')</script>";
 
     $insertPost = "INSERT INTO photos (user_id,collection_id,photo_description,photo_day, photo_month, photo_year, photo_link)
     VALUES ('$sessionUserID','$collectionArray[0]','$photoDescription','$photoDay', '$photoMonth', '$photoYear', '$dest')";

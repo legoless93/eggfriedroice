@@ -33,7 +33,7 @@ include("../includes/connection.php");
         $collectionCircle = '1';
     }
 
-    echo "<script>alert('$collectionName,$collectionPublic,$collectionFriends,$collectionCircle,$collectionFOF,$collectionPrivate,$sessionUserID')</script>";
+    // echo "<script>alert('$collectionName,$collectionPublic,$collectionFriends,$collectionCircle,$collectionFOF,$collectionPrivate,$sessionUserID')</script>";
 
     $insertCollection = "INSERT INTO photocollections (collection_name,public,friends,friendsOfFriends,private,photocollections.circle, user_id)
     VALUES ('$collectionName','$collectionPublic','$collectionFriends','$collectionFOF','$collectionPrivate','$collectionCircle', '$sessionUserID')";
