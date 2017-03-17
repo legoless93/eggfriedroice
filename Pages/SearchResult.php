@@ -410,7 +410,9 @@ include("../template/theme/head.php");
                                           <div class='header'>
                                           <span class='chat-img pull-left'>
 
-                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
+                                          <div class='image-cropper'>
+                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='my-picture'/>
+                                          </div>
 
                                           </span>
                                           &nbsp;
