@@ -29,5 +29,25 @@ $checkMutualFriends = "SELECT * FROM (SELECT user.user_firstName, user.user_last
 
 }
 
+function getTotalFriend($curID){
+
+  include("../includes/connection.php");
+
+  $get_myFriends5 = "SELECT user.user_id from friendshipBridge
+                                                  JOIN user ON friendshipBridge.user_id = user.user_id
+                                                  WHERE friendshipBridge.friend_id = '$curID'
+                                                  UNION ALL
+                                                  SELECT user.user_id FROM friendshipBridge
+                                                  JOIN user ON friendshipBridge.friend_id = user.user_id
+                                                  WHERE friendshipBridge.user_id = '$curID'";
+                              $run_myFriends5 = mysqli_query($con, $get_myFriends5);
+                              $checkrun_myFriends5Count = mysqli_num_rows($run_myFriends5);
+
+
+                              return $checkrun_myFriends5Count;
+
+
+}
+
 
 ?>
