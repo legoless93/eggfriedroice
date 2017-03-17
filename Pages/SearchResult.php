@@ -460,18 +460,7 @@ img[class] {
                                           <div class='header'>
                                           <span class='chat-img pull-left'>
 
-                                          <div class=\"image\">
-                                          <img class=\"object-fit_cover\" src=\"../user/user_images/$thisPhoto\">
-                                          </div>
-                                          <div class=\"image\">
-                                          <img class=\"object-fit_fill\" src=\"../user/user_images/$thisPhoto\">
-                                          </div>
-                                          <div class=\"image\">
-                                          <img class=\"object-fit_contain\" src=\"../user/user_images/$thisPhoto\">
-                                          </div>
-                                          <div class=\"image\">
-                                          <img class=\"object-fit_scale-down\" src=\"../user/user_images/$thisPhoto\">
-                                          </div>
+                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-thumbnail' style='width:50px;height:50px;'/>
 
                                           </span>
                                           &nbsp;
