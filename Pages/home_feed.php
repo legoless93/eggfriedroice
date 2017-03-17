@@ -348,6 +348,25 @@ include("../template/theme/head.php");
         $run_myFriends5 = mysqli_query($con, $get_myFriends5);
         $check_myFriends5 = mysqli_num_rows($run_myFriends5);
 
+        if($check_myFriends5 == 0){
+          echo "        <article class=\"timeline-entry\">
+
+                        <div class=\"timeline-entry-inner\">
+
+
+
+                            <div class=\"timeline-label\">
+                                <p>Your friend has not post anything!</p>
+                            </div>
+                        </div>
+
+                    </article>";
+
+
+
+
+        }
+
         $friends = array();
 
         while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
