@@ -548,7 +548,7 @@ $(document).ready(function(){
 
 <!-- modal for viewing mutual friends  -->
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
      <div class="modal-content">
 
         <div class="modal-header">
