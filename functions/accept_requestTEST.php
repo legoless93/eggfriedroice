@@ -62,7 +62,7 @@ if(isset($_REQUEST['accept'])) {
                                 $thisPhoto = $rowPosts['user_pic'];
 
                                 $mutuals = getMut($sessionUserID, $thisFriendID);
-
+                                $friendTotal =  getTotalFriend($thisFriendID);
 
  								$output .= "
                 <li class='list-group-item clearfix'>
@@ -87,8 +87,10 @@ if(isset($_REQUEST['accept'])) {
                       </a>
 
                       <div class='pull-left'>
-                      <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                      <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friends </a>
                       </div>
+                      <br>
+                      <a data-toggle='modal' data-target='#view-friends-modal' data-id=\"$thisFriendID\" id='getFriendUser'>$friendTotal friend(s)</a>
 
                       <br>
 
@@ -114,7 +116,7 @@ if(isset($_REQUEST['accept'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-    
+
 <script>
  $(document).ready(function(){
 

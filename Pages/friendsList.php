@@ -480,6 +480,71 @@ $(document).ready(function(){
 });
 </script>
 
+<!-- jQuery and ajax  for mutual friends -->
+<script>
+ $(document).ready(function(){
+
+    $(document).on('click', '#getFriendUser', function(e){
+
+     e.preventDefault();
+
+     var uid = $(this).data('id'); // get id of clicked row
+
+     $('#allfriends-content').html(''); // leave this div blank
+     // $('#modal-loader').show();      // load ajax loader on button click
+
+     $.ajax({
+          url: '../functions/FriendsOfFriend.php',
+          type: 'POST',
+          data: 'id='+uid,
+          dataType: 'html'
+     })
+     .done(function(data){
+          console.log(data);
+          // $('#dynamic-content').html(''); // blank before load.
+          $('#allfriends-content').html(data); // load here
+          // $('#modal-loader').hide(); // hide loader
+     })
+     .fail(function(){
+          $('#allfriends-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+          // $('#modal-loader').hide();
+     });
+
+    });
+});
+</script>
+
+<!-- modal for viewing ALL their friends -->
+<div id="view-friends-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+     <div class="modal-content">
+
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4 class="modal-title">
+           <i class="glyphicon glyphicon-user"></i> Friends
+           </h4>
+        </div>
+
+        <div class="modal-body">
+           <!-- <div id="modal-loader" style="display: none; text-align: center;">
+           <!-- ajax loader -->
+<!--            <img src="ajax-loader.gif"> -->
+           <!-- </div> -->
+
+           <!-- mysql data will be load here -->
+           <div id="allfriends-content"></div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
 
 <!-- modal for viewing mutual friends  -->
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
@@ -571,6 +636,7 @@ $(document).ready(function(){
                                   $thisPhoto = $rowPosts['user_pic'];
                                   // $thisRelID = $rowPosts['']
                                   $mutuals = getMut($sessionUserID, $thisFriendID);
+                                  $friendTotal =  getTotalFriend($thisFriendID);
    								echo "
 
                   <li class='list-group-item clearfix'>
@@ -595,9 +661,10 @@ $(document).ready(function(){
                         </a>
 
                         <div class='pull-left'>
-                        <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                        <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friend(s) </a>
                         </div>
-
+                        <br>
+                        <a data-toggle='modal' data-target='#view-friends-modal' data-id=\"$thisFriendID\" id='getFriendUser'>$friendTotal friend(s)</a>
                         <br>
 
 
@@ -683,7 +750,7 @@ $(document).ready(function(){
                                           </a>
 
                                           <div class='pull-left'>
-                                          <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                          <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friend(s)</a>
                                           </div>
                                           <br>
 
@@ -781,7 +848,7 @@ $(document).ready(function(){
                                       <span  class='label label-primary pull-right' style='padding:5px'>Pending</span>
                                       </a>
 
-                                      <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                      <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> $mutuals mutual friend(s)</a>
                                       <br>
 
                                       </li>

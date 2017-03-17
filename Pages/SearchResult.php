@@ -58,7 +58,7 @@ include("../template/theme/head.php");
 
    bootbox.dialog({
      message: "Are you sure you want to send a Friend Request ?",
-     title: "<i class='glyphicon glyphicon-trash'></i> Send Friend Request",
+     title: "Send Friend Request",
      buttons: {
     success: {
       label: "No",
@@ -269,7 +269,69 @@ img[class] {
 
 </head>
 
+<!-- jQuery and ajax  for mutual friends -->
+<script>
+ $(document).ready(function(){
 
+    $(document).on('click', '#getFriendUser', function(e){
+
+     e.preventDefault();
+
+     var uid = $(this).data('id'); // get id of clicked row
+
+     $('#allfriends-content').html(''); // leave this div blank
+     // $('#modal-loader').show();      // load ajax loader on button click
+
+     $.ajax({
+          url: '../functions/FriendsOfFriend.php',
+          type: 'POST',
+          data: 'id='+uid,
+          dataType: 'html'
+     })
+     .done(function(data){
+          console.log(data);
+          // $('#dynamic-content').html(''); // blank before load.
+          $('#allfriends-content').html(data); // load here
+          // $('#modal-loader').hide(); // hide loader
+     })
+     .fail(function(){
+          $('#allfriends-content').html('<i class="glyphicon glyphicon-info-sign"></i> Something went wrong, Please try again...');
+          // $('#modal-loader').hide();
+     });
+
+    });
+});
+</script>
+
+<!-- modal for viewing ALL their friends -->
+<div id="view-friends-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+     <div class="modal-content">
+
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4 class="modal-title">
+           <i class="glyphicon glyphicon-users"></i> Friends
+           </h4>
+        </div>
+
+        <div class="modal-body">
+           <!-- <div id="modal-loader" style="display: none; text-align: center;">
+           <!-- ajax loader -->
+<!--            <img src="ajax-loader.gif"> -->
+           <!-- </div> -->
+
+           <!-- mysql data will be load here -->
+           <div id="allfriends-content"></div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+
+    </div>
+  </div>
+</div>
 
 <div id="view-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
@@ -441,6 +503,7 @@ img[class] {
                                     $thisPhoto = $rowPosts['user_pic'];
 
                                     $mutuals = getMut($sessionUserID, $thisFriendID);
+                                    $friendTotal =  getTotalFriend($thisFriendID);
 
                                 		if ($thisFriendID == $sessionUserID){
 
@@ -448,7 +511,7 @@ img[class] {
 
                                 			echo "
 
-                                      <li>
+                                      <li class='list-group-item clearfix'>
                                         <div class='chat-body clearfix'>
                                           <div class='header'>
                                           <span class='chat-img pull-left'>
@@ -492,8 +555,10 @@ img[class] {
                                           </a>
 
                                           <div class='pull-left'>
-                                          <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                          <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friends </a>
                                           </div>
+                                          <br>
+                                          <a data-toggle='modal' data-target='#view-friends-modal' data-id=\"$thisFriendID\" id='getFriendUser'>$friendTotal friend(s)</a>
                                           <br>
 
                                           </li>
@@ -525,8 +590,10 @@ img[class] {
                                             </a>
 
                                             <div class='pull-left'>
-                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friends </a>
                                             </div>
+                                            <br>
+                                            <a data-toggle='modal' data-target='#view-friends-modal' data-id=\"$thisFriendID\" id='getFriendUser'>$friendTotal friend(s)</a>
                                             <br>
 
                                             </li>
@@ -555,8 +622,10 @@ img[class] {
                                             <i class='btn btn-primary  btn-xs glyphicon glyphicon-check pull-right'></i>
                                             </a>
                                             <div class='pull-left'>
-                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
+                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friends </a>
                                             </div>
+                                            <br>
+                                            <a data-toggle='modal' data-target='#view-friends-modal' data-id=\"$thisFriendID\" id='getFriendUser'>$friendTotal friend(s)</a>
 
                                             <br>
                                             </li>
@@ -579,14 +648,17 @@ img[class] {
                                             <a href='../Pages/profile.php?userid=$thisFriendID'>
                                             <strong class='primary-font'>$thisFirstName $thisLastName</strong>
                                             </a>
-                                            <br>
-                                            <div class='pull-left'>
-                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'> mutual friends ($mutuals) </a>
-                                            </div>
                                             <a class='send_product' data-id=\"$thisFriendID\" href='javascript:void(0)'>
                                             <span  class='btn btn-primary  btn-xs glyphicon glyphicon-plus pull-right'></span>
                                             </a>
+                                            <br>
+                                            <div class='pull-left'>
+                                            <a data-toggle='modal' data-target='#view-modal' data-id='$thisFriendID' id='getUser'>$mutuals mutual friends</a>
                                             </div>
+                                            <br>
+                                            <a data-toggle='modal' data-target='#view-friends-modal' data-id=\"$thisFriendID\" id='getFriendUser'>$friendTotal friend(s)</a>
+                                            </div>
+                                            <br>
                                             </li>
 
 
