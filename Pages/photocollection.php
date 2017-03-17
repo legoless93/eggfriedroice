@@ -6,6 +6,7 @@ include("../functions/upload_photo.php");
 include("../functions/new_collection.php");
 include("../functions/delete_photo.php");
 include("../functions/like_photo.php");
+include("../functions/collection_privacy_adjust.php");
 
 
 $logged_email = $_SESSION['user_email'];
@@ -134,7 +135,6 @@ include("../template/theme/head.php");
                                   };
                               ?>
 
-
                                   <!--collection gallery-->
                                   <div class="row form-group"></div>
 
@@ -156,16 +156,15 @@ include("../template/theme/head.php");
 
                                   $sessionUserID = $row['user_id'];
 
-                                  if($sessionUserID != $userID) {
-
                                     $getPriv = "SELECT * FROM photocollections WHERE user_id = '$userID' AND collection_id = '$this_collection_id'";
                                     $run_getPriv = mysqli_query($con, $getPriv);
                                     $allPriv = mysqli_fetch_array($run_getPriv);
 
+
                                     if($allPriv['public'] == 1) {
                                       $curSet = "public";
                                     } else if($allPriv['friendsOfFriends'] == 1) {
-                                      $curSet = "friendsOfFriends";
+                                      $curSet = "friends of friends";
                                     } else if($allPriv['friends'] == 1) {
                                       $curSet = 'friends';
                                     } else if($allPriv['private'] == 1) {
@@ -174,8 +173,10 @@ include("../template/theme/head.php");
                                       $curSet = "circle";
                                     }
 
-                                   // echo "<script>alert('cur set : $curSet !!!')</script>";
+                                    if($sessionUserID != $userID) {
+
                                     $collection_privacy_score = 1;
+
                                     if($curSet == "friends") {
                                       $checkStatus = "SELECT * FROM friendshipBridge
                                                       WHERE (user_id = '$userID' AND friend_id = '$sessionUserID')
@@ -193,8 +194,7 @@ include("../template/theme/head.php");
                                               $run_checkStatus = mysqli_query($con, $checkStatus);
                                             while ($rows = mysqli_fetch_array($run_checkStatus)) {
                                               $thisCOUNT  = $rows['count_id'];
-                                            echo "<script>alert('$thisCOUNT ')</script>";
-
+                                              // echo "<script>alert('$thisCOUNT')</script>";
                                               if($thisCOUNT > 1 ){
                                                 $collection_privacy_score = 1;
                                               }else{
@@ -206,7 +206,7 @@ include("../template/theme/head.php");
                                           $collection_privacy_score = 0;
                                     }else if($curSet == "public"){
                                           $collection_privacy_score = 1;
-                                    }else if($curSet == "friendsOfFriends") {
+                                    }else if($curSet == "friends of friends") {
 
                                       $checkStatus = "SELECT * FROM friendshipBridge
                                                       WHERE (user_id = '$userID' AND friend_id = '$sessionUserID')
@@ -253,7 +253,7 @@ include("../template/theme/head.php");
                                  echo "
                                 <div class='panel-group' id='accordion'>
                                   <div class='panel panel-primary'>
-                                          <div class='panel-heading' >
+                                          <div class='panel-heading'>
                                             <h4 class='panel-title'>
                                               <a data-toggle='collapse' data-parent='#accordion' href='#$this_collection_id'>
                                                 $this_collection_name
@@ -262,6 +262,52 @@ include("../template/theme/head.php");
                                           </div>
                                       <div id='$this_collection_id' class='panel-collapse collapse in'>
                                         <div class='panel-body'>";
+
+                                        if($userID == $sessionUserID) {
+                                      echo "
+                                        <div class='well well-sm'>
+
+                                                <div class='btn-group'>
+                                                  <button type='button' class='btn button-primary'>$curSet</button>
+                                                  <button type='button' class='btn button-primary dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                                  <span class='caret'></span>
+                                                  <span class='sr-only'>Toggle Dropdown</span>
+                                                  </button>
+                                                  <ul class='dropdown-menu'>
+                                                      <li><form method='post' action='../functions/collection_privacy_adjust.php' style='margin-top:10px;' >
+                                                        <button  name='change2public' type='submit' value='$this_collection_id' class='btn btn-primary btn-link btn-block'>public</button>
+                                                      </form>
+                                                      </li>
+
+                                                      <li><form method='post' action='../functions/collection_privacy_adjust.php' style='margin-top:10px;' >
+                                                        <button  name='change2private' type='submit' value='$this_collection_id' class='btn btn btn-link btn-block'>private</button>
+                                                      </form>
+                                                      </li>
+
+                                                      <li><form method='post' action='../functions/collection_privacy_adjust.php' style='margin-top:10px;' >
+                                                        <button  name='change2friends' type='submit' value='$this_collection_id' class='btn btn btn-link btn-block'>friends</button>
+                                                      </form>
+                                                      </li>
+
+                                                      <li><form method='post' action='../functions/collection_privacy_adjust.php' style='margin-top:10px;' >
+                                                        <button  name='change2FOF' type='submit' value='$this_collection_id' class='btn btn btn-link btn-block'>friends of friends</button>
+                                                      </form>
+                                                      </li>
+
+                                                      <li><form method='post' action='../functions/collection_privacy_adjust.php' style='margin-top:10px;' >
+                                                        <button  name='change2cirlce' type='submit' value='$this_collection_id' class='btn btn btn-link btn-block'>circle</button>
+                                                      </form>
+                                                      </li>
+
+                                                  </ul>
+                                                  </div>
+                                                  <button type='button' class='btn btn-danger pull-right'>DELETE</button>
+                                        </div>
+
+
+
+
+                                        ";};
 
                                             $get_photo =  "SELECT * FROM photos WHERE collection_id='$this_collection_id' AND user_id = '$userID' ORDER BY photo_id DESC";
                                             $show_photo = mysqli_query($con, $get_photo);
@@ -278,7 +324,7 @@ include("../template/theme/head.php");
                                             <div class='col-lg-3 col-md-4 col-xs-12 thumb'  hero-feature'>
                                               <div class='thumbnail'>
                                                      <div id='$thisPhotoID' class='links'>
-                                                        <a href='../uploads/$thisPhotoLink' title='$thisPhotoDescription' data-gallery>
+                                                        <a href='../uploads/$thisPhotoLink' title='Photo: $thisPhotoDescription Collection: $this_collection_name' data-gallery>
                                                             <img style='height=200px;' src='../uploads/$thisPhotoLink' class='img-responsive center-block alt='Responsive image'>
                                                         </a>
                                                       </div>
@@ -485,6 +531,8 @@ include("../template/theme/head.php");
                                       <div class="row form-group"></div>
                                           <!--photo gallery-->
                                       <?php
+                                      if($userID == $sessionUserID) {
+
                                           $get_photo =  "SELECT * FROM photos WHERE user_id = '$userID' ORDER BY photo_id DESC";
                                           $show_photo = mysqli_query($con, $get_photo);
                                           $checkPhoto = mysqli_num_rows($show_photo);
@@ -513,22 +561,21 @@ include("../template/theme/head.php");
                                                             links = this.getElementsByTagName('a');
                                                         blueimp.Gallery(links, options);
                                                     };
-                                                    </script>";
+                                                    </script>
 
-                                                    if($userID == $sessionUserID) {
-                                                    echo "
+
                                                     <br>
                                                     <form method='post' action='../functions/delete_photo.php' >
                                                       <button  name='deletePhoto' type='submit' value='$thisPhotoID' class='button button-rounded button-caution button-tiny btn-block btn-block'>DELETE</button>
                                                     </form>
-                                                    ";
-                                                    }
-                                                  echo "
+
+
+
                                                 </div>
                                             </div>
-                                        ";};
+                                        ";}};
                                        ?>
-                                 <!-- photo gallery ends -
+                                 <!-- photo gallery ends -->
 
                                 </div>
                               </div>

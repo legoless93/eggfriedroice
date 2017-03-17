@@ -12,7 +12,7 @@ $row = mysqli_fetch_array($run_userID);
 $sessionUserID = $row['user_id'];
 $collection_id = $_GET['collection_id'];
 
-if(isset($_GET['collection_id'])) {
+if(isset($_POST['delete_collection'])) {
 
     $collection_id = $_GET['collection_id'];
 
