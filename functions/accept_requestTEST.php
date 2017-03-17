@@ -26,7 +26,6 @@ if(isset($_REQUEST['accept'])) {
 
 
 
-
     $run_accept_friend = mysqli_query($con, $accept_friend);
     $run_update_accept_friend = mysqli_query($con, $update_accept_friend);
     $run_accepted_friend_notification =mysqli_query($con, $accepted_friend_notification);

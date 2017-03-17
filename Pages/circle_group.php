@@ -24,6 +24,7 @@ if(isset($_GET['userid'])) {
   $userID = $_GET['userid'];
 }
 
+// include("../functions/getMessages.php");
 ?>
 
 <!DOCTYPE html>
@@ -37,11 +38,26 @@ include("../template/theme/head.php");
 
 <script>
  $(document).ready(function(){
-var d = $('#div1');
-d.scrollTop(d.prop("scrollHeight"));
+
+// var d = $('#div1');
+// d.scrollTop(d.prop("scrollHeight"));
+
+setInterval(function(){
+    $('#hibrian').load("../functions/getMessages.php?circle_id=<?php echo $get_circleID?>&userid=<?php echo $sessionUserID?>");
+    console.log('hey');
+}, 5000);
+
 });
 </script>
 
+<!-- <script>
+$('#hibrian').load("../functions/getMessages.php?circle_id=<?php echo $get_circleID?>&userid=<?php echo $sessionUserID?>");
+
+setInterval(function(){
+    $('#hibrian').load("../functions/getMessages.php?circle_id=<?php echo $get_circleID?>&userid=<?php echo $sessionUserID?>");
+    console.log('hey');
+}, 5000);
+</script> -->
 
 <body>
 
@@ -75,86 +91,47 @@ d.scrollTop(d.prop("scrollHeight"));
 
                 <style>
                 .fixed-panel {
-  min-height: 100;
-  max-height: 100;
-  overflow-y: scroll;
+                  min-height: 100;
+                  max-height: 100;
+                  overflow-y: scroll;
 }
                 </style>
+
 
                 <div class="row">
                     <div class="col-lg-8">
                       <div class="chat-panel panel panel-default">
-                          <!-- <div class="panel-heading">
-                              <i class="fa fa-comments fa-fw"></i>
-                              <?php
-                              // echo "$circleName";
-                              ?>
-                          </div> -->
+                          <div class="panel-heading">
+                            <form action="" method="post">
+                              <div class="input-group">
+
+                                  <textarea method="post" name="circle_message" type="text" class="form-control input-group-sm" placeholder="Type your message here..." style="height:50px"></textarea>
+
+                                  <span class="input-group-btn">
+
+                                      <button name="sendCircleMessage" type="submit" class="btn btn-warning btn-lg">
+                                          Send
+                                      </button>
+
+                                  </span>
+
+                              </div>
+                              </form>
+                          </div>
 
                       <div class="panel-body" id="div1" style="min-height: 600px;">
-                          <ul class="chat">
+                          <ul class="chat" id="hibrian">
 
 
-                            <?php
+                            <?php include("../functions/getMessages.php"); ?>
 
-                            $get_messages = "SELECT user.user_firstName, user.user_lastName, user.user_pic, messages.message_body, messages.sender_id, messages.message_time
-                                              FROM messages JOIN user ON messages.sender_id = user.user_id WHERE messages.circle_id = '$get_circleID' ORDER BY message_id ASC";
-                            $run_messages = mysqli_query($con, $get_messages);
-                            $check_messages = mysqli_num_rows($run_messages);
-
-                            while ($rowPosts = mysqli_fetch_array($run_messages)) {
-
-                              // $thisMessageID = $rowPosts['message_id'];
-                              $thisSenderID = $rowPosts['sender_id'];
-                              $thisMessageTime = $rowPosts['message_time'];
-                              $thisMessageBody = $rowPosts['message_body'];
-                              $thisFirst = $rowPosts['user_firstName'];
-                              $thisLast = $rowPosts['user_lastName'];
-                              $thisPic = $rowPosts['user_pic'];
-
-                              if ($thisSenderID != $userID){
-                              echo "<li class='left clearfix'>
-                                  <span class='chat-img pull-left'>
-                                      <img src='../user/user_images/$thisPic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                  </span>
-                                  <div class='chat-body clearfix'>
-                                      <div class='header'>
-                                          <strong class='primary-font'>$thisFirst $thisLast</strong>
-                                          <small class='pull-right text-muted'>
-                                              <i class='fa fa-clock-o fa-fw'></i> $thisMessageTime
-                                          </small>
-                                      </div>
-                                      <p>
-                                      $thisMessageBody
-                                      </p>
-                                  </div>
-                              </li>";
-                            } else {
-                              echo "<li class='right clearfix'>
-                                      <span class='chat-img pull-right'>
-                                      <img src='../user/user_images/$thisPic' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                      </span>
-                                      <div class='chat-body clearfix'>
-                                      <div class='header'>
-                                      <small class=' text-muted'>
-                                      <i class='fa fa-clock-o fa-fw'></i> $thisMessageTime</small>
-                                      <strong class='pull-right primary-font'>$thisFirst $thisLast</strong>
-                                      </div>
-                                      <p>
-                                      $thisMessageBody
-                                      </p>
-                                      </div>
-                                      </li>";
-                            }
-                            };
-                            ?>
                         <!--  -->
 
                     </ul>
                 </div>
 
               <!-- /.panel-body -->
-              <div class="panel-footer">
+              <!-- <div class="panel-footer">
 
                 <form action="" method="post">
                   <div class="input-group">
@@ -171,7 +148,7 @@ d.scrollTop(d.prop("scrollHeight"));
                   </div>
                   </form>
 
-              </div>
+              </div> -->
             </div>
           </div>
             <!-- /.panel-footer -->
@@ -343,25 +320,8 @@ d.scrollTop(d.prop("scrollHeight"));
     </div>
     <!-- /#wrapper -->
 
-    <!-- TEST -->
-
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
-
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Flot Charts JavaScript -->
-    <!-- <script src="../vendor/flot/excanvas.min.js"></script>
-    <script src="../vendor/flot/jquery.flot.js"></script>
-    <script src="../vendor/flot/jquery.flot.pie.js"></script>
-    <script src="../vendor/flot/jquery.flot.resize.js"></script>
-    <script src="../vendor/flot/jquery.flot.time.js"></script>
-    <script src="../vendor/flot-tooltip/jquery.flot.tooltip.min.js"></script>
-    <script src="../data/flot-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

@@ -42,15 +42,8 @@ $sessionUserID = $row['user_id'];
 <html lang="en">
 
 <?php
-
 include("../template/theme/head.php");
 ?>
-
-
-      <!-- added changes here ( removed the 2 js ones at the bottom of the page ) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 
 
     <script>
@@ -222,6 +215,56 @@ include("../template/theme/head.php");
  });
 
 </script>
+
+<style>
+
+.object-fit_fill {
+  object-fit: fill
+}
+
+.object-fit_contain {
+  object-fit: contain
+}
+
+.object-fit_cover {
+  object-fit: cover
+}
+
+.object-fit_none {
+  object-fit: none
+}
+
+.object-fit_scale-down {
+  object-fit: scale-down
+}
+
+img {
+  height: 50px;
+  background-color: #FFF;
+}
+
+img[class] {
+  width: 50%;
+}
+
+.original-image {
+  margin-bottom: 50px;
+}
+
+.image {
+  float: left;
+  width: 100px;
+  height: 100px;
+  margin: 0 30px 20px 0;
+  &:nth-child(2n) {
+    clear: left;
+  }
+  &:nth-child(2n+1) {
+    margin-right: 0;
+  }
+}
+
+</style>
 
 
 </head>
@@ -409,12 +452,15 @@ include("../template/theme/head.php");
                                         <div class='chat-body clearfix'>
                                           <div class='header'>
                                           <span class='chat-img pull-left'>
+
                                           <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                          &nbsp;
+
                                           </span>
+                                          &nbsp;
                                           <a href='../Pages/profile.php?userid=$thisFriendID'>
                                           <strong class='primary-font'>$thisFirstName $thisLastName</strong><br>
                                           </a>
+                                          &nbsp;
                                           <strong> (You) </strong>
                                           </div>
                                           </div>

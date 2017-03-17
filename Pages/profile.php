@@ -104,7 +104,7 @@ include("../template/theme/head.php");
         echo "
         <center>
 
-        <p align='center'><img id='userImg' src='../user/user_images/$user_image' width='250' height='250'/></p>
+        <p align='center'><img id='userImg' src='../user/user_images/$user_image' height='250' width='250'/></p>
         <p style=\"font-size:60px\"><strong>$user_firstName  $user_lastName</strong></p>
         <p style=\"font-size:35px\"><strong>Birthday: </strong>$theBirthday</p>
 
@@ -219,10 +219,11 @@ include("../template/theme/head.php");
                                                 <!-- end of interest box -->
 
                                                 <div style='margin-top: 10px;'>
-                                                  <button name='deleteInterests' type='delete' class='btn btn-warning btn-sm pull-left'>Delete</button>
+                                                  <button name='deleteInterests' type='delete' class='btn btn-danger btn-sm pull-left'>Delete</button>
 
                                                   <button name='addInterests' type='submit' class='btn btn-primary btn-sm pull-right'>Add</button>
                                                 </div>
+                                                <br>
                                                 ";
 
                                                 while ($interestArray = mysqli_fetch_array($run_interestQuery)) {
@@ -245,7 +246,7 @@ include("../template/theme/head.php");
                                                   $thisInterest = $interestArray['interest'];
 
                                                 echo "
-                                                  <li class='list-unstyled' style='text-align: center;'>
+                                                  <li class='list-unstyled'>
                                                     <h3>$thisInterest</h3>
                                                       </span>
                                                     </li>

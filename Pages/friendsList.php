@@ -472,7 +472,7 @@ $(document).ready(function(){
 
  setInterval(function(){
   load_friends();
- }, 5000);
+}, 2500);
 
 
  // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);

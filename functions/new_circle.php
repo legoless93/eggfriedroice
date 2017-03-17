@@ -11,6 +11,8 @@ if(isset($_POST['createCircle'])){
   $row = mysqli_fetch_array($run_userID);
 
   $userID = $row['user_id'];
+  $firstName = $row['user_firstName'];
+  $lastName = $row['user_lastName'];
 
   $circleName = $_POST['circle_name'];
   // test without the rest
@@ -41,11 +43,15 @@ if(isset($_POST['createCircle'])){
           $run_insertAddFriend = mysqli_query($con, $addFriend2Circle);
           // $addFriend2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($optionArray[$i],99)";
           // echo "<script>alert($optionArray[$i])</script>";
+
+          $circle_notification = "INSERT INTO notifications(notification_text, status, receiver_id ) VALUES ('$firstName $lastName added you to a circle','0', '$optionArray[$i]' )";
+          $notification = mysqli_query($con, $circle_notification);
         }
 
-        // insert friends intp friendship bridge
+        // insert yourself into friendship bridge
         $addCreator2Circle = "INSERT INTO circleBridge (member_id, circle_id) VALUES ($userID,$circleID)";
         $run_insertAddCreator = mysqli_query($con, $addCreator2Circle);
+
 
     }
     echo "<script>alert('created new circle')</script>";
