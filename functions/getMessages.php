@@ -3,15 +3,6 @@
 $circleID = $_GET['circle_id'];
 $userID = $_GET['userid'];
 
-// echo "<script>alert($circleID)</script>";
-// echo "<script>alert($userID)</script>";
-
-// TRY: load original with function(params) and refresh with setInterval
-
-
-// MANUALLY INPUTTING CIRCLE ID AND USER ID WORKS
-
-// function getMessages($circleID, $userID){
 
 include("../includes/connection.php");
 
@@ -22,7 +13,6 @@ $check_messages = mysqli_num_rows($run_messages);
 
 while ($rowPosts = mysqli_fetch_array($run_messages)) {
 
-  // $thisMessageID = $rowPosts['message_id'];
   $thisSenderID = $rowPosts['sender_id'];
   $thisMessageTime = $rowPosts['message_time'];
   $thisMessageBody = $rowPosts['message_body'];
@@ -66,5 +56,4 @@ while ($rowPosts = mysqli_fetch_array($run_messages)) {
 }
 };
 
-// }
 ?>

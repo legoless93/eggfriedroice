@@ -2,9 +2,6 @@
 session_start();
 include("../includes/connection.php");
 include("../functions/functions.php");
-// include("../functions/new_post.php");
-// include("../functions/delete_post.php");
-// include("../functions/retrieve_posts.php");
 
 $logged_email = $_SESSION['user_email'];
 
@@ -14,30 +11,8 @@ $row = mysqli_fetch_array($run_userID);
 
 $sessionUserID = $row['user_id'];
 
-// echo "<script>alert('session user id: $sessionUserID !!!')</script>";
-
-// if(isset($_GET['userid'])) {
-//   $userID = $_GET['userid'];
-// }
-
-// if(isset($_GET[''])){
-// }
 
 ?>
-
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-	<title>TEST</title>
-</head>
-<body>
-
-<h1>HEY THERE u fuck  </h1>
-
-
-</body>
-</html> -->
 
 
 <!DOCTYPE html>
@@ -131,10 +106,6 @@ include("../template/theme/head.php");
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this *****************************************
-        // but copy this
-        // $('#f_sent').html(response);
-
        })
        .fail(function(){
 
@@ -196,8 +167,6 @@ include("../template/theme/head.php");
         bootbox.alert('You are now friends');
         parent.fadeOut('slow');
 
-        // keep this *****************************************
-        // but copy this
         $('#f_list').html(response);
 
 
@@ -268,9 +237,6 @@ $(document).ready(function(){
   // uncomment below to read the notification
   load_unseen_notification('yes');
 
-  // uncomment below to not remove the notification
-  // load_unseen_notification();
-
 
  });
 
@@ -317,9 +283,6 @@ $(document).ready(function(){
        })
        .done(function(response){
 
-
-        // load_friends();
-        // init();
         bootbox.alert(response);
         parent.fadeOut('slow');
 
@@ -345,8 +308,6 @@ $(document).ready(function(){
 
 
   });
-
-// init();
 
 
  });
@@ -402,9 +363,6 @@ $(document).ready(function(){
          //updates the dropdown for logout
          $('#logOutD').dropdown();
 
-        // keep this *****************************************
-        // but copy this
-        // $('#f_sent').html(response);
 
        })
        .fail(function(){
@@ -443,20 +401,7 @@ $(document).ready(function(){
    .done(function(data){
 
 
-    // <?php
-    // echo "<script>alert('in success!!!')</script>";
-    // ?>
-
-
-    // if(data.unseen_notification > 0)
-    // {
-    //  $('.count').html(data.unseen_notification);
-    // }
     $('#f_no').html(data);
-    // if(data.unseen_notification > 0)
-    // {
-    //  $('.count').html(data.unseen_notification);
-    // }
 
    })
 
@@ -475,7 +420,6 @@ $(document).ready(function(){
 }, 2500);
 
 
- // $("#div1").animate({ scrollTop: $('#div1').prop("scrollHeight")}, 1000);
 
 });
 </script>
@@ -527,12 +471,7 @@ $(document).ready(function(){
         </div>
 
         <div class="modal-body">
-           <!-- <div id="modal-loader" style="display: none; text-align: center;">
-           <!-- ajax loader -->
-<!--            <img src="ajax-loader.gif"> -->
-           <!-- </div> -->
 
-           <!-- mysql data will be load here -->
            <div id="allfriends-content"></div>
         </div>
 
@@ -589,15 +528,7 @@ $(document).ready(function(){
       ?>
 
         <div id="page-wrapper">
-            <!-- <div class="row">
-                <div class="col-lg-6">
-                    <h1 class="page-header">Friends List</h1>
-                </div>
 
-            </div> -->
-            <!-- /.row -->
-
-            <!-- /.row -->
             <div class="row">
               <br>
               <div class="col-lg-6">
@@ -606,7 +537,7 @@ $(document).ready(function(){
                   <div class="panel-heading" id="f_no">
 
                  <!-- get friends here  -->
-                      <!-- <i class="fa fa-user fa-fw"></i>Your Friends -->
+
                   </div>
                   <!-- /.panel-heading -->
                   <div class="panel-body" style="height:550px">
@@ -625,8 +556,6 @@ $(document).ready(function(){
                                 $run_myFriends5 = mysqli_query($con, $get_myFriends5);
                                 $check_myFriends5 = mysqli_num_rows($run_myFriends5); // this is the number of friends
 
-                                // add another query here ??
-                                //
 
                                 while ($rowPosts = mysqli_fetch_array($run_myFriends5)) {
 
@@ -634,7 +563,7 @@ $(document).ready(function(){
                                   $thisFirstName = $rowPosts['user_firstName'];
                                   $thisLastName = $rowPosts['user_lastName'];
                                   $thisPhoto = $rowPosts['user_pic'];
-                                  // $thisRelID = $rowPosts['']
+
                                   $mutuals = getMut($sessionUserID, $thisFriendID);
                                   $friendTotal =  getTotalFriend($thisFriendID);
    								echo "
@@ -724,7 +653,6 @@ $(document).ready(function(){
                                     $rowUsers = mysqli_fetch_array($run_request_status);
                                     $theRequestStatus = $rowUsers['request_status'];
 
-                                    // echo "<script>alert('the request status is: $theRequestStatus')</script>";
                                     };
 
                                     $mutuals = getMut($sessionUserID, $thisFriendID);
@@ -769,10 +697,6 @@ $(document).ready(function(){
                         ?>
 
                         </ul>
-
-                                  <!-- <button data-toggle='modal' data-target='#accept-modal' data-id=\"$thisFriendID\" id='getSenderUser' class='btn btn-sm btn-info'><i class='glyphicon glyphicon-plus'></i> Accept</button>
-
-                                </li> -->
 
 
                         </div>
@@ -822,7 +746,6 @@ $(document).ready(function(){
                                 $rowUsers = mysqli_fetch_array($run_request_status);
                                 $theRequestStatus = $rowUsers['request_status'];
 
-                                // echo "<script>alert('the request status is: $theRequestStatus')</script>";
                                 };
 
 
@@ -881,12 +804,6 @@ $(document).ready(function(){
 
     </div>
     <!-- /#wrapper -->
-
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>

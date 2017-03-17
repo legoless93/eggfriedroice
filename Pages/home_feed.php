@@ -43,13 +43,6 @@ include("../template/theme/head.php");
       <!-- Where POSTS begin -->
       <br>
       <br>
-      <!-- <div class="row">
-          <div class="col-lg-12">
-              <h1 class="page-header">Feed(me)</h1>
-          </div>
-
-      </div> -->
-      <!-- ROW DIV -->
 
       <style>
 
@@ -316,7 +309,6 @@ include("../template/theme/head.php");
 
       </style>
 
-      <!-- <div class="container"> -->
 	<div class="row">
 
       <div class="col-xs-8">
@@ -325,17 +317,6 @@ include("../template/theme/head.php");
         <!-- TEST WITH QUERY HERE -->
 
         <?php
-
-        // $get_myFriends5 = "SELECT * FROM (SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM friendshipBridge
-        //                     JOIN user ON friendshipBridge.friend_id = user.user_id
-        //                     JOIN posts ON posts.user_id = user.user_id
-        //                     WHERE friendshipBridge.user_id = '$userID'
-        //                     UNION
-        //                     SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, 		posts.post_time, posts.post_id FROM friendshipBridge
-        //                     JOIN user ON friendshipBridge.friend_id = user.user_id
-        //                     JOIN posts ON posts.user_id = user.user_id
-        //                     WHERE friendshipBridge.user_id = '$userID')friendPost
-        //                     UNION SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id FROM posts JOIN user ON posts.user_id = user.user_id WHERE posts.user_id = '$userID' ORDER BY post_id DESC";
 
         $get_myFriends5 = "SELECT user.user_firstName, user.user_lastName, user.user_id, user.user_pic, posts.post_title, posts.post_body, posts.post_time, posts.post_id
                             FROM user JOIN posts ON posts.user_id = user.user_id JOIN friendshipBridge ON friendshipBridge.user_id = user.user_id
@@ -380,7 +361,6 @@ include("../template/theme/head.php");
           $thisPostBody = $rowPosts['post_body'];
           $thisPostTime = $rowPosts['post_time'];
 
-          // $friends[] = $thisFriendID;
 
           if ($thisFriendID == $sessionUserID){
 
@@ -473,9 +453,8 @@ include("../template/theme/head.php");
 
   </div>
 </div>
-<!-- ROW BELOW -->
-	</div>
-<!-- </div> -->
+
+</div>
 
 
 	</div>
@@ -485,19 +464,9 @@ include("../template/theme/head.php");
     </div>
 
     </div>
-    <!-- jQuery -->
-    <!-- <script src="../vendor/jquery/jquery.min.js"></script> -->
-
-    <!-- Bootstrap Core JavaScript -->
-    <!-- <script src="../vendor/bootstrap/js/bootstrap.min.js"></script> -->
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <!-- <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script> -->
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
