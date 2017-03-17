@@ -409,12 +409,15 @@ include("../template/theme/head.php");
                                         <div class='chat-body clearfix'>
                                           <div class='header'>
                                           <span class='chat-img pull-left'>
-                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='img-circle' style='width:50px;height:50px;'/>
-                                          &nbsp;
+                                          <div class='image-cropper'>
+                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='my-picture'/>
+                                          </div>
                                           </span>
+                                          &nbsp;
                                           <a href='../Pages/profile.php?userid=$thisFriendID'>
                                           <strong class='primary-font'>$thisFirstName $thisLastName</strong><br>
                                           </a>
+                                          &nbsp;
                                           <strong> (You) </strong>
                                           </div>
                                           </div>
