@@ -409,9 +409,9 @@ include("../template/theme/head.php");
                                         <div class='chat-body clearfix'>
                                           <div class='header'>
                                           <span class='chat-img pull-left'>
-                                          <div class='image-cropper'>
-                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='my-picture'/>
-                                          </div>
+
+                                          <img src='../user/user_images/$thisPhoto' alt='User Avatar' class='test5'/>
+
                                           </span>
                                           &nbsp;
                                           <a href='../Pages/profile.php?userid=$thisFriendID'>
