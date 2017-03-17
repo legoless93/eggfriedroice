@@ -163,6 +163,8 @@ if(isset($_REQUEST['accept'])) {
         //updates the dropdown for logout
         $('#logOutD').dropdown();
 
+          $('.dropdown-toggle').dropdown();
+
        })
        .fail(function(){
 
